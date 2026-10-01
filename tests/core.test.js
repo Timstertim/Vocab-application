@@ -228,3 +228,29 @@ test('gapChoices gives six distinct options, preferring the same part of speech'
   assert.ok(choices.every((c) => !['talo', 'kissa', 'koira'].includes(c)));
   assert.equal(Core.gapChoices(pool[0], pool.slice(0, 3), 6).length, 3);
 });
+
+test('gap: words marked as also fitting count as correct, and synonyms are not offered', () => {
+  const word = { id: 't', finnish: 'toppahaalari', english: 'snowsuit', examples: [{ fi: 'Talvella lapsella pitää olla toppahaalari.' }] };
+  let s = Core.sentenceFor(word);
+  assert.equal(Core.isGapAnswer('pipo', word, s), false);
+  const marked = Core.setAlsoFits(word, word.examples[0].fi, 'pipo', true);
+  s = Core.sentenceFor(marked);
+  assert.equal(Core.isGapAnswer('pipo', marked, s), true);
+  assert.equal(Core.isGapAnswer('toppahaalari', marked, s), true);
+  assert.equal(Core.isGapAnswer('lelu', marked, s), false);
+  assert.equal(word.examples[0].alsoFits, undefined, 'original is not mutated');
+  const twice = Core.setAlsoFits(marked, word.examples[0].fi, 'pipo', true);
+  assert.deepEqual(twice.examples[0].alsoFits, ['pipo']);
+  assert.equal(Core.setAlsoFits(marked, word.examples[0].fi, 'pipo', false).examples[0].alsoFits, undefined);
+
+  const happy = { id: 'a', finnish: 'iloinen', english: 'happy, glad', partOfSpeech: 'adjective' };
+  const pool = [happy,
+    { id: 'b', finnish: 'onnellinen', english: 'happy, content', partOfSpeech: 'adjective' },
+    { id: 'c', finnish: 'surullinen', english: 'sad', partOfSpeech: 'adjective' },
+    { id: 'd', finnish: 'puhua', english: 'to speak, to talk', partOfSpeech: 'verb' },
+    { id: 'e', finnish: 'jutella', english: 'to chat, talk', partOfSpeech: 'verb' }];
+  for (let k = 0; k < 20; k++) {
+    assert.ok(!Core.gapChoices(happy, pool, 6).includes('onnellinen'));
+    assert.ok(!Core.gapChoices(pool[3], pool, 6).includes('jutella'));
+  }
+});

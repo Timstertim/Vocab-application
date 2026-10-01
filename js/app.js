@@ -137,6 +137,14 @@
       '</article></section>';
     const drawBody = () => { view.querySelector('#wd-body').innerHTML = wordBody(Store.word(id)); };
     drawBody();
+    view.querySelector('#wd-body').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-unfit]');
+      if (!b) return;
+      const ex = Store.word(id).examples[Number(b.dataset.unfit)];
+      Store.setAlsoFits(id, ex.fi, b.dataset.word, false);
+      drawBody();
+      toast(b.dataset.word + ' is no longer accepted for that sentence');
+    });
     view.querySelector('[data-act=edit]').onclick = () => openWordForm(w);
     view.querySelector('[data-act=delete]').onclick = () => {
       if (confirm('Delete "' + w.finnish + '"?')) { Store.deleteWord(w.id); toast('Deleted ' + w.finnish); go('#/words'); }
@@ -169,9 +177,14 @@
       '<div class="chips">' + (w.categoryIds || []).map((c) => catChip(Store.category(c))).join('') + '</div>' +
       (w.definition ? '<h3>Definition</h3><p>' + esc(w.definition) + '</p>' : '') +
       '<h3>Examples</h3>' +
-      ((w.examples || []).length ? '<ul class="examples">' + w.examples.map((x) =>
+      ((w.examples || []).length ? '<ul class="examples">' + w.examples.map((x, xi) =>
         '<li><span lang="fi">' + esc(x.fi) + '</span> ' + speakButton(x.fi, 'fi') +
-        (x.en ? '<br><span class="muted">' + esc(x.en) + '</span>' : '') + '</li>').join('') + '</ul>'
+        (x.en ? '<br><span class="muted">' + esc(x.en) + '</span>' : '') +
+        ((x.alsoFits || []).length ? '<div class="also-fits small"><span class="muted">Also accepted in Fill the gap:</span> ' +
+          x.alsoFits.map((a) => '<span class="also-chip" lang="fi">' + esc(a) +
+            ' <button type="button" class="icon-btn" data-unfit="' + xi + '" data-word="' + esc(a) + '" title="Stop accepting ' + esc(a) +
+            '" aria-label="Stop accepting ' + esc(a) + '">✕</button></span>').join(' ') + '</div>' : '') +
+        '</li>').join('') + '</ul>'
         : '<p class="muted">No examples yet.</p>') +
       (w.notes ? '<h3>Notes</h3><p class="notes">' + esc(w.notes) + '</p>' : '') +
       '<p class="muted small">Practised ' + ((s.correct || 0) + (s.wrong || 0)) + ' times · ' +
@@ -416,7 +429,12 @@
             notes: form.notes.value.trim(),
             examples: Array.from(exBox.querySelectorAll('.ex-row'))
               .map((r) => ({ fi: r.querySelector('.ex-fi').value.trim(), en: r.querySelector('.ex-en').value.trim() }))
-              .filter((x) => x.fi),
+              .filter((x) => x.fi)
+              // Keep "also fits" answers for sentences that weren't changed.
+              .map((x) => {
+                const old = (w.examples || []).find((o) => o.fi === x.fi);
+                return old && old.alsoFits ? Object.assign(x, { alsoFits: old.alsoFits }) : x;
+              }),
             categoryIds: Array.from(form.querySelectorAll('input[name=cat]:checked')).map((c) => c.value),
           });
           Store.upsertWord(w);

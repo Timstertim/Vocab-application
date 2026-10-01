@@ -97,6 +97,11 @@
     deleteGame(id) {
       Store.update((s) => { s.games = s.games.filter((g) => g.id !== id); });
     },
+    /** Accept (or stop accepting) another word for the gap in one of a word's example sentences. */
+    setAlsoFits(wordId, fi, finnish, add) {
+      const w = Store.word(wordId);
+      if (w) Store.upsertWord(root.VocabCore.setAlsoFits(w, fi, finnish, add));
+    },
     /** Record a practice result for a word without re-rendering listeners. */
     recordAnswer(wordId, correct) {
       const w = Store.word(wordId);

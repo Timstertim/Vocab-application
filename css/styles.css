@@ -365,3 +365,6 @@ legend { font-weight: 600; font-size: .9rem; padding: 0 .3rem; }
 @media (max-width: 640px) { .choices.six { grid-template-columns: 1fr 1fr; } .gap-sentence { font-size: 1.25rem; } }
 @media (max-width: 440px) { .choices.six { grid-template-columns: 1fr; gap: .45rem; } .choices.six .choice { padding: .65rem .9rem; overflow-wrap: normal; } }
 #g-dir[hidden] { display: none; }
+.also-fits { margin-top: .25rem; display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; }
+.also-chip { display: inline-flex; align-items: center; gap: .1rem; background: var(--ok-soft); color: var(--ok); border-radius: 999px; padding: 0 .1rem 0 .55rem; font-weight: 600; }
+.also-chip .icon-btn { font-size: .75rem; padding: .15rem .3rem; color: inherit; }

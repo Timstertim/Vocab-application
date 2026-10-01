@@ -238,6 +238,7 @@
   /* ---------- Fill the gap ---------- */
   function gap(session) {
     let i = 0;
+    let finalOk = false; // result of the current question, recorded on Continue
     const pool = session.opts.pool;
 
     function render() {
@@ -261,14 +262,17 @@
       const hint = session.el.querySelector('[data-act=hint]');
       if (hint) hint.onclick = () => { hint.parentNode.innerHTML = '<span class="muted">' + esc(sentence.en) + '</span>'; };
       const buttons = Array.from(session.el.querySelectorAll('.choice'));
+      finalOk = false;
       const choose = (n) => {
         if (answered || n >= choices.length) return;
         answered = true;
-        const ok = choices[n] === w.finnish;
-        record(session, c, ok);
+        const picked = choices[n];
+        const ok = Core.isGapAnswer(picked, w, sentence);
+        const isOriginal = picked === w.finnish;
+        finalOk = ok;
         buttons.forEach((b, k) => {
           b.disabled = true;
-          if (choices[k] === w.finnish) b.classList.add('right');
+          if (Core.isGapAnswer(choices[k], w, sentence)) b.classList.add('right');
           else if (k === n) b.classList.add('wrong');
         });
         // Reveal the full sentence with the word in the form it takes there.
@@ -280,11 +284,34 @@
           ? '<p class="muted small"><strong lang="fi">' + esc(sentence.form) + '</strong> is a form of <strong lang="fi">' +
             esc(w.finnish) + '</strong> (' + esc(w.english) + ').</p>'
           : '<p class="muted small"><strong lang="fi">' + esc(w.finnish) + '</strong> = ' + esc(w.english) + '</p>';
+        const others = sentence.alsoFits.filter((a) => a !== picked);
+        const alsoNote = !isOriginal && ok
+          ? '<p class="muted small"><strong lang="fi">' + esc(picked) + '</strong> also fits here. The sentence uses <strong lang="fi">' +
+            esc(w.finnish) + '</strong>.</p>'
+          : isOriginal && others.length
+            ? '<p class="muted small">Also accepted here: ' + others.map((a) => '<strong lang="fi">' + esc(a) + '</strong>').join(', ') + '</p>'
+            : '';
         const fb = session.el.querySelector('.feedback');
-        fb.innerHTML = (ok ? '<span class="good">Oikein! ✓</span>' : '<span class="bad">Not quite.</span>') + formNote +
-          '<button class="btn" data-act="next">Continue <kbd>Enter</kbd></button>';
+        fb.innerHTML = (ok ? '<span class="good">Oikein! ✓</span>' : '<span class="bad">Not quite.</span>') + formNote + alsoNote +
+          '<div class="row gap center">' +
+          '<button class="btn" data-act="next">Continue <kbd>Enter</kbd></button>' +
+          (!ok ? '<button class="btn ghost" data-act="alsofits">✓ <span lang="fi">' + esc(picked) + '</span> also fits</button>' : '') +
+          '</div>';
         fb.querySelector('[data-act=next]').onclick = next;
         fb.querySelector('[data-act=next]').focus();
+        const also = fb.querySelector('[data-act=alsofits]');
+        if (also) {
+          also.onclick = () => {
+            // Count it as right and remember it for this sentence.
+            root.Store.setAlsoFits(w.id, sentence.fi, picked, true);
+            finalOk = true;
+            buttons[n].classList.replace('wrong', 'right');
+            fb.querySelector('.bad').outerHTML = '<span class="good">Counted as correct ✓</span>';
+            also.outerHTML = '<span class="muted small">From now on <strong lang="fi">' + esc(picked) +
+              '</strong> is accepted for this sentence.</span>';
+            fb.querySelector('[data-act=next]').focus();
+          };
+        }
         speak(sentence.fi, 'fi');
       };
       buttons.forEach((b, n) => { b.onclick = () => choose(n); });
@@ -293,6 +320,8 @@
       });
     }
     function next() {
+      // Recorded on Continue, so "also fits" can still turn a miss into a hit.
+      record(session, session.cards[i], finalOk);
       i++;
       render();
     }

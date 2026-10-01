@@ -280,13 +280,24 @@
     return {
       fi: ex.fi, en: ex.en || '', form: hit.form,
       before: ex.fi.slice(0, hit.start), after: ex.fi.slice(hit.end),
+      alsoFits: (ex.alsoFits || []).slice(),
     };
   }
 
-  /** Options for a gap: the word plus distractors, preferring the same part of speech. */
+  /** The English meanings of a word as comparable keys: "to speak, to talk" → speak, talk. */
+  function meaningKeys(word) {
+    return alternatives(word.english).map((a) => normalize(a).replace(/^to /, '')).filter(Boolean);
+  }
+
+  /**
+   * Options for a gap: the word plus distractors, preferring the same part of speech.
+   * Words sharing a meaning with the answer (iloinen / onnellinen, both "happy") are left out,
+   * since they would usually fit the sentence too.
+   */
   function gapChoices(word, pool, n, rng) {
     const seen = new Set([normalize(word.finnish)]);
-    const others = shuffle(pool.filter((w) => w.id !== word.id), rng);
+    const meanings = new Set(meaningKeys(word));
+    const others = shuffle(pool.filter((w) => w.id !== word.id && !meaningKeys(w).some((k) => meanings.has(k))), rng);
     const same = others.filter((w) => w.partOfSpeech && w.partOfSpeech === word.partOfSpeech);
     const picked = [];
     for (const w of same.concat(others)) {
@@ -297,6 +308,26 @@
       if (picked.length >= n - 1) break;
     }
     return shuffle(picked.concat(word.finnish), rng);
+  }
+
+  /** Is `choice` right for this gap: the sentence's own word, or one marked as also fitting? */
+  function isGapAnswer(choice, word, sentence) {
+    const c = normalize(choice);
+    return c === normalize(word.finnish) || (sentence.alsoFits || []).some((a) => normalize(a) === c);
+  }
+
+  /** Copy of `word` where `finnish` is also accepted (add=true) or no longer accepted in example `fi`. */
+  function setAlsoFits(word, fi, finnish, add) {
+    return Object.assign({}, word, {
+      examples: (word.examples || []).map((ex) => {
+        if (ex.fi !== fi) return ex;
+        const list = (ex.alsoFits || []).filter((a) => normalize(a) !== normalize(finnish));
+        if (add) list.push(finnish);
+        const next = Object.assign({}, ex, { alsoFits: list });
+        if (!list.length) delete next.alsoFits;
+        return next;
+      }),
+    });
   }
 
   /* ---------- Category suggestions ---------- */
@@ -454,6 +485,6 @@
     uid, normalize, stripDiacritics, alternatives, levenshtein, checkAnswer, shuffle,
     filterWords, sortWords, accuracy, makeCard, choicesFor, pickRound,
     stripHtml, parseWiktionary, suggestionFromEntries, mergeImport, suggestCategories,
-    findWordInSentence, sentenceFor, gapChoices,
+    findWordInSentence, sentenceFor, gapChoices, isGapAnswer, setAlsoFits,
   };
 });

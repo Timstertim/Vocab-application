@@ -26,7 +26,10 @@ with Quizlet-style mini games.
   - 🧩 **Fill the gap**: a Finnish example sentence with one word missing. Pick the right
     word out of six (in dictionary form). The answer shows the form used in the sentence,
     e.g. *Tavataan* is a form of *tavata*. Uses each word's own example sentences, and
-    handles inflection, compounds and common stem changes (*vesi → vettä*).
+    handles inflection, compounds and common stem changes (*vesi → vettä*). If another option
+    fits the sentence too, tap **✓ … also fits**: it counts as correct and is accepted for that
+    sentence from then on. You can see and remove these on the word's page. Words with the
+    same English meaning as the answer are never offered as wrong options.
   - ✍️ **Write**: type the answer, with ä / ö / å buttons. It flags near misses and brings
     missed words back at the end of the round.
   - ⚡ **Match**: pair Finnish words with their meanings against the clock. Your best
