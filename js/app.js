@@ -49,6 +49,24 @@
       Store.get().categories.map((c) => '<option value="' + esc(c.id) + '"' + (c.id === selected ? ' selected' : '') +
         '>' + esc(c.name) + ' (' + countIn(c.id) + ')</option>').join('');
   }
+  /** <option>s for a level select. */
+  function levelOptions(selected, emptyLabel, extra) {
+    return '<option value="">' + esc(emptyLabel) + '</option>' + Core.LEVEL_SCALE.map((l) =>
+      '<option value="' + l + '"' + (l === selected ? ' selected' : '') + '>' + l + '</option>').join('') + (extra || '');
+  }
+  /** "Level from … to …" selects. */
+  function levelRange(idPrefix, min, max) {
+    return '<span class="level-range"><label class="inline">Level <select id="' + idPrefix + '-lmin" aria-label="Lowest level">' +
+      levelOptions(min, 'any') + '</select></label><label class="inline">to <select id="' + idPrefix + '-lmax" aria-label="Highest level">' +
+      levelOptions(max, 'any') + '</select></label></span>';
+  }
+  function levelText(min, max) {
+    if (!min && !max) return '';
+    if (min && max) return min === max ? min : min + '–' + max;
+    return min ? min + ' and up' : 'up to ' + max;
+  }
+  function levelBadge(level) { return level ? '<span class="lvl" title="Level ' + esc(level) + '">' + esc(level) + '</span>' : ''; }
+
   function countIn(catId) { return Store.get().words.filter((w) => (w.categoryIds || []).includes(catId)).length; }
 
   function accuracyBar(w) {
@@ -66,6 +84,7 @@
     const query = params.q || '';
     const catId = params.cat || '';
     const sort = params.sort || 'finnish';
+    const lvl = params.lvl || '';
     view.innerHTML =
       '<section class="page">' +
       '<div class="page-head"><h1>My words <span class="count">' + s.words.length + '</span></h1>' +
@@ -73,6 +92,7 @@
       '<div class="toolbar">' +
       '<div class="search"><input id="q" type="search" placeholder="Search Finnish, English, definitions, examples…" value="' + esc(query) + '" aria-label="Search words"></div>' +
       '<select id="cat" aria-label="Filter by category">' + categoryOptions(catId) + '</select>' +
+      '<select id="lvl" aria-label="Filter by level">' + levelOptions(lvl, 'All levels', '<option value="none"' + (lvl === 'none' ? ' selected' : '') + '>No level</option>') + '</select>' +
       '<select id="sort" aria-label="Sort">' +
       [['finnish', 'A–Ö (Finnish)'], ['english', 'A–Z (English)'], ['newest', 'Newest first'], ['weakest', 'Needs practice']]
         .map(([v, l]) => '<option value="' + v + '"' + (v === sort ? ' selected' : '') + '>' + l + '</option>').join('') +
@@ -83,9 +103,10 @@
     const qEl = view.querySelector('#q');
     const catEl = view.querySelector('#cat');
     const sortEl = view.querySelector('#sort');
+    const lvlEl = view.querySelector('#lvl');
 
     function draw() {
-      const list = Core.sortWords(Core.filterWords(Store.get().words, { query: qEl.value, categoryId: catEl.value }), sortEl.value);
+      const list = Core.sortWords(Core.filterWords(Store.get().words, { query: qEl.value, categoryId: catEl.value, level: lvlEl.value }), sortEl.value);
       if (!Store.get().words.length) {
         listEl.innerHTML = '<div class="empty"><p>No words yet. Add your first Finnish word!</p>' +
           '<button class="btn primary" data-act="add">+ Add word</button></div>';
@@ -97,7 +118,7 @@
       } else {
         listEl.innerHTML = '<ul class="word-grid">' + list.map((w) =>
           '<li><a class="word-card" href="#/word/' + encodeURIComponent(w.id) + '">' +
-          '<div class="wc-top"><span class="wc-fi" lang="fi">' + esc(w.finnish) + '</span>' + accuracyBar(w) + '</div>' +
+          '<div class="wc-top"><span class="wc-fi" lang="fi">' + esc(w.finnish) + '</span><span class="wc-badges">' + levelBadge(w.level) + accuracyBar(w) + '</span></div>' +
           '<div class="wc-en">' + esc(w.english) + (w.partOfSpeech ? ' <span class="pos">' + esc(w.partOfSpeech) + '</span>' : '') + '</div>' +
           (w.examples && w.examples[0] ? '<div class="wc-ex" lang="fi">' + esc(w.examples[0].fi) + '</div>' : '') +
           '<div class="chips">' + (w.categoryIds || []).map((c) => catChip(Store.category(c))).join('') + '</div>' +
@@ -108,12 +129,13 @@
       const p = new URLSearchParams();
       if (qEl.value) p.set('q', qEl.value);
       if (catEl.value) p.set('cat', catEl.value);
+      if (lvlEl.value) p.set('lvl', lvlEl.value);
       if (sortEl.value !== 'finnish') p.set('sort', sortEl.value);
       const h = '#/words' + (p.toString() ? '?' + p : '');
       history.replaceState(null, '', h);
     }
     qEl.oninput = () => { draw(); syncHash(); };
-    catEl.onchange = sortEl.onchange = () => { draw(); syncHash(); };
+    catEl.onchange = sortEl.onchange = lvlEl.onchange = () => { draw(); syncHash(); };
     const addHandler = (e) => {
       const b = e.target.closest('[data-act=add]');
       if (b) openWordForm(null, { finnish: b.dataset.prefill || '', categoryIds: catEl.value ? [catEl.value] : [] });
@@ -178,7 +200,7 @@
   function wordBody(w) {
     const s = w.stats || {};
     return '<div class="wd-head"><h1 lang="fi">' + esc(w.finnish) + '</h1>' + speakButton(w.finnish, 'fi') + '</div>' +
-      '<p class="wd-en">' + esc(w.english) + (w.partOfSpeech ? ' <span class="pos">' + esc(w.partOfSpeech) + '</span>' : '') + '</p>' +
+      '<p class="wd-en">' + esc(w.english) + (w.partOfSpeech ? ' <span class="pos">' + esc(w.partOfSpeech) + '</span>' : '') + ' ' + levelBadge(w.level) + '</p>' +
       '<div class="chips">' + (w.categoryIds || []).map((c) => catChip(Store.category(c))).join('') + '</div>' +
       (w.definition ? '<h3>Definition</h3><p>' + esc(w.definition) + '</p>' : '') +
       '<h3>Examples</h3>' +
@@ -281,13 +303,15 @@
       '<button type="button" class="btn" data-act="lookup">🔎 Look up</button></div></label>' +
       letterBar('#f-fi') +
       '<div id="f-lookup"></div>' +
-      '<div class="grid-2">' +
       '<label>English meaning<input name="english" required value="' + esc(w.english) + '" placeholder="e.g. library">' +
       '<span class="hint">Separate alternatives with commas: “hi, hello”</span></label>' +
+      '<div class="grid-2">' +
       '<label>Part of speech<select name="partOfSpeech">' +
       POS.concat(POS.includes(w.partOfSpeech) ? [] : [w.partOfSpeech]).map((p) => '<option value="' + esc(p) + '"' +
         (p === w.partOfSpeech ? ' selected' : '') + '>' + (p || '—') + '</option>').join('') +
-      '</select></label></div>' +
+      '</select></label>' +
+      '<label>Level<select name="level">' + levelOptions(w.level || '', '—') + '</select>' +
+      '<span class="hint">A1.1 = beginner … B1.2 = intermediate</span></label></div>' +
       '<label>Definition<textarea name="definition" rows="2" placeholder="What does it mean? Any grammar notes?">' + esc(w.definition) + '</textarea></label>' +
       '<fieldset><legend>Example sentences</legend><div id="f-examples">' +
       (w.examples.length ? w.examples : [{ fi: '', en: '' }]).map(exampleRow).join('') +
@@ -430,6 +454,7 @@
             finnish,
             english,
             partOfSpeech: form.partOfSpeech.value,
+            level: form.level.value,
             definition: form.definition.value.trim(),
             notes: form.notes.value.trim(),
             examples: Array.from(exBox.querySelectorAll('.ex-row'))
@@ -522,15 +547,23 @@
   }
 
   /* ---------- Games ---------- */
-  function wordsForCategories(catIds) {
-    return Core.filterWords(Store.get().words, { categoryIds: catIds || [] });
+  function wordsForCategories(catIds, levelMin, levelMax) {
+    return Core.filterWords(Store.get().words, { categoryIds: catIds || [], levelMin, levelMax });
   }
 
   function gameSummary(g) {
     const cats = (g.categoryIds || []).map((id) => Store.category(id)).filter(Boolean);
-    const n = wordsForCategories(g.categoryIds).length;
-    return (Games.TYPES[g.type].noDirection ? '' : Games.DIRECTIONS[g.direction] + ' · ') + (cats.length ? cats.map((c) => c.name).join(', ') : 'All words') +
+    const n = wordsForCategories(g.categoryIds, g.levelMin, g.levelMax).length;
+    const lt = levelText(g.levelMin, g.levelMax);
+    return (Games.TYPES[g.type].noDirection ? '' : directionLabel(g.type, g.direction) + ' · ') + (cats.length ? cats.map((c) => c.name).join(', ') : 'All words') +
+      (lt ? ' · ' + lt : '') +
       ' · ' + (g.count ? Math.min(g.count, n) + ' of ' : '') + n + ' words';
+  }
+
+  /** Direction wording; for Write it says which language you type. */
+  function directionLabel(type, dir) {
+    if (type === 'write') return { 'fi-en': 'You type English', 'en-fi': 'You type Finnish', mixed: 'You type both' }[dir];
+    return Games.DIRECTIONS[dir];
   }
 
   function renderGames(params) {
@@ -546,8 +579,9 @@
       '<h2 class="section-title">Quick play</h2>' +
       '<div class="toolbar"><label class="inline">Words from <select id="qp-cat">' + categoryOptions(presetCat, 'All words') + '</select></label>' +
       '<label class="inline">Direction <select id="qp-dir">' +
-      Object.entries(Games.DIRECTIONS).map(([k, v]) => '<option value="' + k + '">' + v + '</option>').join('') +
-      '</select></label></div>' +
+      Object.entries(Games.DIRECTIONS).map(([k, v]) => '<option value="' + k + '"' + (k === (s.settings.qpDir || 'fi-en') ? ' selected' : '') + '>' + v + '</option>').join('') +
+      '</select></label>' + levelRange('qp', s.settings.qpLevelMin || '', s.settings.qpLevelMax || '') + '</div>' +
+      '<p class="muted small" id="qp-count"></p>' +
       '<div class="type-grid">' + Object.entries(Games.TYPES).map(([k, t]) =>
         '<button class="type-card" data-quick="' + k + '"><span class="type-icon">' + t.icon + '</span>' +
         '<strong>' + t.name + '</strong><span class="muted small">' + t.blurb + '</span></button>').join('') +
@@ -568,12 +602,40 @@
       '</section>';
 
     view.querySelectorAll('[data-act=create]').forEach((b) => { b.onclick = () => openGameForm(null, presetCat); });
+    const qp = (sel) => view.querySelector(sel);
+    const qpCount = () => {
+      const n = wordsForCategories(qp('#qp-cat').value ? [qp('#qp-cat').value] : [], qp('#qp-lmin').value, qp('#qp-lmax').value).length;
+      qp('#qp-count').textContent = n + ' word' + (n === 1 ? '' : 's') + ' match' + (n === 1 ? 'es' : '') + ' these settings.';
+    };
+    ['#qp-cat', '#qp-dir', '#qp-lmin', '#qp-lmax'].forEach((sel) => {
+      qp(sel).addEventListener('change', () => {
+        // Keep "from" ≤ "to".
+        const lo = qp('#qp-lmin'), hi = qp('#qp-lmax');
+        if (lo.value && hi.value && Core.levelIndex(lo.value) > Core.levelIndex(hi.value)) (sel === '#qp-lmin' ? hi : lo).value = (sel === '#qp-lmin' ? lo : hi).value;
+        Store.update((st) => { st.settings.qpLevelMin = lo.value; st.settings.qpLevelMax = hi.value; st.settings.qpDir = qp('#qp-dir').value; });
+        qpCount();
+      });
+    });
+    qpCount();
+    const startQuick = (type, dir) => {
+      const p = new URLSearchParams({ type, dir });
+      const cat = qp('#qp-cat').value;
+      if (cat) p.set('cat', cat);
+      if (qp('#qp-lmin').value) p.set('lmin', qp('#qp-lmin').value);
+      if (qp('#qp-lmax').value) p.set('lmax', qp('#qp-lmax').value);
+      go('#/play/quick?' + p);
+    };
     view.querySelectorAll('[data-quick]').forEach((b) => {
       b.onclick = () => {
-        const p = new URLSearchParams({ type: b.dataset.quick, dir: view.querySelector('#qp-dir').value });
-        const cat = view.querySelector('#qp-cat').value;
-        if (cat) p.set('cat', cat);
-        go('#/play/quick?' + p);
+        if (b.dataset.quick !== 'write') return startQuick(b.dataset.quick, qp('#qp-dir').value);
+        // Write: ask which language to type.
+        openModal('<div class="modal-head"><h2>✍️ Write – which language do you type?</h2>' +
+          '<button type="button" class="icon-btn" data-act="close" aria-label="Close">✕</button></div>' +
+          '<div class="write-choice">' +
+          '<button class="type-card" data-wdir="en-fi"><strong>Type in Finnish</strong><span class="muted small">You see the English, you write the Finnish word.</span></button>' +
+          '<button class="type-card" data-wdir="fi-en"><strong>Type in English</strong><span class="muted small">You see the Finnish word, you write what it means.</span></button>' +
+          '<button class="type-card" data-wdir="mixed"><strong>Mixed</strong><span class="muted small">A bit of both.</span></button></div>',
+        (m) => m.querySelectorAll('[data-wdir]').forEach((x) => { x.onclick = () => { closeModal(); startQuick('write', x.dataset.wdir); }; }));
       };
     });
     view.querySelectorAll('[data-edit]').forEach((b) => { b.onclick = () => openGameForm(Store.game(b.dataset.edit)); });
@@ -590,6 +652,7 @@
     const g = game ? JSON.parse(JSON.stringify(game)) : {
       id: Core.uid(), name: '', type: 'quiz', direction: 'fi-en', count: 10,
       categoryIds: presetCat ? [presetCat] : [],
+      levelMin: Store.get().settings.qpLevelMin || '', levelMax: Store.get().settings.qpLevelMax || '',
     };
     const cats = Store.get().categories;
     openModal(
@@ -611,6 +674,8 @@
         '<option value="' + k + '"' + (k === g.direction ? ' selected' : '') + '>' + v + '</option>').join('') + '</select></label>' +
       '<label>Words per round<select name="count">' + [5, 10, 15, 20, 30, 0].map((n) =>
         '<option value="' + n + '"' + (n === g.count ? ' selected' : '') + '>' + (n || 'All') + '</option>').join('') + '</select></label>' +
+      '<label>Lowest level<select name="levelMin">' + levelOptions(g.levelMin || '', 'Any') + '</select></label>' +
+      '<label>Highest level<select name="levelMax">' + levelOptions(g.levelMax || '', 'Any') + '</select></label>' +
       '</div>' +
       '<p class="muted small" id="g-summary"></p>' +
       '<div class="modal-foot"><span></span><div class="row gap"><button type="button" class="btn ghost" data-act="close">Cancel</button>' +
@@ -625,17 +690,31 @@
           g.direction = form.direction.value;
           g.count = Number(form.count.value);
           g.categoryIds = Array.from(form.querySelectorAll('input[name=cat]:checked')).map((c) => c.value);
+          g.levelMin = form.levelMin.value;
+          g.levelMax = form.levelMax.value;
+          if (g.levelMin && g.levelMax && Core.levelIndex(g.levelMin) > Core.levelIndex(g.levelMax)) {
+            g.levelMax = g.levelMin;
+            form.levelMax.value = g.levelMin;
+          }
+        };
+        // For Write, say plainly which language is typed.
+        const labelDirections = () => {
+          dirLabel.firstChild.textContent = g.type === 'write' ? 'You type in' : 'Direction';
+          Array.from(form.direction.options).forEach((o) => {
+            o.textContent = g.type === 'write' ? { 'fi-en': 'English (Finnish shown)', 'en-fi': 'Finnish (English shown)', mixed: 'Both, mixed' }[o.value] : Games.DIRECTIONS[o.value];
+          });
         };
         const dirLabel = modal.querySelector('#g-dir');
         const update = () => {
           read();
           dirLabel.hidden = !!Games.TYPES[g.type].noDirection;
-          let words = wordsForCategories(g.categoryIds);
+          labelDirections();
+          let words = wordsForCategories(g.categoryIds, g.levelMin, g.levelMax);
           if (g.type === 'gap') words = words.filter((w) => Core.sentenceFor(w));
           const n = words.length;
           summary.textContent = n ? 'This game will use ' + (g.count ? Math.min(g.count, n) + ' of ' : 'all ') + n + ' matching words per round.' +
             (g.type === 'gap' ? ' (Only words with an example sentence that contains the word.)' : '')
-            : g.type === 'gap' ? 'No words here have an example sentence that contains the word yet.' : 'No words match these categories yet.';
+            : g.type === 'gap' ? 'No words here have an example sentence that contains the word yet.' : 'No words match these categories and levels yet.';
           if (!form.name.value.trim() || form.name.dataset.auto) {
             const cs = g.categoryIds.map((id) => Store.category(id).name);
             form.name.value = (cs.length ? cs.join(' + ') : 'All words') + ' – ' + Games.TYPES[g.type].name;
@@ -644,7 +723,7 @@
         };
         form.name.oninput = () => { delete form.name.dataset.auto; };
         form.addEventListener('change', update);
-        if (isNew) update(); else { read(); dirLabel.hidden = !!Games.TYPES[g.type].noDirection; summary.textContent = gameSummary(g); }
+        if (isNew) update(); else { read(); dirLabel.hidden = !!Games.TYPES[g.type].noDirection; labelDirections(); summary.textContent = gameSummary(g); }
         let then = 'save';
         form.querySelectorAll('[data-then]').forEach((b) => { b.onclick = () => { then = b.dataset.then; }; });
         form.onsubmit = (e) => {
@@ -671,15 +750,18 @@
         direction: Games.DIRECTIONS[params.dir] ? params.dir : 'fi-en',
         count: type === 'flashcards' ? 0 : type === 'match' ? 6 : 10,
         categoryIds: cat ? [cat.id] : [],
-        title: (cat ? cat.name : 'All words') + ' · ' + Games.TYPES[type].name,
+        levelMin: Core.levelIndex(params.lmin) >= 0 ? params.lmin : '',
+        levelMax: Core.levelIndex(params.lmax) >= 0 ? params.lmax : '',
       };
+      const lt = levelText(opts.levelMin, opts.levelMax);
+      opts.title = (cat ? cat.name : 'All words') + (lt ? ' (' + lt + ')' : '') + ' · ' + Games.TYPES[type].name;
     } else {
       const g = Store.game(id);
       if (!g) { view.innerHTML = '<section class="page"><p>Game not found.</p><a href="#/games">Back to games</a></section>'; return; }
-      opts = { type: g.type, direction: g.direction, count: g.count, categoryIds: g.categoryIds, title: g.name, gameId: g.id };
+      opts = { type: g.type, direction: g.direction, count: g.count, categoryIds: g.categoryIds, levelMin: g.levelMin, levelMax: g.levelMax, title: g.name, gameId: g.id };
     }
     view.innerHTML = '<section class="page narrow"><div id="game"></div></section>';
-    const words = wordsForCategories(opts.categoryIds);
+    const words = wordsForCategories(opts.categoryIds, opts.levelMin, opts.levelMax);
     Games.start(view.querySelector('#game'), Object.assign(opts, {
       words,
       // Distractors for multiple choice may come from all words when a category is tiny.

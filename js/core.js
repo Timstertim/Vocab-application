@@ -88,11 +88,26 @@
     return a;
   }
 
-  /** Words matching a free-text query and/or a category id. */
+  // Same scale as js/levels.js (Finnish sub-levels of the CEFR).
+  const LEVEL_SCALE = ['A1.1', 'A1.2', 'A1.3', 'A2.1', 'A2.2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1.1'];
+  /** Position of a level on the scale, or -1 for none/unknown. */
+  function levelIndex(level) { return LEVEL_SCALE.indexOf(level); }
+
+  /** Does a word's level fall within [min, max]? Unlevelled words only pass when no limit is set. */
+  function inLevelRange(word, min, max) {
+    if (!min && !max) return true;
+    const i = levelIndex(word.level);
+    if (i < 0) return false;
+    return (!min || i >= levelIndex(min)) && (!max || i <= levelIndex(max));
+  }
+
+  /** Words matching a free-text query, category id(s), an exact level and/or a level range. */
   function filterWords(words, filter) {
     filter = filter || {};
     const q = normalize(filter.query || '', { lenient: true });
     return words.filter((w) => {
+      if (filter.level && (filter.level === 'none' ? levelIndex(w.level) >= 0 : w.level !== filter.level)) return false;
+      if (!inLevelRange(w, filter.levelMin, filter.levelMax)) return false;
       if (filter.categoryId && !(w.categoryIds || []).includes(filter.categoryId)) return false;
       if (filter.categoryIds && filter.categoryIds.length &&
           !(w.categoryIds || []).some((c) => filter.categoryIds.includes(c))) return false;
@@ -500,6 +515,7 @@
         notes: String(w.notes || ''),
         examples: Array.isArray(w.examples) ? w.examples.filter((x) => x && x.fi) : [],
         categoryIds: (w.categoryIds || []).map((c) => importedCatMap.get(c)).filter(Boolean),
+        level: levelIndex(w.level) >= 0 ? w.level : '',
         stats: w.stats || { correct: 0, wrong: 0 },
         createdAt: w.createdAt || Date.now(),
       };
@@ -512,6 +528,7 @@
         const old = words[idx];
         words[idx] = Object.assign({}, old, clean, {
           id: old.id,
+          level: clean.level || old.level || '',
           categoryIds: Array.from(new Set((old.categoryIds || []).concat(clean.categoryIds))),
           stats: old.stats,
         });
@@ -525,7 +542,7 @@
   }
 
   return {
-    uid, normalize, stripDiacritics, alternatives, levenshtein, checkAnswer, shuffle,
+    uid, LEVEL_SCALE, levelIndex, inLevelRange, normalize, stripDiacritics, alternatives, levenshtein, checkAnswer, shuffle,
     filterWords, sortWords, accuracy, makeCard, choicesFor, pickRound,
     stripHtml, parseWiktionary, suggestionFromEntries, mergeImport, suggestCategories,
     findWordInSentence, sentenceFor, gapChoices, isGapAnswer, setAlsoFits,

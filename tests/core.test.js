@@ -291,3 +291,25 @@ test('role play checks: typos are close, known mistakes are recognised, word ord
   assert.equal(Core.checkOrder(['Kortilla', 'kiitos'], step), true);
   assert.equal(Core.checkOrder(['kiitos', 'Kortilla'], step), false);
 });
+
+test('levels: every starter word has a valid level, and level filters work', () => {
+  global.self = global;
+  require('../js/levels.js');
+  require('../js/starter.js');
+  const S = global.VocabStarter;
+  for (const w of S.words) assert.ok(Core.levelIndex(w.level) >= 0, w.finnish + ' has no level');
+  const words = [{ id: 'a', finnish: 'a', level: 'A1.1' }, { id: 'b', finnish: 'b', level: 'A2.2' }, { id: 'c', finnish: 'c' }];
+  const ids = (f) => Core.filterWords(words, f).map((w) => w.id).join('');
+  assert.equal(ids({}), 'abc');
+  assert.equal(ids({ levelMax: 'A1.3' }), 'a');
+  assert.equal(ids({ levelMin: 'A2.1' }), 'b');
+  assert.equal(ids({ levelMin: 'A1.1', levelMax: 'B1.1' }), 'ab');
+  assert.equal(ids({ level: 'A2.2' }), 'b');
+  assert.equal(ids({ level: 'none' }), 'c');
+  // Imports keep valid levels and drop invalid ones.
+  const res = Core.mergeImport({ words: [], categories: [], games: [] },
+    { words: [{ finnish: 'x', english: 'x', level: 'A2.1' }, { finnish: 'y', english: 'y', level: 'Z9' }] });
+  assert.deepEqual(res.state.words.map((w) => w.level), ['A2.1', '']);
+  const SC = require('../js/scenarios.js');
+  for (const sc of SC) assert.ok(Core.levelIndex(sc.level) >= 0, sc.id);
+});

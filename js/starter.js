@@ -48,8 +48,9 @@
     C('Daycare pick-up', '#c0602a'),
     C('On the phone', '#1f8fa3'),
     C('At the office', '#55606e'),
+    C('Emergency call', '#c43b3b'),
   ];
-  const VERSION = 5;
+  const VERSION = 6;
   const id = (n) => 'cat-' + slug(n);
 
   // [finnish, english, part of speech, definition, [[example fi, example en]...], category]
@@ -903,16 +904,44 @@
     ['lähettää', 'to send', 'verb', 'Type 1 · minä lähetän · hän lähetti (past).', [['Lähetän paketin postissa.', 'I\'ll send the parcel by post.']], 'At the office'],
   ];
 
+  // Added in version 6: emergency calls (112).
+  const v6 = [
+    ['hätäkeskus', 'emergency response centre', 'noun', 'Answers 112 calls and sends the fire brigade, ambulance or police. Stem: hätäkeskuksen.', [['Hätäkeskus vastaa numerosta 112.', 'The emergency centre answers the number 112.']], 'Emergency call'],
+    ['hätäpuhelu', 'emergency call', 'noun', 'Free, and works without a SIM card.', [['Hätäpuhelu on maksuton.', 'An emergency call is free of charge.']], 'Emergency call'],
+    ['älä katkaise puhelua', 'don\'t hang up', 'phrase', 'Stay on the line until the emergency centre says you can end the call.', [['Älä katkaise puhelua ennen kuin annan luvan.', 'Don\'t hang up until I give you permission.']], 'Emergency call'],
+    ['apu on matkalla', 'help is on the way', 'phrase', 'What the emergency centre tells you once help has been sent.', [['Apu on matkalla, pysy rauhallisena.', 'Help is on the way, stay calm.']], 'Emergency call'],
+    ['kunta', 'municipality', 'noun', 'Always give it with the address: the same street name exists in many towns. Stem: kunnan.', [['Missä kunnassa olet?', 'Which municipality are you in?']], 'Emergency call'],
+    ['tulipalo', 'fire (accidental)', 'noun', 'A fire that is out of control. Stem: tulipalon.', [['Tulipalo syttyi keittiössä.', 'The fire started in the kitchen.']], 'Emergency call'],
+    ['palaa', 'to burn, to be on fire', 'verb', 'Type 1 · se palaa · se paloi (past). Not to be confused with palata (to return): minä palaan.', [['Talo palaa!', 'The house is on fire!']], 'Emergency call'],
+    ['savu', 'smoke', 'noun', 'Stem: savun, savua.', [['Rappukäytävässä on savua.', 'There\'s smoke in the stairwell.']], 'Emergency call'],
+    ['palokunta', 'fire brigade, fire service', 'noun', 'Stem: palokunnan.', [['Palokunta tuli nopeasti.', 'The fire brigade came quickly.']], 'Emergency call'],
+    ['palovaroitin', 'smoke alarm', 'noun', 'Required by law in every Finnish home. Stem: palovaroittimen.', [['Palovaroitin piippaa.', 'The smoke alarm is beeping.']], 'Emergency call'],
+    ['sammutin', 'fire extinguisher', 'noun', 'Also: sammutuspeite = fire blanket. Stem: sammuttimen.', [['Sammutin on eteisessä.', 'The fire extinguisher is in the hall.']], 'Emergency call'],
+    ['ambulanssi', 'ambulance', 'noun', 'Stem: ambulanssin.', [['Ambulanssi on matkalla.', 'The ambulance is on its way.']], 'Emergency call'],
+    ['tajuton', 'unconscious', 'adjective', 'Stem: tajuttoman.', [['Mies on tajuton.', 'The man is unconscious.']], 'Emergency call'],
+    ['hengittää', 'to breathe', 'verb', 'Type 1 · minä hengitän · hän hengitti (past).', [['Hengittääkö hän?', 'Is he breathing?']], 'Emergency call'],
+    ['kylkiasento', 'recovery position', 'noun', 'Lying on one\'s side. kääntää kylkiasentoon = to put in the recovery position.', [['Käännä hänet kylkiasentoon.', 'Put him in the recovery position.']], 'Emergency call'],
+    ['elvyttää', 'to resuscitate, to do CPR', 'verb', 'Type 1 · minä elvytän · hän elvytti (past).', [['Osaatko elvyttää?', 'Do you know how to do CPR?']], 'Emergency call'],
+    ['adrenaliinikynä', 'adrenaline pen, EpiPen', 'noun', 'Injected into the thigh in a severe allergic reaction.', [['Adrenaliinikynä on lapsen repussa.', 'The adrenaline pen is in the child\'s backpack.']], 'Emergency call'],
+    ['loukkaantua', 'to get hurt, to be injured', 'verb', 'Type 1 · minä loukkaannun · hän loukkaantui (past).', [['Kukaan ei loukkaantunut.', 'Nobody was hurt.']], 'Emergency call'],
+    ['onnettomuus', 'accident', 'noun', 'liikenneonnettomuus = traffic accident. Stem: onnettomuuden.', [['Tiellä tapahtui onnettomuus.', 'There was an accident on the road.']], 'Emergency call'],
+    ['murto', 'break-in, burglary', 'noun', 'tehdä murto johonkin = to break into somewhere. Stem: murron.', [['Asuntoon tehtiin murto.', 'Someone broke into the flat.']], 'Emergency call'],
+    ['varas', 'thief', 'noun', 'murtovaras = burglar. Stem: varkaan, varasta.', [['Varas vei pyöräni.', 'A thief took my bike.']], 'Emergency call'],
+    ['rappukäytävä', 'stairwell, staircase', 'noun', 'The shared stairs in a block of flats. Also: rappu.', [['Odotan rappukäytävässä.', 'I\'ll wait in the stairwell.']], 'Emergency call'],
+    ['ovikoodi', 'door code', 'noun', 'Tell the emergency centre if help needs a code to get in.', [['Ulko-oven ovikoodi on 1234.', 'The code for the front door is 1234.']], 'Emergency call'],
+  ];
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5).map((r) => {
+  const tagged = v4.concat(v5, v6).map((r) => {
     let cats = [].concat(r[5]);
     if (/^Daycare|^Talking to parents$|^ECEC terms$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$/.test(cats[0])) cats.push('Verbs');
     return r.slice(0, 5).concat([cats]);
   });
 
+  const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
-  const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(i < v4.length ? 4 : 5)));
+  const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(i < v4.length ? 4 : i < v4.length + v5.length ? 5 : 6)));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
     finnish: r[0],
@@ -921,6 +950,7 @@
     definition: r[3],
     examples: r[4].map(([fi, en]) => ({ fi, en })),
     categoryIds: [].concat(r[5]).map(id),
+    level: L ? L.levelFor(r[0], [].concat(r[5])[0]) : '',
     notes: '',
     stats: { correct: 0, wrong: 0 },
     createdAt: now - (rows.length - i) * 1000,

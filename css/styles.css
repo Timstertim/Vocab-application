@@ -434,3 +434,12 @@ legend { font-weight: 600; font-size: .9rem; padding: 0 .3rem; }
 .rp-type .letter-bar { justify-content: flex-start; margin: -.3rem 0 .8rem; }
 .rp-phrases { list-style: none; padding: 0; text-align: left; max-width: 520px; margin: 0 auto 1rem; }
 .rp-phrases li { padding: .45rem 0; border-bottom: 1px solid var(--border); }
+
+/* Levels */
+.lvl { display: inline-block; font-size: .7rem; font-weight: 700; padding: .05rem .45rem; border-radius: 6px; background: var(--primary-soft); color: var(--primary); letter-spacing: .02em; vertical-align: middle; }
+.lvl.big { font-size: .85rem; padding: .2rem .6rem; }
+.wc-badges { display: inline-flex; gap: .25rem; align-items: center; flex-shrink: 0; }
+.rp-card .lvl { align-self: flex-start; margin-top: .2rem; }
+.level-range { display: inline-flex; gap: .4rem; flex-wrap: wrap; }
+.rp-intro { background: var(--bad-soft); border-radius: 12px; padding: .7rem .9rem; }
+.write-choice { display: flex; flex-direction: column; gap: .6rem; }

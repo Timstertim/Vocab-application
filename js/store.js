@@ -31,12 +31,28 @@
     return s;
   }
 
+  /** Fill in missing levels on saved words from the starter list (words saved before levels existed). */
+  function backfillLevels(s) {
+    const byFinnish = new Map(Starter.words.map((w) => [root.VocabCore.normalize(w.finnish), w.level]));
+    let changed = false;
+    for (const w of s.words) {
+      if (w.level) continue;
+      const lv = byFinnish.get(root.VocabCore.normalize(w.finnish));
+      if (lv) { w.level = lv; changed = true; }
+    }
+    return changed;
+  }
+
   /** Give existing users the starter words added since they last opened the app, once. */
   function upgradeStarter(s) {
     const from = s.starterVersion || 1;
-    if (from >= Starter.VERSION) return s;
+    if (from >= Starter.VERSION) {
+      if (backfillLevels(s)) { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) { /* ignore */ } }
+      return s;
+    }
     const res = root.VocabCore.mergeImport(s, Starter.newerThan(from), { onlyNew: true });
     const next = Object.assign(res.state, { starterVersion: Starter.VERSION });
+    backfillLevels(next);
     if (res.added) {
       const names = Starter.newerThan(from).categories.map((c) => c.name).filter((n) => n !== 'Verbs' && n !== 'Daycare');
       upgradeNote = res.added + ' new starter words added' + (names.length > 4

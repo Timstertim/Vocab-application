@@ -30,17 +30,22 @@ with Quizlet-style mini games.
     fits the sentence too, tap **✓ … also fits**: it counts as correct and is accepted for that
     sentence from then on. You can see and remove these on the word's page. Words with the
     same English meaning as the answer are never offered as wrong options.
-  - ✍️ **Write**: type the answer, with ä / ö / å buttons. It flags near misses and brings
+  - ✍️ **Write**: type the answer, with ä / ö / å buttons. Choose whether you type in
+    Finnish (you see the English) or in English (you see the Finnish), or mixed. It flags near misses and brings
     missed words back at the end of the round.
   - ⚡ **Match**: pair Finnish words with their meanings against the clock. Your best
     time is saved.
   - 🎭 **Role play**: pick a place (shop, library, health centre, café, bus & train, daycare
-    pick-up, phone calls, an office) and a situation with a goal, e.g. *ask for these shoes in
+    pick-up, phone calls, an office, an emergency call to 112) and a situation with a goal, e.g. *ask for these shoes in
     size 38*. The other person speaks Finnish and you reply. **Easy**: choose the best of three
     replies. **Medium**: put the words in order. **Hard**: type it (several wordings accepted,
     small typos forgiven). Wrong replies are realistic mistakes and each one is explained. The
     results list the useful phrases and link to that place's word category. Conversations are
     in `js/scenarios.js`.
+- **Levels**: every word has a level on the Finnish scale (A1.1, A1.2, A1.3, A2.1, A2.2,
+  B1.1, B1.2…). Filter the word list by level, and set a level range in Quick play or when
+  creating a game, so you only practise words at your level. Set the level of your own words
+  in the word form. Starter levels are in `js/levels.js`.
 - **Your own mini games**: save a game type, its categories, direction and round size
   under a name, then replay it from the Games page.
 - **Progress**: every answer is recorded per word. Games pick weak words more often, and
@@ -48,13 +53,13 @@ with Quizlet-style mini games.
 - **Pronunciation**: 🔊 buttons read words aloud using your device's text-to-speech
   (install a Finnish voice for the best result).
 - **Backup**: export and import everything as JSON from Settings.
-- Starts with 753 starter words in 40 categories, including **Feelings**, **Shapes**,
+- Starts with 776 starter words in 41 categories, including **Feelings**, **Shapes**,
   **A2.2 verbs**, a set for daycare teachers (**Daycare**, **Daycare: play**, **Daycare: safety**,
   **Talking to parents**, **ECEC terms**), everyday life (**Time & calendar**, **Weather & seasons**,
   **Body & health**, **Clothes**, **Shopping & money**, **Getting around**, **Services & offices**,
   **Animals**, **Working life**), language building blocks (**Question words**, **Opposites**,
   **Small words**, **Survival phrases**, **Spoken Finnish**) and culture (**Holidays & traditions**,
-  **Finnish food**), plus one category per role-play place (**At the shop**, **At the library**…). Each verb shows its verb type, "minä" form, past form and, where it
+  **Finnish food**), plus one category per role-play place (**At the shop**, **At the library**, **Emergency call**…). Each verb shows its verb type, "minä" form, past form and, where it
   matters, which case it takes. You can delete starter words, or add them back from Settings.
   When new starter words are released, they're added to your list once; words you already
   have, edited or deleted are left alone.
@@ -89,6 +94,7 @@ npm test        # unit tests for answer checking, search, Wiktionary parsing, im
 | `js/ui.js` | Shared helpers (escaping, speech, ä/ö buttons) |
 | `js/scenarios.js` | Role-play conversations |
 | `js/roleplay.js` | The role-play game |
+| `js/levels.js` | Levels of the starter words |
 | `js/topics.js` | Topics and keywords used for category suggestions |
 | `js/starter.js` | Starter vocabulary |
 

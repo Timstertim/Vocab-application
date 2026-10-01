@@ -1,0 +1,97 @@
+/*
+ * Language levels for the starter words, on the Finnish scale used by schools and YKI
+ * (A1.1 … C1.1, the CEFR levels split into sub-levels).
+ * A word's level is WORD[finnish] if listed, otherwise the level of its first category.
+ * These are estimates for a learner of Finnish as a second language.
+ */
+(function (root, factory) {
+  const levels = factory();
+  if (typeof module === 'object' && module.exports) module.exports = levels;
+  else root.VocabLevels = levels;
+})(typeof self !== 'undefined' ? self : this, function () {
+  'use strict';
+  const SCALE = ['A1.1', 'A1.2', 'A1.3', 'A2.1', 'A2.2', 'B1.1', 'B1.2', 'B2.1', 'B2.2', 'C1.1'];
+
+  const CATEGORY = {
+    'Greetings': 'A1.1', 'Food & drink': 'A1.2', 'Family': 'A1.1', 'Home': 'A1.2', 'Numbers': 'A1.1',
+    'Colours': 'A1.1', 'Verbs': 'A1.2', 'Nature': 'A1.3', 'Feelings': 'A2.1', 'Shapes': 'A2.1',
+    'A2.2 verbs': 'A2.2', 'Daycare': 'B1.1', 'Daycare: play': 'A2.1', 'Daycare: safety': 'A2.2',
+    'Talking to parents': 'B1.1', 'ECEC terms': 'B1.2', 'Working life': 'A2.2', 'Time & calendar': 'A1.2',
+    'Weather & seasons': 'A1.3', 'Body & health': 'A1.3', 'Clothes': 'A1.2', 'Shopping & money': 'A1.3',
+    'Getting around': 'A1.3', 'Services & offices': 'A2.2', 'Animals': 'A1.2', 'Question words': 'A1.1',
+    'Opposites': 'A1.2', 'Small words': 'A1.3', 'Survival phrases': 'A1.1', 'Spoken Finnish': 'A2.1',
+    'Holidays & traditions': 'A2.1', 'Finnish food': 'A2.1', 'At the shop': 'A2.1', 'At the library': 'A2.1',
+    'At the health centre': 'A2.2', 'At the café': 'A2.1', 'Bus & train': 'A2.1', 'Daycare pick-up': 'A2.2',
+    'On the phone': 'A2.2', 'At the office': 'A2.2', 'Emergency call': 'A2.2',
+  };
+
+  // Words that are easier or harder than their category.
+  const groups = {
+    'A1.1': ['ole hyvä', 'vesi', 'maito', 'kahvi', 'puhua', 'syödä', 'juoda', 'mennä', 'asua', 'tulla',
+      'maanantai', 'tiistai', 'keskiviikko', 'torstai', 'perjantai', 'lauantai', 'sunnuntai', 'tänään', 'huomenna',
+      'eilen', 'kello', 'kylmä', 'kauppa', 'euro', 'bussi', 'auto', 'koira', 'kissa', 'iso', 'pieni', 'uusi', 'vanha',
+      'hyvä', 'huono', 'ja', 'moi', 'joo', 'kiitti', 'okei', 'kiva'],
+    'A1.2': ['näkemiin', 'aurinko', 'lumi', 'järvi', 'metsä', 'väsynyt', 'ostaa', 'maksaa', 'tehdä', 'haluta',
+      'opiskella', 'nukkua', 'ymmärtää', 'vessa', 'tammikuu', 'helmikuu', 'maaliskuu', 'huhtikuu', 'toukokuu',
+      'kesäkuu', 'heinäkuu', 'elokuu', 'syyskuu', 'lokakuu', 'marraskuu', 'joulukuu', 'aamupäivä', 'iltapäivä',
+      'viikko', 'kuukausi', 'vuosi', 'tunti', 'minuutti', 'viikonloppu', 'sää', 'sataa', 'kuuma', 'lämmin', 'kevät',
+      'kesä', 'syksy', 'talvi', 'pää', 'käsi', 'jalka', 'silmä', 'suu', 'nenä', 'korva', 'lääkäri', 'raha', 'hinta',
+      'kallis', 'halpa', 'kortti', 'ruokakauppa', 'juna', 'metro', 'pyörä', 'kävellä', 'kirjasto', 'eläin', 'hevonen',
+      'lehmä', 'kala', 'lintu', 'millainen', 'kuinka monta', 'mistä', 'mihin', 'kaunis', 'auki', 'kiinni', 'mutta',
+      'tai', 'myös', 'aina', 'voisitko toistaa', 'miten sanotaan', 'mitä tarkoittaa', 'joulu', 'syntymäpäivä',
+      'kahvila', 'täällä', 'numero', 't-paita'],
+    'A1.3': ['iloinen', 'surullinen', 'vihainen', 'tähti', 'sydän', 'pallo', 'myydä', 'nähdä', 'oppia', 'tietää',
+      'kysyä', 'odottaa', 'tykätä', 'soittaa', 'päiväkoti', 'leikkiä', 'sairas', 'laulaa', 'juosta', 'nähdään huomenna',
+      'hyvää viikonloppua', 'puoli', 'kalenteri', 'sade', 'tuuli', 'kipeä', 'apteekki', 'lääke', 'hammas', 'terve',
+      'selkä', 'sormi', 'vatsa', 'koko', 'sentti', 'kassa', 'ajaa', 'vasen', 'oikea', 'posti', 'pankki', 'poliisi',
+      'karhu', 'susi', 'hirvi', 'poro', 'kettu', 'jänis', 'orava', 'lammas', 'ankka', 'hiiri', 'kenen', 'mihin aikaan',
+      'hidas', 'nopea', 'aikaisin', 'myöhään', 'ruma', 'vai', 'koska', 'vielä', 'jo', 'ehkä', 'usein', 'joskus',
+      'ensin', 'sitten', 'mä', 'sä', 'tosi', 'lahja', 'joulupukki', 'onnea', 'ruisleipä', 'pulla', 'puuro', 'karkki',
+      'makkara', 'seuraava', 'keskusta', 'ulkona', 'haloo', 'sairaala'],
+    'A2.1': ['onnellinen', 'ilo', 'rakkaus', 'auttaa', 'muistaa', 'unohtaa', 'tarvita', 'osata', 'tavata', 'lähteä',
+      'käydä', 'etsiä', 'löytää', 'vastata', 'kertoa', 'herätä', 'rakastaa', 'pitää', 'matkustaa', 'siivota', 'pestä',
+      'alkaa', 'leikki', 'piha', 'lelu', 'pipo', 'lapanen', 'kuume', 'piirtää', 'maalata', 'hakea', 'päivä meni hyvin',
+      'heittää', 'hypätä', 'lumiukko', 'nukke', 'ei hätää', 'mihin sattuu', 'laastari', 'hätänumero', 'kaatua',
+      'lapsi söi hyvin', 'hän nukkui tunnin', 'hän oli väsynyt', 'hänellä oli hyvä päivä', 'palkka', 'loma',
+      'työkaveri', 'kahvitauko', 'vartti', 'päivämäärä', 'pakkanen', 'aste', 'pilvinen', 'terveyskeskus', 'flunssa',
+      'yskä', 'kurkku', 'polvi', 'villapaita', 'kumisaappaat', 'kaulahuivi', 'alushousut', 'kokeilla', 'sopia',
+      'pyjama', 'hanska', 'kuitti', 'alennus', 'ale', 'tarjous', 'vaihtaa', 'lasku', 'ostoskassi', 'käteinen',
+      'myöhässä', 'ajoissa', 'aikataulu', 'matkakortti', 'suoraan', 'ratikka', 'raitiovaunu', 'passi', 'paketti',
+      'lainata', 'henkilökortti', 'Kela', 'siili', 'joutsen', 'hämähäkki', 'perhonen', 'possu', 'montako', 'kumpi',
+      'raskas', 'kevyt', 'puhdas', 'likainen', 'märkä', 'kuiva', 'täynnä', 'tyhjä', 'että', 'jos', 'kun', 'koskaan',
+      'heti', 'myöhemmin', 'olen pahoillani', 'kirjoittaisitko sen', 'juhannus', 'mökki', 'kynttilä', 'mukaan',
+      'tilata', 'ulos', 'sisällä', 'sisälle', 'asunto', 'osoite', 'puhelu', 'tekstiviesti', 'myyjä', 'asiakas',
+      'isompi', 'pienempi', 'kerros', 'kipu', 'tabletti', 'salasana', 'pähkinä', 'ajokortti', 'lähettää', 'täyttää',
+      'ambulanssi', 'tulipalo', 'hengittää'],
+    'A2.2': ['hermostunut', 'peloissaan', 'huolissaan', 'innoissaan', 'yllättynyt', 'pettynyt', 'yksinäinen',
+      'rauhallinen', 'tunne', 'suru', 'pelko', 'kulma', 'muoto', 'suora', 'allergia', 'satu', 'itkeä', 'retki', 'ryhmä',
+      'ruokailu', 'välipala', 'ulkoilu', 'päiväunet', 'vaippa', 'potta', 'tutti', 'eskari', 'ulkovaatteet', 'pukea',
+      'pukeutua', 'riisua', 'jono', 'vuoro', 'jakaa', 'turvallinen', 'lokero', 'kurahousut', 'toppahaalari', 'hippa',
+      'palapeli', 'potkia', 'haava', 'varovainen', 'ensiapu', 'vuotaa', 'aurinkorasva', 'kiitos tiedosta', 'tiimi',
+      'lomake', 'työaika', 'liukas', 'räntä', 'sääennuste', 'ukkonen', 'myrsky', 'sumu', 'särkeä', 'resepti', 'nuha',
+      'lippis', 'nappi', 'pantti', 'palauttaa', 'tili', 'risteys', 'suojatie', 'kulkea', 'jonottaa', 'muurahainen',
+      'hyttynen', 'eikö', 'vaikka', 'siksi', 'ihan sama', 'duuni', 'kämppä', 'uudenvuodenaatto', 'itsenäisyyspäivä',
+      'nimipäivä', 'korvapuusti', 'karjalanpiirakka', 'hana', 'tuote', 'hylly', 'lähtö', 'allerginen', 'laktoositon',
+      'oire', 'hätäkeskus', 'ovikoodi', 'onnettomuus', 'varas', 'savu', 'palokunta'],
+    'B1.1': ['kateellinen', 'tylsistynyt', 'suorakulmio', 'soikio', 'kuutio', 'huoltaja', 'kiusaaminen',
+      'välikausihaalari', 'kuraeteinen', 'kuivauskaappi', 'heijastinliivi', 'roolileikki', 'vuorotella',
+      'kiipeilyteline', 'kylmäpakkaus', 'tapaturma', 'pistos', 'turvallisuus', 'kotikieli', 'pienryhmä', 'suunnitella',
+      'arvioida', 'ammattiliitto', 'perehdytys', 'määräaikainen', 'vakituinen', 'työterveys', 'ansioluettelo',
+      'esihenkilö', 'verokortti', 'työsopimus', 'ylityö', 'vetoketju', 'tunnistautua', 'pankkitunnukset',
+      'oleskelulupa', 'muuttoilmoitus', 'verotoimisto', 'allekirjoitus', 'kuitenkin', 'virpominen', 'laskiainen',
+      'kokko', 'munavoi', 'mämmi', 'piimä', 'leipäjuusto', 'lakka', 'gluteeniton', 'huoltoyhtiö', 'yleisavain',
+      'vuokrasopimus', 'palkkatodistus', 'liite', 'asumistuki', 'henkilöllisyystodistus', 'myöhästymismaksu',
+      'lainausautomaatti', 'sähköinen resepti', 'päivystys', 'vastaanotto', 'vaivata', 'tulot', 'kylkiasento',
+      'elvyttää', 'tajuton', 'adrenaliinikynä', 'rappukäytävä', 'murto', 'kunta', 'sammutin', 'palovaroitin'],
+    'B1.2': ['varhaiskasvatussuunnitelma', 'kasvatuskumppanuus', 'havainnointi', 'tunnetaidot', 'havainnoida'],
+  };
+  const WORD = {};
+  for (const [level, words] of Object.entries(groups)) for (const w of words) WORD[w] = level;
+
+  /** Level of a starter word given its Finnish text and its first category name. */
+  function levelFor(finnish, categoryName) {
+    return WORD[finnish] || CATEGORY[categoryName] || '';
+  }
+
+  return { SCALE, CATEGORY, WORD, levelFor };
+});

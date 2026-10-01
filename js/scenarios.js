@@ -4,7 +4,7 @@
  *   reply:  the best reply [Finnish, English]
  *   accept: other wordings accepted when typing (Hard level)
  *   wrong:  plausible wrong replies [Finnish, English, why it's wrong] (Easy level options)
- * `category` links the scenario to a word category in the starter words.
+ * `category` links the scenario to a word category in the starter words; `level` is the typical level.
  */
 (function (root, factory) {
   const scenarios = factory();
@@ -14,7 +14,7 @@
   'use strict';
   return [
     {
-      id: 'shop', icon: '🛒', name: 'At the shop', fi: 'Kaupassa', category: 'At the shop',
+      id: 'shop', level: 'A2.1', icon: '🛒', name: 'At the shop', fi: 'Kaupassa', category: 'At the shop',
       situations: [
         {
           title: 'Shoes in your size',
@@ -128,7 +128,7 @@
     },
 
     {
-      id: 'library', icon: '📚', name: 'At the library', fi: 'Kirjastossa', category: 'At the library',
+      id: 'library', level: 'A2.1', icon: '📚', name: 'At the library', fi: 'Kirjastossa', category: 'At the library',
       situations: [
         {
           title: 'Finding crime novels',
@@ -242,7 +242,7 @@
     },
 
     {
-      id: 'health', icon: '🩺', name: 'At the health centre', fi: 'Terveyskeskuksessa', category: 'At the health centre',
+      id: 'health', level: 'A2.2', icon: '🩺', name: 'At the health centre', fi: 'Terveyskeskuksessa', category: 'At the health centre',
       situations: [
         {
           title: 'Booking an appointment',
@@ -356,7 +356,7 @@
     },
 
     {
-      id: 'cafe', icon: '☕', name: 'At the café', fi: 'Kahvilassa', category: 'At the café',
+      id: 'cafe', level: 'A2.1', icon: '☕', name: 'At the café', fi: 'Kahvilassa', category: 'At the café',
       situations: [
         {
           title: 'Ordering',
@@ -461,7 +461,7 @@
     },
 
     {
-      id: 'transport', icon: '🚌', name: 'Bus & train', fi: 'Bussissa ja junassa', category: 'Bus & train',
+      id: 'transport', level: 'A2.1', icon: '🚌', name: 'Bus & train', fi: 'Bussissa ja junassa', category: 'Bus & train',
       situations: [
         {
           title: 'A train ticket',
@@ -566,7 +566,7 @@
     },
 
     {
-      id: 'pickup', icon: '🧒', name: 'Daycare pick-up', fi: 'Päiväkodin hakutilanne', category: 'Daycare pick-up',
+      id: 'pickup', level: 'B1.1', icon: '🧒', name: 'Daycare pick-up', fi: 'Päiväkodin hakutilanne', category: 'Daycare pick-up',
       situations: [
         {
           title: 'Telling a parent about the day',
@@ -671,7 +671,7 @@
     },
 
     {
-      id: 'phone', icon: '📞', name: 'On the phone', fi: 'Puhelimessa', category: 'On the phone',
+      id: 'phone', level: 'A2.2', icon: '📞', name: 'On the phone', fi: 'Puhelimessa', category: 'On the phone',
       situations: [
         {
           title: 'Calling in sick',
@@ -785,7 +785,7 @@
     },
 
     {
-      id: 'office', icon: '🏢', name: 'At the office', fi: 'Virastossa', category: 'At the office',
+      id: 'office', level: 'A2.2', icon: '🏢', name: 'At the office', fi: 'Virastossa', category: 'At the office',
       situations: [
         {
           title: 'At Kela',
@@ -891,6 +891,180 @@
               wrong: [
                 ['Tässä on kirjastokorttini.', 'Here\'s my library card.', 'A library card isn\'t ID – use a driving licence, ID card or passport.'],
                 ['Minulla ei ole henkilöllisyystodistusta.', 'I don\'t have any ID.', 'You have your driving licence with you.'],
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'emergency', level: 'A2.2', icon: '🚨', name: 'Emergency call 112', fi: 'Hätäpuhelu', category: 'Emergency call',
+      intro: 'In Finland 112 is the number for fire, ambulance and police. Say what happened, give the address and municipality, answer the questions and don\'t hang up until you\'re told to.',
+      situations: [
+        {
+          title: 'A fire in the kitchen',
+          goal: 'A fire has started in your kitchen. Your address is Kotikatu 3 A 5, Tampere. Everyone is already out of the flat. Call 112.',
+          steps: [
+            {
+              npc: ['Hätäkeskus. Mitä on tapahtunut?', 'Emergency centre. What has happened?'],
+              reply: ['Keittiössäni on tulipalo!', 'There\'s a fire in my kitchen!'],
+              accept: ['Keittiössä on tulipalo', 'Asunnossani on tulipalo', 'Keittiössä palaa', 'Meillä on tulipalo', 'Asunnossani palaa'],
+              wrong: [
+                ['Keittiöni on tulipalo!', 'My kitchen is a fire!', 'Where something is: keittiössäni (inessive, -ssa).'],
+                ['Haluaisin varata ajan.', 'I\'d like to book an appointment.', 'This is an emergency – say what is happening: Keittiössäni on tulipalo!'],
+              ],
+            },
+            {
+              npc: ['Mikä on osoite ja kunta?', 'What is the address and the municipality?'],
+              reply: ['Kotikatu 3 A 5, Tampere.', 'Kotikatu 3 A 5, Tampere.'],
+              accept: ['Kotikatu 3 A 5 Tampere', 'Osoite on Kotikatu 3 A 5, Tampere', 'Kotikatu 3 A 5, Tampereella'],
+              wrong: [
+                ['Kotikatu 3 A 5.', 'Kotikatu 3 A 5.', 'Also say the municipality: Tampere. The same street name exists in many towns.'],
+                ['Asun Tampereella.', 'I live in Tampere.', 'They need the exact street address too.'],
+              ],
+            },
+            {
+              npc: ['Onko kaikki ulkona asunnosta?', 'Is everyone out of the flat?'],
+              reply: ['On, kaikki ovat ulkona.', 'Yes, everyone is outside.'],
+              accept: ['On', 'Kaikki ovat ulkona', 'Kyllä, kaikki ovat ulkona', 'On, kaikki on ulkona'],
+              wrong: [
+                ['Kyllä, kaikki ovat ulos.', 'Yes, everyone is out(wards).', 'Being outside is ulkona. Ulos means going out.'],
+                ['En tiedä, menen katsomaan.', 'I don\'t know, I\'ll go and look.', 'Never go back into a burning building.'],
+              ],
+            },
+            {
+              npc: ['Palokunta on matkalla. Sulje asunnon ovi ja odota ulkona. Älä mene takaisin sisälle.', 'The fire brigade is on its way. Close the flat door and wait outside. Don\'t go back inside.'],
+              reply: ['Selvä. Suljin oven ja odotan ulkona.', 'OK. I closed the door and I\'m waiting outside.'],
+              accept: ['Selvä', 'Selvä, odotan ulkona', 'Ymmärrän', 'Selvä, suljin oven', 'Odotan ulkona'],
+              wrong: [
+                ['Selvä, menen hakemaan kissan.', 'OK, I\'ll go and get the cat.', 'Don\'t go back inside – tell the fire brigade if a pet is still in there.'],
+                ['Selvä, avaan kaikki ikkunat.', 'OK, I\'ll open all the windows.', 'Fresh air feeds the fire. Close the door and wait outside.'],
+              ],
+            },
+          ],
+        },
+        {
+          title: 'A man has collapsed',
+          goal: 'An elderly man has collapsed at a bus stop on Rantatie, next to the library, in Turku. He is breathing but doesn\'t respond. Call 112.',
+          steps: [
+            {
+              npc: ['Hätäkeskus. Mitä on tapahtunut?', 'Emergency centre. What has happened?'],
+              reply: ['Vanha mies kaatui bussipysäkillä. Hän ei vastaa.', 'An old man collapsed at the bus stop. He isn\'t responding.'],
+              accept: ['Mies kaatui bussipysäkillä', 'Vanha mies kaatui', 'Vanha mies kaatui bussipysäkillä', 'Mies kaatui eikä vastaa', 'Vanha mies kaatui eikä vastaa'],
+              wrong: [
+                ['Vanha mies kaatui bussipysäkille. Hän ei vastaa.', 'An old man collapsed onto the bus stop…', 'Where it happened: bussipysäkillä (adessive, -lla).'],
+                ['Vanha mies odottaa bussia.', 'An old man is waiting for the bus.', 'Say what is wrong: he collapsed and isn\'t responding.'],
+              ],
+            },
+            {
+              npc: ['Missä olet? Kerro osoite tai paikka.', 'Where are you? Tell me the address or the place.'],
+              reply: ['Rantatiellä, kirjaston vieressä, Turussa.', 'On Rantatie, next to the library, in Turku.'],
+              accept: ['Rantatiellä kirjaston vieressä Turussa', 'Rantatie, kirjaston vieressä, Turku', 'Turussa Rantatiellä kirjaston vieressä', 'Rantatiellä Turussa'],
+              wrong: [
+                ['Rantatiellä, kirjaston vieressä.', 'On Rantatie, next to the library.', 'Also say the town: Turussa.'],
+                ['Bussipysäkillä.', 'At the bus stop.', 'There are many bus stops – give the street and the town.'],
+              ],
+            },
+            {
+              npc: ['Hengittääkö hän?', 'Is he breathing?'],
+              reply: ['Kyllä, hän hengittää.', 'Yes, he is breathing.'],
+              accept: ['Hengittää', 'Kyllä hengittää', 'Hän hengittää', 'Kyllä, hengittää'],
+              wrong: [
+                ['Kyllä, hän hengitti.', 'Yes, he breathed.', 'Use the present tense: hän hengittää (he is breathing now).'],
+                ['En ole.', 'I\'m not.', 'Answer with the verb of the question: Hengittää.'],
+              ],
+            },
+            {
+              npc: ['Ambulanssi on tulossa. Käännä hänet kylkiasentoon ja pysy hänen luonaan. Älä katkaise puhelua.', 'The ambulance is coming. Turn him into the recovery position and stay with him. Don\'t hang up.'],
+              reply: ['Selvä, käännän hänet kyljelleen. Pysyn puhelimessa.', 'OK, I\'ll turn him onto his side. I\'ll stay on the line.'],
+              accept: ['Selvä', 'Selvä, pysyn puhelimessa', 'Selvä, käännän hänet kyljelleen', 'Ymmärrän', 'Pysyn puhelimessa'],
+              wrong: [
+                ['Selvä, lopetan nyt puhelun.', 'OK, I\'ll end the call now.', 'Don\'t hang up until the emergency centre tells you to.'],
+                ['Selvä, annan hänelle vettä.', 'OK, I\'ll give him some water.', 'Don\'t give an unresponsive person anything to drink.'],
+              ],
+            },
+          ],
+        },
+        {
+          title: 'A break-in',
+          goal: 'You come home: the front door is broken and you see someone running away from your flat. Address: Koivutie 5 B 12, Espoo. Nobody is hurt. Call 112.',
+          steps: [
+            {
+              npc: ['Hätäkeskus. Mitä on tapahtunut?', 'Emergency centre. What has happened?'],
+              reply: ['Asuntooni on tehty murto.', 'There\'s been a break-in at my flat.'],
+              accept: ['Kotiini on tehty murto', 'Asuntooni on murtauduttu', 'Meille on tehty murto', 'Asunnossani on ollut murto'],
+              wrong: [
+                ['Asuntoni on murto.', 'My flat is a break-in.', 'Say: Asuntooni on tehty murto (a break-in has been made into my flat).'],
+                ['Haluaisin tilata taksin.', 'I\'d like to order a taxi.', 'This is an emergency – tell them about the break-in.'],
+              ],
+            },
+            {
+              npc: ['Mikä on osoite?', 'What is the address?'],
+              reply: ['Koivutie 5 B 12, Espoo.', 'Koivutie 5 B 12, Espoo.'],
+              accept: ['Koivutie 5 B 12 Espoo', 'Osoite on Koivutie 5 B 12, Espoo', 'Koivutie 5 B 12, Espoossa'],
+              wrong: [
+                ['Koivutie 5 B 12.', 'Koivutie 5 B 12.', 'Always say the municipality too: Espoo.'],
+                ['Espoossa.', 'In Espoo.', 'They need the full street address.'],
+              ],
+            },
+            {
+              npc: ['Onko murtovaras vielä paikalla? Onko kukaan loukkaantunut?', 'Is the burglar still there? Is anyone hurt?'],
+              reply: ['Ei. Hän juoksi pois, eikä kukaan loukkaantunut.', 'No. They ran away, and nobody was hurt.'],
+              accept: ['Ei', 'Ei, hän juoksi pois', 'Hän juoksi pois, kukaan ei loukkaantunut', 'Ei, kukaan ei loukkaantunut', 'Ei ole, hän juoksi pois'],
+              wrong: [
+                ['Ei. Hän juoksee pois huomenna.', 'No. They\'ll run away tomorrow.', 'It already happened: juoksi (past tense).'],
+                ['Kyllä, kaikki loukkaantuivat.', 'Yes, everyone was hurt.', 'Nobody was hurt in this situation.'],
+              ],
+            },
+            {
+              npc: ['Poliisi tulee paikalle. Älä mene asuntoon äläkä koske mihinkään.', 'The police are coming. Don\'t go into the flat and don\'t touch anything.'],
+              reply: ['Selvä, odotan rappukäytävässä.', 'OK, I\'ll wait in the stairwell.'],
+              accept: ['Selvä', 'Selvä, odotan', 'Selvä, en koske mihinkään', 'Ymmärrän', 'Odotan ulkona'],
+              wrong: [
+                ['Selvä, siivoan asunnon ensin.', 'OK, I\'ll clean the flat first.', 'Don\'t touch anything – the police need to investigate.'],
+                ['Selvä, menen sisälle katsomaan.', 'OK, I\'ll go in and have a look.', 'Don\'t go in – wait for the police.'],
+              ],
+            },
+          ],
+        },
+        {
+          title: 'An allergic reaction at daycare',
+          goal: 'You\'re at work at Päiväkoti Satakieli, Kuusitie 8, Vantaa. A 4-year-old girl ate something with nuts: her face is swelling and she has trouble breathing. She has an adrenaline pen. Call 112.',
+          steps: [
+            {
+              npc: ['Hätäkeskus. Mitä on tapahtunut?', 'Emergency centre. What has happened?'],
+              reply: ['Lapsella on vakava allerginen reaktio. Hänen on vaikea hengittää.', 'A child is having a severe allergic reaction. She has trouble breathing.'],
+              accept: ['Lapsella on allerginen reaktio', 'Lapsella on vakava allerginen reaktio', 'Lapsen on vaikea hengittää', 'Lapsi ei saa henkeä', 'Lapsella on allerginen reaktio, hänen on vaikea hengittää'],
+              wrong: [
+                ['Lapsi on allerginen reaktio.', 'The child is an allergic reaction.', 'Use the "have" structure: lapsella on allerginen reaktio.'],
+                ['Lapsella on vähän nuhaa.', 'The child has a bit of a runny nose.', 'This is much more serious – say she has trouble breathing.'],
+              ],
+            },
+            {
+              npc: ['Mikä on osoite?', 'What is the address?'],
+              reply: ['Päiväkoti Satakieli, Kuusitie 8, Vantaa.', 'Satakieli daycare, Kuusitie 8, Vantaa.'],
+              accept: ['Kuusitie 8 Vantaa', 'Kuusitie 8, Vantaa', 'Päiväkoti Satakieli Kuusitie 8 Vantaa', 'Osoite on Kuusitie 8, Vantaa'],
+              wrong: [
+                ['Päiväkodissa.', 'At the daycare.', 'Give the name, the street address and the town.'],
+                ['Kuusitie 8.', 'Kuusitie 8.', 'Also say the town: Vantaa.'],
+              ],
+            },
+            {
+              npc: ['Kuinka vanha lapsi on? Onko hänellä adrenaliinikynää?', 'How old is the child? Does she have an adrenaline pen?'],
+              reply: ['Hän on neljä vuotta vanha. Kyllä, hänellä on adrenaliinikynä.', 'She is four years old. Yes, she has an adrenaline pen.'],
+              accept: ['Neljä vuotta', 'Hän on neljävuotias', 'Hän on neljä vuotta vanha', 'Kyllä, hänellä on adrenaliinikynä', 'Neljä vuotta, hänellä on adrenaliinikynä'],
+              wrong: [
+                ['Hän on neljä vuotta vanhempi.', 'She is four years older.', 'Age: neljä vuotta vanha or neljävuotias.'],
+                ['Hän on neljä vuotta vanha. Ei, hänellä on adrenaliinikynä.', 'She is four. No, she has an adrenaline pen.', 'Kyllä means yes – ei means no.'],
+              ],
+            },
+            {
+              npc: ['Anna adrenaliini nyt reiteen. Ambulanssi on matkalla. Pysy puhelimessa.', 'Give the adrenaline into the thigh now. The ambulance is on its way. Stay on the line.'],
+              reply: ['Selvä, annan sen nyt. Pysyn puhelimessa.', 'OK, I\'ll give it now. I\'ll stay on the line.'],
+              accept: ['Selvä', 'Selvä, annan sen nyt', 'Annan sen nyt', 'Pysyn puhelimessa', 'Ymmärrän'],
+              wrong: [
+                ['Selvä, annan sen huomenna.', 'OK, I\'ll give it tomorrow.', 'It must be given now (nyt).'],
+                ['Selvä, lopetan puhelun.', 'OK, I\'ll hang up.', 'Stay on the line until they tell you to hang up.'],
               ],
             },
           ],

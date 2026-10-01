@@ -74,6 +74,7 @@
         const done = sc.situations.filter((_, n) => best(sc.id, n) != null).length;
         return '<a class="rp-card" href="#/roleplay/' + sc.id + '"><span class="rp-icon">' + sc.icon + '</span>' +
           '<strong>' + esc(sc.name) + '</strong><span class="muted small" lang="fi">' + esc(sc.fi) + '</span>' +
+          (sc.level ? '<span class="lvl">' + esc(sc.level) + '</span>' : '') +
           '<span class="muted small">' + sc.situations.length + ' situations' + (done ? ' · ' + done + ' played' : '') + '</span></a>';
       }).join('') + '</div></section>';
     bindLevelPicker(view, () => renderList(view));
@@ -87,7 +88,9 @@
     const cat = categoryFor(sc);
     view.innerHTML = '<section class="page narrow">' +
       '<a class="back" href="#/roleplay">← All places</a>' +
-      '<div class="page-head"><h1>' + sc.icon + ' ' + esc(sc.name) + ' <span class="muted" lang="fi">· ' + esc(sc.fi) + '</span></h1></div>' +
+      '<div class="page-head"><h1>' + sc.icon + ' ' + esc(sc.name) + ' <span class="muted" lang="fi">· ' + esc(sc.fi) + '</span></h1>' +
+      (sc.level ? '<span class="lvl big">Level ' + esc(sc.level) + '</span>' : '') + '</div>' +
+      (sc.intro ? '<p class="rp-intro">' + esc(sc.intro) + '</p>' : '') +
       levelPicker() +
       '<ul class="rp-situations">' + sc.situations.map((si, n) =>
         '<li><a class="rp-situation" href="#/roleplay/' + sc.id + '/' + n + '">' +
