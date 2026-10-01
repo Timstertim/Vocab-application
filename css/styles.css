@@ -456,3 +456,11 @@ select { max-width: 100%; text-overflow: ellipsis; }
 .num-choices { grid-template-columns: 1fr; }
 .num-choices .choice span, .num-context, .expected { overflow-wrap: anywhere; }
 .num-type .big-input { margin-top: .5rem; }
+.clock-face { display: block; width: min(220px, 60vw); height: auto; margin: .4rem auto .6rem; }
+.clock-face .rim { fill: var(--surface); stroke: var(--text); stroke-width: 4; }
+.clock-face .tick { stroke: var(--muted); stroke-width: 1.5; }
+.clock-face .tick.big { stroke: var(--text); stroke-width: 3; }
+.clock-face text { fill: var(--text); font: 700 15px system-ui, sans-serif; text-anchor: middle; }
+.clock-face .hour { stroke: var(--text); }
+.clock-face .minute { stroke: var(--primary); }
+.clock-face .pin { fill: var(--primary); }

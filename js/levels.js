@@ -103,6 +103,11 @@
     groups['A1.3'] = groups['A1.3'].concat(['harjata', 'keittää', 'sammuttaa', 'sytyttää', 'pehmeä', 'kova', 'rikki', 'korkea', 'matala', 'kurssi', 'koe', 'lause', 'vihko', 'toistaa', 'kielikurssi', 'tehtävä', 'sanakirja', 'lautanen', 'saippua', 'pyykki', 'tiskata', 'imuroida', 'leipoa', 'kantaa', 'wifi', 'tulostin', 'toimia', 'teksti', 'tärkeä', 'puinen', 'muovinen', 'lasinen', 'laatikko']);
     groups['A2.2'] = groups['A2.2'].concat(['kammata', 'meikata', 'pedata', 'ripustaa', 'viikata', 'silittää', 'ulkoiluttaa', 'kiirehtiä', 'nukahtaa', 'herättää', 'sileä', 'karhea', 'ehjä', 'kulunut', 'tahmea', 'litteä', 'käytännöllinen', 'materiaali', 'villainen', 'metallinen', 'tallentaa', 'tiedosto', 'kansio', 'poistaa', 'asentaa', 'kaapeli', 'klikata', 'painaa', 'latautua', 'lataus', 'ruutu', 'päivitys', 'jumissa']);
     groups['B1.1'] = groups['B1.1'].concat(['läpinäkyvä', 'himmeä', 'äänekäs', 'essee', 'oikeinkirjoitus', 'YKI-testi']);
+  // Version 9 additions.
+    groups['A1.3'] = groups['A1.3'].concat(['tasan', 'noin', 'yli', 'vaille']);
+    groups['A2.1'] = groups['A2.1'].concat(['viisari', 'kellonaika', 'keskipäivä', 'keskiyö']);
+    groups['A2.2'] = groups['A2.2'].concat(['viimeistään', 'vuosiluku', 'vuosikymmen', 'vuosisata']);
+    groups['B1.1'] = groups['B1.1'].concat(['aikaisintaan']);
   const WORD = {};
   for (const [level, words] of Object.entries(groups)) for (const w of words) WORD[w] = level;
 

@@ -118,8 +118,17 @@
     prices: { name: 'Prices', icon: '💶', blurb: '3,50 € = kolme euroa viisikymmentä senttiä' },
     positions: { name: 'Ordinals & positions', icon: '🥇', blurb: 'kolmannessa kerroksessa, tuli toiseksi, jonossa neljäntenä' },
     spoken: { name: 'Spoken numbers', icon: '🗣️', blurb: 'kakskyt, viiskyt · Mennään ysillä · Sain kympin' },
-    other: { name: 'Years, ages & phone numbers', icon: '☎️', blurb: 'vuonna kaksituhattakaksikymmentäneljä, neljävuotias' },
+    clock: { name: 'Read the clock', icon: '🕰️', blurb: 'Look at the clock face: varttia vaille kolme, puoli viisi' },
+    spans: { name: 'Time spans', icon: '⏳', blurb: 'kahden tunnin päästä, kolme päivää sitten, odotin puoli tuntia' },
+    years: { name: 'Years & decades', icon: '📆', blurb: 'vuonna 1995, vuodesta 2018, 1990-luvulla, 1800-luvulla' },
+    other: { name: 'Ages & phone numbers', icon: '☎️', blurb: 'neljävuotias · nolla neljä nolla…' },
   };
+
+  // Number words 1–12 in the genitive (kahden tunnin päästä = in two hours).
+  const GENITIVE = ['', 'yhden', 'kahden', 'kolmen', 'neljän', 'viiden', 'kuuden', 'seitsemän', 'kahdeksan', 'yhdeksän', 'kymmenen', 'yhdentoista', 'kahdentoista'];
+  // Time units: [nominative, genitive, partitive, English].
+  const UNITS = [['minuutti', 'minuutin', 'minuuttia', 'minute'], ['tunti', 'tunnin', 'tuntia', 'hour'], ['päivä', 'päivän', 'päivää', 'day'],
+    ['viikko', 'viikon', 'viikkoa', 'week'], ['kuukausi', 'kuukauden', 'kuukautta', 'month'], ['vuosi', 'vuoden', 'vuotta', 'year']];
 
   function dateExercise(rng) {
     const m = int(1, 12, rng), d = int(1, MONTH_DAYS[m], rng);
@@ -144,17 +153,19 @@
     };
   }
 
-  function timeExercise(rng) {
-    const h = int(1, 23, rng), m = pick([0, 0, 5, 10, 15, 20, 25, 30, 30, 35, 40, 45, 50, 55], rng);
+  function timeExercise(rng, fixed) {
+    fixed = fixed || {};
+    const h = fixed.h != null ? fixed.h : int(1, 23, rng);
+    const m = fixed.m != null ? fixed.m : pick([0, 0, 5, 10, 15, 20, 25, 30, 30, 35, 40, 45, 50, 55], rng);
     const h12 = h % 12 || 12, next = h12 % 12 + 1;
     const hour = (x) => cardinal(x);
     const shown = h + '.' + String(m).padStart(2, '0');
     const official = m === 0 ? 'kello ' + cardinal(h) : cardinal(h) + ' ' + cardinal(m);
     let answer, wrong, note, spoken = '';
     if (m === 0) {
-      answer = 'kello ' + hour(h12);
-      wrong = ['kello ' + hour(next), 'puoli ' + hour(h12), 'varttia yli ' + hour(h12)];
-      note = 'On the hour: kello + number.';
+      answer = hour(h12);
+      wrong = [hour(next), 'puoli ' + hour(h12), 'varttia yli ' + hour(h12)];
+      note = 'On the hour: just the number (Kello on ' + hour(h12) + '), or tasan ' + hour(h12) + ' = exactly ' + h12 + '.';
     } else if (m === 30) {
       answer = 'puoli ' + hour(next);
       wrong = ['puoli ' + hour(h12), 'kolmekymmentä yli ' + hour(h12), 'varttia vaille ' + hour(next)];
@@ -170,10 +181,126 @@
       wrong = [MINUTES[60 - m] + ' yli ' + hour(next), MINUTES[60 - m] + ' vaille ' + hour(h12), MINUTES[60 - m] + ' vaille ' + hour(next % 12 + 1)];
       note = 'Minutes to: partitive (' + MINUTES[60 - m] + ') + vaille + the next hour.' + (spoken ? ' In speech you also hear ' + spoken + '.' : '');
     }
+    const accept = ['kello ' + answer, official, 'kello ' + official].concat(m === 0 ? ['tasan ' + hour(h12)] : [], spoken ? [spoken] : []);
+    if (fixed.clock) {
+      // A clock face can mean morning or afternoon: accept both 24-hour readings.
+      const pm = m === 0 ? 'kello ' + cardinal(h12 + 12) : cardinal(h12 + 12) + ' ' + cardinal(m);
+      accept.push(pm, 'kello ' + pm.replace(/^kello /, ''));
+      return {
+        kind: 'clock', shown, clock: { h: h12, m }, task: 'What time does the clock show?', context: 'Kello on ___.',
+        answer, accept: Array.from(new Set(accept)), wrong: uniq(wrong, answer), note,
+      };
+    }
     return {
       kind: 'times', shown, task: 'Say the time (everyday way)', context: 'Kello on ___.',
-      answer, accept: ['kello ' + answer, official, 'kello ' + official].concat(m === 0 ? [hour(h12), 'tasan ' + hour(h12)] : [], spoken ? [spoken] : []),
-      wrong: uniq(wrong, answer), note: note + ' Official (24 h): ' + official + '.',
+      answer, accept, wrong: uniq(wrong, answer), note: note + ' Official (24 h): ' + official + '.',
+    };
+  }
+
+  function clockExercise(rng) {
+    return timeExercise(rng, { h: int(1, 12, rng), m: pick([0, 5, 10, 15, 20, 25, 30, 30, 35, 40, 45, 45, 50, 55], rng), clock: true });
+  }
+
+  function spanExercise(rng) {
+    const r = rng();
+    const [nom, gen, part, en] = pick(UNITS, rng);
+    const n = pick([1, 2, 2, 3, 3, 4, 5, 10], rng);
+    const plural = n === 1 ? en : en + 's';
+    if (r < 0.15) {
+      // Half an hour / an hour and a half: fixed expressions.
+      const [shown, context, answer, wrong, note] = pick([
+        ['in half an hour', 'Ruoka on valmis ___.', 'puolen tunnin päästä', ['puoli tuntia päästä', 'puolen tunnin sitten', 'puoli tunnin päästä'], '"In" + genitive: puolen tunnin päästä.'],
+        ['for half an hour', 'Odotin ___.', 'puoli tuntia', ['puolen tunnin', 'puoli tunti', 'puolen tuntia'], 'How long: puoli + partitive tuntia.'],
+        ['in an hour and a half', 'Juna saapuu ___.', 'puolentoista tunnin päästä', ['puolitoista tuntia päästä', 'puolentoista tuntia sitten', 'puolitoista tunnin päästä'], '"In" + genitive: puolentoista tunnin päästä.'],
+        ['for an hour and a half', 'Elokuva kesti ___.', 'puolitoista tuntia', ['puolentoista tunnin', 'puolitoista tunti', 'puolentoista tuntia'], 'How long: puolitoista + partitive tuntia.'],
+      ], rng);
+      return { kind: 'spans', shown, task: 'Say it in Finnish', context, answer, accept: [], wrong: uniq(wrong, answer), note };
+    }
+    const amount = n === 1 ? nom : cardinal(n) + ' ' + part;          // kolme päivää
+    const inForm = (n === 1 ? '' : GENITIVE[n] + ' ') + gen;          // kolmen päivän
+    if (r < 0.45) {
+      const context = pick(['Bussi tulee ___.', 'Palaan ___.', 'Loma alkaa ___.', 'Tavataan ___.'], rng);
+      return {
+        kind: 'spans', shown: 'in ' + n + ' ' + plural, task: 'Say "in ' + n + ' ' + plural + '" (from now)', context,
+        answer: inForm + ' päästä', accept: [inForm + ' kuluttua'].concat(n === 1 ? ['yhden ' + gen + ' päästä', 'yhden ' + gen + ' kuluttua'] : []),
+        wrong: uniq([amount + ' päästä', inForm + ' sitten', amount + ' sitten', (n === 1 ? 'yksi ' + nom : cardinal(n) + ' ' + gen) + ' päästä'], inForm + ' päästä'),
+        note: '"In … (from now)": genitive + päästä (or kuluttua): ' + inForm + ' päästä.',
+      };
+    }
+    if (r < 0.75) {
+      const context = pick(['Hän lähti ___.', 'Muutin tänne ___.', 'Näin hänet ___.', 'Soitin sinulle ___.'], rng);
+      return {
+        kind: 'spans', shown: n + ' ' + plural + ' ago', task: 'Say "' + n + ' ' + plural + ' ago"', context,
+        answer: amount + ' sitten', accept: n === 1 ? ['yksi ' + nom + ' sitten'] : [],
+        wrong: uniq([inForm + ' sitten', amount + ' päästä', (n === 1 ? 'yksi ' + part : cardinal(n) + ' ' + nom) + ' sitten'], amount + ' sitten'),
+        note: '"… ago": number + partitive + sitten: ' + amount + ' sitten. (After yksi, the noun stays in the basic form.)',
+      };
+    }
+    const context = pick(['Odotin ___.', 'Olin lomalla ___.', 'Kurssi kestää ___.', 'Lapsi nukkui ___.'], rng);
+    return {
+      kind: 'spans', shown: 'for ' + n + ' ' + plural, task: 'Say how long: ' + n + ' ' + plural, context,
+      answer: amount, accept: n === 1 ? ['yhden ' + gen, 'yksi ' + nom] : [],
+      wrong: uniq([inForm + ' päästä', n === 1 ? 'yksi ' + part : cardinal(n) + ' ' + nom, amount + ' sitten'], amount),
+      note: 'How long: number + partitive (' + amount + '). With one: ' + nom + ' or yhden ' + gen + '.',
+    };
+  }
+
+  /** "1990-luku" as said in Finnish, and the adessive "1990-luvulla". */
+  function decadeWord(y) {
+    if (y === 2000) return 'kaksituhatta';
+    const head = y < 2000 ? 'tuhat' + (Math.floor((y % 1000) / 100) === 9 ? 'yhdeksänsataa' : cardinal(Math.floor((y % 1000) / 100)) + 'sataa') : 'kaksituhatta';
+    const tens = y % 100;
+    return head + (tens === 0 ? '' : tens === 10 ? 'kymmen' : cardinal(tens));
+  }
+
+  function yearExercise(rng) {
+    const r = rng();
+    if (r < 0.3) {
+      const y = int(1950, 2030, rng);
+      return {
+        kind: 'years', shown: String(y), task: 'Say the year', context: pick(['Muutin Suomeen vuonna ___.', 'Synnyin vuonna ___.', 'Valmistuin vuonna ___.'], rng),
+        answer: cardinal(y), accept: [], wrong: uniq([cardinal(y + 1), cardinal(y + 10), cardinal(y - 100)], cardinal(y)),
+        note: 'Years are read as one long number: ' + cardinal(y) + '. "In" a year: vuonna + the number.',
+      };
+    }
+    if (r < 0.5) {
+      const y = int(2005, 2023, rng);
+      return {
+        kind: 'years', shown: 'since ' + y, task: 'Say "since ' + y + '"', context: pick(['Olen asunut Suomessa ___.', 'Olen ollut töissä täällä ___.', 'Olen opiskellut suomea ___.'], rng),
+        answer: 'vuodesta ' + cardinal(y), accept: ['vuodesta ' + cardinal(y) + ' asti', 'vuodesta ' + cardinal(y) + ' lähtien'],
+        wrong: uniq(['vuonna ' + cardinal(y), 'vuoteen ' + cardinal(y), 'vuodesta ' + cardinal(y + 1)], 'vuodesta ' + cardinal(y)),
+        note: '"Since" a year: vuodesta + the number (the number itself stays the same).',
+      };
+    }
+    if (r < 0.65) {
+      const y = int(2025, 2040, rng);
+      return {
+        kind: 'years', shown: 'by ' + y, task: 'Say "by ' + y + '"', context: pick(['Talo valmistuu ___ mennessä.', 'Haluan oppia suomea ___ mennessä.'], rng),
+        answer: 'vuoteen ' + cardinal(y), accept: [],
+        wrong: uniq(['vuonna ' + cardinal(y), 'vuodesta ' + cardinal(y), 'vuoteen ' + cardinal(y - 1)], 'vuoteen ' + cardinal(y)),
+        note: '"By" a year: vuoteen + the number + mennessä.',
+      };
+    }
+    if (r < 0.88) {
+      const y = pick([1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020], rng);
+      const full = decadeWord(y) + 'luvulla';
+      const short = y < 2000 ? cardinal(y % 100) + 'luvulla' : null;
+      const answer = short || full;
+      return {
+        kind: 'years', shown: y + '-luvulla', task: 'Say the decade ("in the ' + (y < 2000 ? String(y % 100) : String(y)) + 's")',
+        context: pick(['Synnyin ___.', 'Tämä talo rakennettiin ___.', 'Tuo laulu oli suosittu ___.'], rng),
+        answer, accept: short ? [full] : [],
+        wrong: uniq([(short ? cardinal(y % 100) : decadeWord(y)) + 'luvulle', (short ? cardinal(y % 100) : decadeWord(y)) + 'luvussa', 'vuonna ' + (short ? cardinal(y % 100) : cardinal(y))], answer),
+        note: 'Decades: number + -luku, "in" = -luvulla: ' + full + (short ? '. In speech the century is usually dropped: ' + short : '') + '.',
+      };
+    }
+    const y = pick([1700, 1800, 1900], rng);
+    const answer = decadeWord(y) + 'luvulla';
+    return {
+      kind: 'years', shown: y + '-luvulla', task: 'Say the century ("in the ' + (y / 100 + 1) + 'th century")', context: pick(['Kirkko on rakennettu ___.', 'Tämä tapa syntyi ___.'], rng),
+      answer, accept: [],
+      wrong: uniq([decadeWord(y) + 'luvulle', decadeWord(y + 100) + 'luvulla', 'vuonna ' + cardinal(y)], answer),
+      note: 'Centuries are named after their first year: ' + y + '-luku = ' + decadeWord(y) + 'luku. Careful: 1800-luku is the 19th century.',
     };
   }
 
@@ -266,15 +393,7 @@
 
   function otherExercise(rng) {
     const r = rng();
-    if (r < 0.35) {
-      const y = int(1950, 2030, rng);
-      return {
-        kind: 'years', shown: String(y), task: 'Say the year', context: pick(['Muutin Suomeen vuonna ___.', 'Synnyin vuonna ___.', 'Valmistuin vuonna ___.'], rng),
-        answer: cardinal(y), accept: [], wrong: uniq([cardinal(y + 1), cardinal(y + 10), cardinal(y - 100)], cardinal(y)),
-        note: 'Years are read as one long number: ' + cardinal(y) + '.',
-      };
-    }
-    if (r < 0.65) {
+    if (r < 0.5) {
       const n = int(1, 12, rng);
       return {
         kind: 'ages', shown: n + '-vuotias', task: 'Say the age in one word', context: pick(['Lapsi on ___.', 'Tyttäreni on ___.', 'Ryhmässä on yksi ___.'], rng),
@@ -302,8 +421,9 @@
     return a;
   }
 
-  const GENERATORS = { dates: dateExercise, times: timeExercise, atuntil: atUntilExercise, prices: priceExercise,
-    positions: positionExercise, spoken: spokenExercise, other: otherExercise };
+  const GENERATORS = { dates: dateExercise, times: timeExercise, clock: clockExercise, atuntil: atUntilExercise,
+    spans: spanExercise, prices: priceExercise, positions: positionExercise, spoken: spokenExercise,
+    years: yearExercise, other: otherExercise };
 
   /** A round of `n` exercises from one set, or 'mixed', without exact repeats. */
   function round(set, n, rng) {
@@ -324,6 +444,6 @@
 
   return {
     cardinal, ordinal, ordinalEssive, ORD_INESSIVE, ORD_TRANSLATIVE, MONTHS_PARTITIVE, HOUR_AT, HOUR_UNTIL,
-    NUMBER_NOUNS, SPOKEN, SETS, round, checkNumberAnswer, squash,
+    NUMBER_NOUNS, SPOKEN, SETS, round, checkNumberAnswer, squash, decadeWord,
   };
 });

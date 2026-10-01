@@ -51,7 +51,10 @@ with Quizlet-style mini games.
   *varttia vaille*), "at" and "until" (*kahdelta*, *neljään asti*), prices, ordinals in
   context (*kolmannessa kerroksessa*, *tuli toiseksi*), spoken forms and number nouns
   (*kakskyt*, *Mennään ysillä*, *Sain kympin*), years, ages and phone numbers. Choose or
-  type the answer; each answer comes with a short explanation. Logic in `js/numbers.js`.
+  type the answer; each answer comes with a short explanation. Also: **Read the clock** (an
+  analogue clock face), **Time spans** (*kahden tunnin päästä*, *kolme päivää sitten*,
+  *puoli tuntia*) and **Years & decades** (*vuodesta 2018*, *vuoteen 2030 mennessä*,
+  *yhdeksänkymmentäluvulla*, *tuhatkahdeksansataaluvulla*). Logic in `js/numbers.js`.
 - **Your own mini games**: save a game type, its categories, direction and round size
   under a name, then replay it from the Games page.
 - **Progress**: every answer is recorded per word. Games pick weak words more often, and
@@ -59,7 +62,7 @@ with Quizlet-style mini games.
 - **Pronunciation**: 🔊 buttons read words aloud using your device's text-to-speech
   (install a Finnish voice for the best result).
 - **Backup**: export and import everything as JSON from Settings.
-- Starts with 1490 starter words in 67 categories, including **Feelings**, **Shapes**,
+- Starts with 1503 starter words in 67 categories, including **Feelings**, **Shapes**,
   **A2.2 verbs**, a set for daycare teachers (**Daycare**, **Daycare: play**, **Daycare: safety**,
   **Talking to parents**, **ECEC terms**), everyday life (**Time & calendar**, **Weather & seasons**,
   **Body & health**, **Clothes**, **Shopping & money**, **Getting around**, **Services & offices**,

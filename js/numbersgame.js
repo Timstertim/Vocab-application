@@ -23,6 +23,29 @@
     };
     document.addEventListener('keydown', keyHandler);
   }
+  /** An analogue clock face (inline SVG) showing h:m. The label doesn't give the time away. */
+  function clockSvg(h, m) {
+    const hourAngle = ((h % 12) + m / 60) * 30, minuteAngle = m * 6;
+    const hand = (angle, len, width, cls) => {
+      const a = (angle - 90) * Math.PI / 180;
+      return '<line class="' + cls + '" x1="100" y1="100" x2="' + (100 + len * Math.cos(a)).toFixed(1) + '" y2="' + (100 + len * Math.sin(a)).toFixed(1) +
+        '" stroke-width="' + width + '" stroke-linecap="round"/>';
+    };
+    let marks = '';
+    for (let k = 0; k < 60; k++) {
+      const a = (k * 6 - 90) * Math.PI / 180, big = k % 5 === 0, r1 = big ? 80 : 85;
+      marks += '<line class="tick' + (big ? ' big' : '') + '" x1="' + (100 + r1 * Math.cos(a)).toFixed(1) + '" y1="' + (100 + r1 * Math.sin(a)).toFixed(1) +
+        '" x2="' + (100 + 90 * Math.cos(a)).toFixed(1) + '" y2="' + (100 + 90 * Math.sin(a)).toFixed(1) + '"/>';
+    }
+    for (let n = 1; n <= 12; n++) {
+      const a = (n * 30 - 90) * Math.PI / 180;
+      marks += '<text x="' + (100 + 67 * Math.cos(a)).toFixed(1) + '" y="' + (100 + 67 * Math.sin(a) + 5).toFixed(1) + '">' + n + '</text>';
+    }
+    return '<svg class="clock-face" viewBox="0 0 200 200" role="img" aria-label="A clock face">' +
+      '<circle class="rim" cx="100" cy="100" r="94"/>' + marks +
+      hand(hourAngle, 45, 7, 'hour') + hand(minuteAngle, 70, 4, 'minute') + '<circle class="pin" cx="100" cy="100" r="5"/></svg>';
+  }
+
   const mode = () => (Store.get().settings.numMode === 'type' ? 'type' : 'choose');
   const best = (set) => (Store.get().settings.numBest || {})[set];
 
@@ -81,7 +104,7 @@
       el.innerHTML = header() +
         '<div class="question card-pad">' +
         '<div class="q-label">' + esc(ex.task) + '</div>' +
-        '<div class="q-prompt num-shown">' + esc(ex.shown) + '</div>' +
+        (ex.clock ? clockSvg(ex.clock.h, ex.clock.m) : '<div class="q-prompt num-shown">' + esc(ex.shown) + '</div>') +
         '<div id="num-context">' + contextHtml(ex) + '</div>' +
         (m === 'choose'
           ? '<div class="choices num-choices">' + ex.options.map((o, n) => '<button class="choice" data-n="' + n + '"><kbd>' + (n + 1) + '</kbd> <span lang="fi">' + esc(o) + '</span></button>').join('') + '</div>'

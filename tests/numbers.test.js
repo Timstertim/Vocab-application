@@ -67,3 +67,35 @@ test('clock times: half past is "puoli" + the next hour', () => {
   }
   assert.ok(found > 5);
 });
+
+test('decades and centuries', () => {
+  assert.equal(N.decadeWord(1990) + 'luvulla', 'tuhatyhdeksänsataayhdeksänkymmentäluvulla');
+  assert.equal(N.decadeWord(2000) + 'luku', 'kaksituhattaluku');
+  assert.equal(N.decadeWord(2010) + 'luku', 'kaksituhattakymmenluku');
+  assert.equal(N.decadeWord(1800) + 'luku', 'tuhatkahdeksansataaluku');
+});
+
+test('clock, time spans and years exercises use the right forms', () => {
+  let seed = 3;
+  const rand = () => { seed = (seed * 48271) % 2147483647; return seed / 2147483647; };
+  const seen = { clock: 0, spans: 0, years: 0 };
+  for (let k = 0; k < 300; k++) {
+    for (const set of Object.keys(seen)) {
+      const [ex] = N.round(set, 1, rand);
+      seen[set]++;
+      if (set === 'clock') {
+        assert.ok(ex.clock && ex.clock.h >= 1 && ex.clock.h <= 12, 'clock data');
+        if (ex.clock.m === 30) assert.equal(ex.answer, 'puoli ' + N.cardinal(ex.clock.h % 12 + 1));
+        if (ex.clock.m === 0) assert.equal(ex.answer, N.cardinal(ex.clock.h));
+      }
+      if (/^in \d+ /.test(ex.shown)) assert.match(ex.answer, / päästä$/);
+      if (/ ago$/.test(ex.shown)) assert.match(ex.answer, / sitten$/);
+      if (/^since /.test(ex.shown)) assert.match(ex.answer, /^vuodesta /);
+      if (/^by /.test(ex.shown)) assert.match(ex.answer, /^vuoteen /);
+      if (/-luvulla$/.test(ex.shown)) assert.match(ex.answer, /luvulla$/);
+    }
+  }
+  const ex = { kind: 'spans', answer: 'kahden tunnin päästä', accept: ['kahden tunnin kuluttua'], wrong: ['kaksi tuntia päästä'] };
+  assert.equal(N.checkNumberAnswer('kahden tunnin kuluttua', ex).correct, true);
+  assert.equal(N.checkNumberAnswer('kaksi tuntia päästä', ex).correct, false);
+});

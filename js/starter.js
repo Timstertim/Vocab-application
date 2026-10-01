@@ -76,7 +76,7 @@
     C('Computer problems', '#3f8fc0'),
     C('Studying & writing', '#7a55c7'),
   ];
-  const VERSION = 8;
+  const VERSION = 9;
   const id = (n) => 'cat-' + slug(n);
 
   // [finnish, english, part of speech, definition, [[example fi, example en]...], category]
@@ -1745,8 +1745,25 @@
     ['isi', 'daddy', 'noun', 'Also: iskä (spoken). Standard: isä.', [['Isi tulee pian.', 'Daddy is coming soon.']], 'Daycare: instructions'],
   ];
 
+  // Added in version 9: words for clock times and years.
+  const v9 = [
+    ['tasan', 'exactly, on the dot', 'adverb', 'Kello on tasan kolme = it\'s exactly three.', [['Kello on tasan kolme.', 'It\'s three o\'clock exactly.']], 'Time & calendar'],
+    ['noin', 'about, approximately', 'adverb', 'noin kello viisi = at about five.', [['Tulen noin kello viisi.', 'I\'ll come at about five.']], 'Time & calendar'],
+    ['yli', 'past (time); over', 'postposition', 'kymmentä yli kaksi = ten past two.', [['Kello on kymmentä yli kaksi.', 'It\'s ten past two.']], 'Time & calendar'],
+    ['vaille', 'to (time)', 'postposition', 'viittä vaille neljä = five to four.', [['Kello on viittä vaille neljä.', 'It\'s five to four.']], 'Time & calendar'],
+    ['viisari', 'clock hand', 'noun', 'iso viisari = minute hand, pieni viisari = hour hand.', [['Pieni viisari näyttää tunnit.', 'The small hand shows the hours.']], 'Time & calendar'],
+    ['kellonaika', 'time (of day)', 'noun', 'Mikä kellonaika? = What time?', [['Mikä kellonaika sopii sinulle?', 'What time suits you?']], 'Time & calendar'],
+    ['keskipäivä', 'noon, midday', 'noun', 'keskipäivällä = at noon.', [['Lounas on keskipäivällä.', 'Lunch is at noon.']], 'Time & calendar'],
+    ['keskiyö', 'midnight', 'noun', 'keskiyöllä = at midnight.', [['Juna saapuu keskiyöllä.', 'The train arrives at midnight.']], 'Time & calendar'],
+    ['viimeistään', 'at the latest', 'adverb', 'viimeistään perjantaina = by Friday at the latest.', [['Palauta kirja viimeistään perjantaina.', 'Return the book by Friday at the latest.']], 'Time & calendar'],
+    ['aikaisintaan', 'at the earliest', 'adverb', 'Opposite: viimeistään.', [['Tulen aikaisintaan kuudelta.', 'I\'ll come at six at the earliest.']], 'Time & calendar'],
+    ['vuosiluku', 'year (as a number)', 'noun', 'e.g. 2024. Stem: vuosiluvun.', [['Kirjoita vuosiluku tähän.', 'Write the year here.']], 'Time & calendar'],
+    ['vuosikymmen', 'decade', 'noun', 'Stem: vuosikymmenen. In dates: -luku (1990-luku).', [['Vuosikymmen on kymmenen vuotta.', 'A decade is ten years.']], 'Time & calendar'],
+    ['vuosisata', 'century', 'noun', 'Stem: vuosisadan. 1800-luku = the 19th century.', [['Kirkko on vuosisatoja vanha.', 'The church is centuries old.']], 'Time & calendar'],
+  ];
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5, v6, v7, v8).map((r) => {
+  const tagged = v4.concat(v5, v6, v7, v8, v9).map((r) => {
     let cats = [].concat(r[5]);
     if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$/.test(cats[0])) cats.push('Verbs');
@@ -1755,7 +1772,7 @@
 
   const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
-  const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(i < v4.length ? 4 : i < v4.length + v5.length ? 5 : i < v4.length + v5.length + v6.length ? 6 : i < v4.length + v5.length + v6.length + v7.length ? 7 : 8)));
+  const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(i < v4.length ? 4 : i < v4.length + v5.length ? 5 : i < v4.length + v5.length + v6.length ? 6 : i < v4.length + v5.length + v6.length + v7.length ? 7 : i < v4.length + v5.length + v6.length + v7.length + v8.length ? 8 : 9)));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
     finnish: r[0],
