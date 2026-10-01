@@ -272,9 +272,11 @@
 
   /** A random example sentence of the word with the word located in it, or null. */
   function sentenceFor(word, rng) {
+    const letters = (t) => (t.match(/[a-zà-ÿ]/gi) || []).length;
     const usable = (word.examples || [])
       .map((ex) => ({ ex, hit: findWordInSentence(ex.fi, word.finnish) }))
-      .filter((x) => x.hit);
+      // Skip phrases that would leave the sentence mostly gap: nothing left to go on.
+      .filter((x) => x.hit && (!/\s/.test(word.finnish.trim()) || letters(x.hit.form) <= 0.6 * letters(x.ex.fi)));
     if (!usable.length) return null;
     const { ex, hit } = usable[Math.floor((rng || Math.random)() * usable.length)];
     return {

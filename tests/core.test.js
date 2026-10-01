@@ -187,7 +187,10 @@ test('starter pack: unique words, valid categories, and newerThan() returns only
   }
   const v2 = S.newerThan(1);
   assert.ok(v2.words.length > 0 && v2.words.every((w) => w.since > 1));
-  assert.ok(S.newerThan(2).words.every((w) => w.since === 3 && w.categoryIds.includes('cat-daycare')));
+  assert.ok(S.newerThan(2).words.filter((w) => w.since === 3).every((w) => w.categoryIds.includes('cat-daycare')));
+  assert.ok(S.newerThan(3).words.length > 0 && S.newerThan(3).words.every((w) => w.since === 4));
+  // Every starter example must work in Fill the gap.
+  for (const w of S.words) for (const ex of w.examples) assert.ok(Core.findWordInSentence(ex.fi, w.finnish), w.finnish + ': ' + ex.fi);
   assert.deepEqual(S.newerThan(S.VERSION).words, []);
 });
 
@@ -214,6 +217,9 @@ test('sentenceFor splits the sentence around the word', () => {
   assert.deepEqual([s.before, s.form, s.after, s.en], ['', 'Ostin', ' uuden takin.', 'I bought a new coat.']);
   assert.equal(Core.sentenceFor({ finnish: 'talo', examples: [{ fi: 'Kiitos.' }] }), null);
   assert.equal(Core.sentenceFor({ finnish: 'talo', examples: [] }), null);
+  // A phrase that is almost the whole sentence leaves nothing to go on.
+  assert.equal(Core.sentenceFor({ finnish: 'onko hänellä kaikki hyvin', examples: [{ fi: 'Onko hänellä kaikki hyvin kotona?' }] }), null);
+  assert.ok(Core.sentenceFor({ finnish: 'ole hyvä', examples: [{ fi: 'Ole hyvä, tässä on kahvisi.' }] }));
 });
 
 test('gapChoices gives six distinct options, preferring the same part of speech', () => {

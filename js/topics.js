@@ -57,7 +57,7 @@
     },
     {
       name: 'Daycare', aliases: ['daycare', 'day care', 'kindergarten', 'nursery', 'preschool', 'paivakoti', 'päiväkoti',
-        'early childhood education', 'childcare'],
+        'early childhood education', 'childcare', 'ecec', 'ecec terms', 'talking to parents'],
       keywords: ['daycare', 'day care', 'kindergarten', 'nursery', 'preschool', 'pre-primary', 'early childhood',
         'childcare', 'nappy', 'diaper', 'potty', 'dummy', 'pacifier', 'nap', 'rest time', 'toy', 'playground',
         'sandbox', 'sandpit', 'craft', 'guardian', 'snowsuit', 'overall', 'mitten', 'cubby', 'circle time',
@@ -115,7 +115,7 @@
         'midsummer', 'easter', 'season'],
     },
     {
-      name: 'Travel & transport', aliases: ['travel', 'transport', 'transportation', 'traffic', 'travel & transport', 'trip', 'holiday'],
+      name: 'Travel & transport', aliases: ['travel', 'transport', 'transportation', 'traffic', 'travel & transport', 'trip', 'getting around'],
       keywords: ['travel', 'trip', 'journey', 'holiday', 'vacation', 'tourist', 'transport', 'traffic', 'car', 'bus', 'tram',
         'train', 'metro', 'subway', 'taxi', 'bicycle', 'bike', 'boat', 'ship', 'ferry', 'plane', 'airplane', 'aeroplane',
         'airport', 'station', 'stop', 'platform', 'ticket', 'passport', 'luggage', 'suitcase', 'road', 'street', 'highway',
@@ -123,7 +123,7 @@
         'border', 'abroad', 'direction', 'left', 'right', 'straight', 'north', 'south', 'east', 'west'],
     },
     {
-      name: 'Places & city', aliases: ['place', 'city', 'town', 'places & city', 'building', 'location', 'country'],
+      name: 'Places & city', aliases: ['place', 'city', 'town', 'places & city', 'building', 'location', 'country', 'service', 'services & offices'],
       keywords: ['city', 'town', 'village', 'capital', 'country', 'place', 'building', 'library', 'school', 'museum',
         'church', 'shop', 'store', 'supermarket', 'market', 'bank', 'post office', 'police station', 'hospital', 'park',
         'square', 'cinema', 'theatre', 'theater', 'office', 'factory', 'restaurant', 'cafe', 'café', 'bar', 'hotel',
@@ -165,8 +165,19 @@
         'screen', 'mouse', 'password', 'download', 'upload', 'network', 'wifi', 'charger', 'battery', 'camera',
         'television', 'tv', 'radio', 'video', 'photo', 'printer', 'data', 'file', 'social media'],
     },
+    {
+      name: 'Question words', aliases: ['question word', 'question', 'questions'],
+      keywords: ['who', 'whom', 'whose', 'what', 'which', 'where', 'where from', 'where to', 'when', 'why', 'how',
+        'how much', 'how many', 'what kind', 'what time'],
+    },
     { name: 'Verbs', aliases: ['verb', 'action', 'verbs & actions'], pos: ['verb'], keywords: [] },
-    { name: 'Adjectives', aliases: ['adjective', 'describing words', 'description'], pos: ['adjective'], keywords: [] },
+    { name: 'Adjectives', aliases: ['adjective', 'describing words', 'description', 'opposite'], pos: ['adjective'], keywords: [] },
+    {
+      name: 'Holidays & traditions', aliases: ['holiday', 'tradition', 'festival', 'celebration', 'holidays & traditions', 'culture'],
+      keywords: ['christmas', 'easter', 'midsummer', 'may day', 'new year', 'birthday', 'name day', 'present', 'gift',
+        'party', 'celebration', 'celebrate', 'tradition', 'festival', 'candle', 'bonfire', 'elf', 'santa',
+        'father christmas', 'advent', 'independence day', 'congratulation', 'cottage'],
+    },
     { name: 'Adverbs', aliases: ['adverb'], pos: ['adverb'], keywords: [] },
   ];
 });

@@ -38,8 +38,10 @@
     const res = root.VocabCore.mergeImport(s, Starter.newerThan(from), { onlyNew: true });
     const next = Object.assign(res.state, { starterVersion: Starter.VERSION });
     if (res.added) {
-      const names = Starter.newerThan(from).categories.map((c) => c.name).filter((n) => n !== 'Verbs');
-      upgradeNote = res.added + ' new starter words added' + (names.length ? ': ' + names.join(', ') : '');
+      const names = Starter.newerThan(from).categories.map((c) => c.name).filter((n) => n !== 'Verbs' && n !== 'Daycare');
+      upgradeNote = res.added + ' new starter words added' + (names.length > 4
+        ? ' in ' + names.length + ' new categories – see Categories'
+        : names.length ? ': ' + names.join(', ') : '');
     }
     try { localStorage.setItem(KEY, JSON.stringify(next)); } catch (e) { /* ignore */ }
     return next;
