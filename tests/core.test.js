@@ -186,7 +186,8 @@ test('starter pack: unique words, valid categories, and newerThan() returns only
     for (const c of w.categoryIds) assert.ok(catIds.has(c), w.finnish + ' → ' + c);
   }
   const v2 = S.newerThan(1);
-  assert.ok(v2.words.length > 0 && v2.words.every((w) => w.since === 2));
+  assert.ok(v2.words.length > 0 && v2.words.every((w) => w.since > 1));
+  assert.ok(S.newerThan(2).words.every((w) => w.since === 3 && w.categoryIds.includes('cat-daycare')));
   assert.deepEqual(S.newerThan(S.VERSION).words, []);
 });
 

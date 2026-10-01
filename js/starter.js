@@ -18,8 +18,9 @@
     C('Feelings', '#e0567a'),
     C('Shapes', '#a8781f'),
     C('A2.2 verbs', '#3a7f8f'),
+    C('Daycare', '#c0602a'),
   ];
-  const VERSION = 2;
+  const VERSION = 3;
   const id = (n) => 'cat-' + n.toLowerCase().replace(/\W+/g, '-');
 
   // [finnish, english, part of speech, definition, [[example fi, example en]...], category]
@@ -160,8 +161,100 @@
     ['soittaa', 'to call, to phone, to play (an instrument)', 'verb', 'Type 1 · minä soitan · hän soitti (past).', [['Soitan sinulle illalla.', 'I\'ll call you in the evening.']], ['A2.2 verbs', 'Verbs']],
   ];
 
+  // Added in version 3: words a daycare (päiväkoti) teacher uses at work.
+  const D = 'Daycare', DV = ['Daycare', 'Verbs'];
+  const v3 = [
+    // The system and the people
+    ['päiväkoti', 'daycare, daycare centre, kindergarten', 'noun', 'A place where children under school age get early childhood education and care. Stem: päiväkodin, päiväkotia.', [['Lapsi on päiväkodissa kahdeksasta neljään.', 'The child is at daycare from eight to four.']], D],
+    ['varhaiskasvatus', 'early childhood education and care, ECEC', 'noun', 'The official Finnish term for education and care before school. Stem: varhaiskasvatuksen, varhaiskasvatusta.', [['Varhaiskasvatus on lapsen oikeus.', 'Early childhood education is a child\'s right.']], D],
+    ['varhaiskasvatuksen opettaja', 'early childhood education teacher, kindergarten teacher', 'noun', 'The teacher responsible for planning and leading pedagogy in a group (abbr. vo, formerly lastentarhanopettaja).', [['Olen varhaiskasvatuksen opettaja.', 'I\'m an early childhood education teacher.']], D],
+    ['lastenhoitaja', 'childcare worker, nursery nurse', 'noun', 'Varhaiskasvatuksen lastenhoitaja: a trained worker who cares for and educates children in the group.', [['Lastenhoitaja auttaa lapsia pukemaan.', 'The childcare worker helps the children get dressed.']], D],
+    ['päiväkodin johtaja', 'daycare director, head of the daycare', 'noun', 'The manager of a daycare centre (also: varhaiskasvatusyksikön johtaja).', [['Päiväkodin johtaja tekee työvuorolistat.', 'The daycare director makes the work rosters.']], D],
+    ['kasvattaja', 'educator', 'noun', 'A general word for any adult who educates and cares for the children.', [['Kasvattajat suunnittelevat viikon toiminnan.', 'The educators plan the week\'s activities.']], D],
+    ['sijainen', 'substitute, supply worker', 'noun', 'Someone who covers for an absent worker. Stem: sijaisen, sijaista.', [['Tänään ryhmässä on sijainen.', 'Today there\'s a substitute in the group.']], D],
+    ['ryhmä', 'group', 'noun', 'A group of children with its own room and staff, e.g. pienten ryhmä (toddlers), isojen ryhmä (older children).', [['Ryhmässämme on 21 lasta.', 'There are 21 children in our group.']], D],
+    ['esiopetus', 'pre-primary education, preschool', 'noun', 'The compulsory year of education before school starts, usually at age six. Stem: esiopetuksen, esiopetusta.', [['Esiopetus alkaa elokuussa.', 'Pre-primary education starts in August.']], D],
+    ['eskari', 'preschool', 'noun', 'Colloquial word for esiopetus.', [['Poikani menee eskariin syksyllä.', 'My son starts preschool in the autumn.']], D],
+    ['huoltaja', 'guardian, parent', 'noun', 'The official word for a child\'s parent or legal guardian, used in daycare and school letters.', [['Lähetin huoltajille tiedotteen.', 'I sent the guardians a notice.']], D],
+    ['varhaiskasvatussuunnitelma', 'ECEC plan, individual early education plan', 'noun', 'The child\'s individual plan, made together with the guardians. Short: vasu.', [['Lapsen varhaiskasvatussuunnitelma tehdään yhdessä huoltajien kanssa.', 'The child\'s ECEC plan is made together with the guardians.']], D],
+    ['vasukeskustelu', 'ECEC plan meeting, parent meeting', 'noun', 'A meeting between the teacher and the guardians to discuss the child\'s plan (vasu).', [['Sovitaan aika vasukeskustelulle.', 'Let\'s agree on a time for the ECEC plan meeting.']], D],
+    ['kasvatuskumppanuus', 'partnership with parents', 'noun', 'Cooperation between staff and guardians in supporting the child. Stem: kasvatuskumppanuuden.', [['Kasvatuskumppanuus huoltajien kanssa on tärkeää.', 'Partnership with the guardians is important.']], D],
+    ['vanhempainilta', 'parents\' evening', 'noun', 'An evening meeting for all the parents of a group.', [['Vanhempainilta on torstaina.', 'The parents\' evening is on Thursday.']], D],
+    ['tutustumisjakso', 'settling-in period', 'noun', 'The first days or weeks when a new child gets to know the daycare, usually with a parent.', [['Tutustumisjakso kestää noin kaksi viikkoa.', 'The settling-in period lasts about two weeks.']], D],
+    ['hoitoaika', 'care hours, booked care time', 'noun', 'The hours a child is booked to be at daycare, usually reported in an app. Stem: hoitoajan.', [['Ilmoita lapsen hoitoajat sovellukseen.', 'Report the child\'s care hours in the app.']], D],
+    ['poissaolo', 'absence', 'noun', 'When a child is not at daycare, e.g. because of illness.', [['Ilmoitathan poissaolosta aamulla.', 'Please report any absence in the morning.']], D],
+    ['tiedote', 'notice, newsletter', 'noun', 'A written message to guardians. Stem: tiedotteen, tiedotetta.', [['Viikon tiedote on sovelluksessa.', 'The weekly newsletter is in the app.']], D],
+    ['työvuoro', 'work shift', 'noun', 'aamuvuoro = morning shift, iltavuoro = evening shift.', [['Minulla on huomenna aamuvuoro.', 'I\'m on the morning shift tomorrow.']], D],
+    ['palaveri', 'meeting', 'noun', 'A work meeting, e.g. tiimipalaveri = team meeting.', [['Tiimipalaveri on keskiviikkona.', 'The team meeting is on Wednesday.']], D],
+    ['havainnointi', 'observation', 'noun', 'Watching and documenting children\'s play and learning to plan activities. Verb: havainnoida.', [['Havainnointi auttaa suunnittelemaan toimintaa.', 'Observation helps in planning activities.']], D],
+
+    // The daily rhythm
+    ['aamupiiri', 'morning circle', 'noun', 'A short gathering in the morning with songs, the calendar and the day\'s plan.', [['Aamupiirissä lauletaan ja katsotaan kalenteria.', 'In the morning circle we sing and look at the calendar.']], D],
+    ['tuokio', 'session, activity time', 'noun', 'A short planned activity, e.g. musiikkituokio (music session), satutuokio (story time).', [['Aamupäivällä on musiikkituokio.', 'In the morning there\'s a music session.']], D],
+    ['ulkoilu', 'outdoor time, outdoor play', 'noun', 'Time spent playing outside, usually twice a day in all weathers.', [['Ulkoilu alkaa kymmeneltä.', 'Outdoor time starts at ten.']], D],
+    ['ruokailu', 'mealtime', 'noun', 'Eating together, e.g. lunch at the daycare.', [['Ennen ruokailua pestään kädet.', 'Hands are washed before the meal.']], D],
+    ['välipala', 'snack', 'noun', 'A small meal between main meals, usually in the afternoon.', [['Välipalaksi on leipää ja maitoa.', 'For snack there is bread and milk.']], D],
+    ['lepohetki', 'rest time', 'noun', 'A quiet time after lunch for resting or sleeping. Stem: lepohetken.', [['Lepohetken aikana luetaan satu.', 'A story is read during rest time.']], D],
+    ['päiväunet', 'nap, afternoon nap', 'noun', 'Always plural: nukkua päiväunet = to take a nap.', [['Pienimmät nukkuvat päiväunet.', 'The youngest ones take a nap.']], D],
+    ['hakea', 'to pick up, to fetch', 'verb', 'Type 1 · minä haen · hän haki (past). hakea lapsi päiväkodista = pick up a child from daycare.', [['Isä hakee lapsen neljältä.', 'Dad picks up the child at four.']], DV],
+    ['päivä meni hyvin', 'the day went well', 'phrase', 'What you often tell a parent at pick-up. Question: Miten päivä meni?', [['Päivä meni hyvin, hän leikki paljon ulkona.', 'The day went well, they played outside a lot.']], D],
+
+    // Clothes and the cloakroom
+    ['ulkovaatteet', 'outdoor clothes', 'noun', 'Plural. The clothes children put on to go outside.', [['Ulkovaatteet ovat lokerossa.', 'The outdoor clothes are in the cubby.']], D],
+    ['kurahousut', 'rain trousers, waterproof trousers', 'noun', 'Plural. Waterproof trousers for mud and puddles (kura = mud).', [['Muista kurahousut!', 'Remember the rain trousers!']], D],
+    ['välikausihaalari', 'mid-season overall', 'noun', 'A lined waterproof overall for spring and autumn.', [['Välikausihaalari on hyvä keväällä ja syksyllä.', 'A mid-season overall is good in spring and autumn.']], D],
+    ['toppahaalari', 'snowsuit, winter overall', 'noun', 'A padded winter overall.', [['Talvella lapsella pitää olla toppahaalari.', 'In winter the child needs a snowsuit.']], D],
+    ['lapanen', 'mitten', 'noun', 'Stem: lapasen, lapasta. Plural: lapaset.', [['Missä sinun lapasesi ovat?', 'Where are your mittens?']], D],
+    ['pipo', 'beanie, knitted hat', 'noun', 'A warm knitted hat.', [['Laita pipo päähän.', 'Put your hat on.']], D],
+    ['vaihtovaatteet', 'spare clothes, change of clothes', 'noun', 'Plural. Extra clothes kept at daycare in case of accidents or wet weather.', [['Tuokaa lapselle vaihtovaatteita.', 'Please bring spare clothes for the child.']], D],
+    ['lokero', 'cubby, locker', 'noun', 'Each child\'s own shelf or locker for clothes in the cloakroom.', [['Vaatteet ovat lapsen omassa lokerossa.', 'The clothes are in the child\'s own cubby.']], D],
+    ['kuraeteinen', 'boot room, mud room', 'noun', 'An entrance room where muddy outdoor clothes and boots are left. Stem: kuraeteisen.', [['Jätä kurahousut kuraeteiseen.', 'Leave the rain trousers in the boot room.']], D],
+    ['kuivauskaappi', 'drying cabinet', 'noun', 'A heated cabinet for drying wet outdoor clothes.', [['Laitetaan märät vaatteet kuivauskaappiin.', 'Let\'s put the wet clothes in the drying cabinet.']], D],
+    ['heijastinliivi', 'reflective vest, hi-vis vest', 'noun', 'A bright vest children wear on outings.', [['Retkellä lapsilla on heijastinliivit.', 'On outings the children wear reflective vests.']], D],
+    ['pukea', 'to dress (someone), to put on', 'verb', 'Type 1 · minä puen · hän puki (past). pukea päälle = to put on.', [['Puetaan ulkovaatteet päälle.', 'Let\'s put our outdoor clothes on.']], DV],
+    ['pukeutua', 'to get dressed', 'verb', 'Type 1 · minä pukeudun · hän pukeutui (past). Dressing oneself.', [['Osaatko jo pukeutua itse?', 'Can you get dressed by yourself already?']], DV],
+    ['riisua', 'to undress, to take off', 'verb', 'Type 1 · minä riisun · hän riisui (past).', [['Riisu kengät eteisessä.', 'Take your shoes off in the hall.']], DV],
+
+    // Care and health
+    ['vaippa', 'nappy, diaper', 'noun', 'Stem: vaipan, vaippaa. vaihtaa vaippa = change a nappy.', [['Vaihdetaan vaippa.', 'Let\'s change the nappy.']], D],
+    ['potta', 'potty', 'noun', 'Stem: potan, pottaa. käydä potalla = use the potty.', [['Harjoittelemme potalla käymistä.', 'We\'re practising using the potty.']], D],
+    ['vessa', 'toilet, loo', 'noun', 'Everyday word for the toilet. käydä vessassa = go to the toilet.', [['Pitääkö sinun käydä vessassa?', 'Do you need to go to the toilet?']], D],
+    ['tutti', 'dummy, pacifier', 'noun', 'Stem: tutin, tuttia.', [['Lapsi saa tutin vain päiväunille.', 'The child only gets the dummy for naps.']], D],
+    ['unikaveri', 'cuddly toy, comfort toy', 'noun', 'A soft toy a child brings for rest time (literally "sleep buddy").', [['Unikaveri auttaa nukahtamaan.', 'A cuddly toy helps with falling asleep.']], D],
+    ['sairas', 'sick, ill', 'adjective', 'Stem: sairaan, sairasta.', [['Sairasta lasta ei saa tuoda päiväkotiin.', 'A sick child must not be brought to daycare.']], D],
+    ['kuume', 'fever, temperature', 'noun', 'Stem: kuumeen, kuumetta. Lapsella on kuumetta = the child has a fever.', [['Lapsella on kuumetta.', 'The child has a fever.']], D],
+    ['allergia', 'allergy', 'noun', 'e.g. pähkinäallergia = nut allergy.', [['Lapsella on pähkinäallergia.', 'The child has a nut allergy.']], D],
+    ['erityisruokavalio', 'special diet', 'noun', 'A diet for allergies, religion or other reasons.', [['Kolmella lapsella on erityisruokavalio.', 'Three children have a special diet.']], D],
+
+    // Activities and play
+    ['leikki', 'play, game', 'noun', 'Stem: leikin, leikkiä. vapaa leikki = free play.', [['Vapaa leikki on tärkeää.', 'Free play is important.']], D],
+    ['leikkiä', 'to play', 'verb', 'Type 1 · minä leikin · hän leikki (past). For children\'s play; for sports and games use pelata.', [['Lapset leikkivät pihalla.', 'The children are playing in the yard.']], DV],
+    ['piha', 'yard, playground', 'noun', 'The daycare\'s outdoor play area.', [['Mennään pihalle!', 'Let\'s go out to the yard!']], D],
+    ['hiekkalaatikko', 'sandbox, sandpit', 'noun', 'Stem: hiekkalaatikon. leikkiä hiekkalaatikolla = play in the sandbox.', [['Hiekkalaatikolla on lapio ja ämpäri.', 'There\'s a spade and a bucket in the sandbox.']], D],
+    ['lelu', 'toy', 'noun', 'A thing children play with.', [['Kerätään lelut pois.', 'Let\'s tidy away the toys.']], D],
+    ['retki', 'trip, outing', 'noun', 'Stem: retken, retkeä. lähteä retkelle = go on an outing.', [['Lähdemme retkelle metsään.', 'We\'re going on a trip to the forest.']], D],
+    ['liikunta', 'physical activity, PE', 'noun', 'Exercise and movement games, e.g. in the hall (sali).', [['Tiistaisin on liikuntaa salissa.', 'On Tuesdays there\'s physical activity in the hall.']], D],
+    ['satu', 'fairy tale, story', 'noun', 'Stem: sadun, satua.', [['Luen teille sadun.', 'I\'ll read you a story.']], D],
+    ['muovailuvaha', 'modelling clay, play dough', 'noun', 'Soft clay for shaping.', [['Lapset tekevät muovailuvahasta eläimiä.', 'The children make animals out of play dough.']], D],
+    ['askarrella', 'to do crafts, to make (crafts)', 'verb', 'Type 3 · minä askartelen · hän askarteli (past). Noun: askartelu = crafts.', [['Askartelemme joulukortteja.', 'We\'re making Christmas cards.']], DV],
+    ['piirtää', 'to draw', 'verb', 'Type 1 · minä piirrän · hän piirsi (past).', [['Piirrä kuva perheestäsi.', 'Draw a picture of your family.']], DV],
+    ['maalata', 'to paint', 'verb', 'Type 4 · minä maalaan · hän maalasi (past).', [['Maalaamme vesiväreillä.', 'We\'re painting with watercolours.']], DV],
+    ['laulaa', 'to sing', 'verb', 'Type 1 · minä laulan · hän lauloi (past).', [['Lauletaan yhdessä!', 'Let\'s sing together!']], DV],
+
+    // Guiding the group and feelings
+    ['jono', 'line, queue', 'noun', 'mennä jonoon = get in line.', [['Mennään jonoon.', 'Let\'s get in line.']], D],
+    ['vuoro', 'turn', 'noun', 'Sinun vuorosi = your turn. odottaa vuoroaan = wait for one\'s turn.', [['Nyt on sinun vuorosi.', 'Now it\'s your turn.']], D],
+    ['jakaa', 'to share, to divide', 'verb', 'Type 1 · minä jaan · hän jakoi (past).', [['Jaetaan lelut.', 'Let\'s share the toys.']], DV],
+    ['riita', 'argument, quarrel', 'noun', 'Stem: riidan, riitaa. selvittää riita = sort out an argument.', [['Lapset selvittivät riidan yhdessä.', 'The children sorted out the argument together.']], D],
+    ['itkeä', 'to cry', 'verb', 'Type 1 · minä itken · hän itki (past).', [['Älä itke, äiti tulee pian.', 'Don\'t cry, Mum will come soon.']], DV],
+    ['lohduttaa', 'to comfort', 'verb', 'Type 1 · minä lohdutan · hän lohdutti (past). Takes the partitive.', [['Opettaja lohduttaa itkevää lasta.', 'The teacher comforts the crying child.']], DV],
+    ['tunnetaidot', 'emotional skills, social-emotional skills', 'noun', 'Plural. Recognising, naming and handling feelings.', [['Harjoittelemme tunnetaitoja.', 'We practise emotional skills.']], D],
+    ['kiusaaminen', 'bullying', 'noun', 'Stem: kiusaamisen. puuttua kiusaamiseen = intervene in bullying.', [['Kiusaamiseen puututaan heti.', 'Bullying is dealt with immediately.']], D],
+    ['turvallinen', 'safe', 'adjective', 'Free from danger; feeling secure.', [['Päiväkodin pitää olla turvallinen paikka.', 'Daycare must be a safe place.']], D],
+  ];
+
   const now = Date.now();
-  const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)));
+  const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
     finnish: r[0],

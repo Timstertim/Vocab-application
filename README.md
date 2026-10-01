@@ -34,8 +34,8 @@ with Quizlet-style mini games.
 - **Pronunciation**: 🔊 buttons read words aloud using your device's text-to-speech
   (install a Finnish voice for the best result).
 - **Backup**: export and import everything as JSON from Settings.
-- Starts with 118 starter words in 11 categories, including **Feelings**, **Shapes** and
-  **A2.2 verbs**. Each verb shows its verb type, "minä" form, past form and, where it
+- Starts with 194 starter words in 12 categories, including **Feelings**, **Shapes**,
+  **A2.2 verbs** and **Daycare** (words a Finnish daycare teacher uses at work). Each verb shows its verb type, "minä" form, past form and, where it
   matters, which case it takes. You can delete starter words, or add them back from Settings.
   When new starter words are released, they're added to your list once; words you already
   have, edited or deleted are left alone.

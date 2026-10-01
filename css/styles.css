@@ -344,3 +344,14 @@ legend { font-weight: 600; font-size: .9rem; padding: 0 .3rem; }
 .suggest:hover { background: color-mix(in srgb, var(--chip) 22%, transparent); }
 .suggest.new { border-style: dashed; color: var(--muted); --chip: var(--muted); }
 .suggest.new:hover { color: var(--text); }
+
+/* Long Finnish compounds (e.g. varhaiskasvatussuunnitelma) must wrap on small screens. */
+.wc-fi, .wc-en, .wd-head h1, .fc-text, .q-prompt, .expected, .choice, .tile, .missed li, .cat-name {
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+.wd-head { min-width: 0; }
+.wd-head h1 { min-width: 0; }
+.word-detail { overflow-wrap: anywhere; }
+.word-detail .btn { white-space: normal; text-align: center; }
+@media (max-width: 480px) { .wd-head h1 { font-size: 1.7rem; } .fc-text, .q-prompt { font-size: 1.6rem; } }

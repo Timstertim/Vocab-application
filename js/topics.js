@@ -56,6 +56,14 @@
         'purple', 'violet', 'orange colour', 'orange color', 'beige', 'turquoise', 'gold', 'silver', 'dark', 'light blue'],
     },
     {
+      name: 'Daycare', aliases: ['daycare', 'day care', 'kindergarten', 'nursery', 'preschool', 'paivakoti', 'päiväkoti',
+        'early childhood education', 'childcare'],
+      keywords: ['daycare', 'day care', 'kindergarten', 'nursery', 'preschool', 'pre-primary', 'early childhood',
+        'childcare', 'nappy', 'diaper', 'potty', 'dummy', 'pacifier', 'nap', 'rest time', 'toy', 'playground',
+        'sandbox', 'sandpit', 'craft', 'guardian', 'snowsuit', 'overall', 'mitten', 'cubby', 'circle time',
+        'morning circle', 'pick up', 'drop off', 'settling-in', 'educator', 'ecec'],
+    },
+    {
       name: 'Shapes', aliases: ['shape', 'form', 'geometry', 'colours & shapes', 'shapes & colours'],
       keywords: ['shape', 'form', 'circle', 'square', 'triangle', 'rectangle', 'oval', 'star', 'heart', 'line', 'dot',
         'point', 'corner', 'angle', 'cube', 'sphere', 'ball', 'cone', 'cylinder', 'pyramid', 'diamond', 'spiral',
