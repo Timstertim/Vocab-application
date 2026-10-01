@@ -154,3 +154,43 @@ test('suggestCategories stays quiet without a clear signal', () => {
   // "water" only in the definition should not outrank a clear weather match
   assert.deepEqual(suggest({ english: 'rain', definition: 'Water falling from clouds.' }).map((x) => x.name), ['Weather']);
 });
+
+test('mergeImport with onlyNew keeps existing words untouched and skips unused categories', () => {
+  const state = {
+    words: [{ id: 'x', finnish: 'iloinen', english: 'my own meaning', categoryIds: [] }],
+    categories: [], games: [],
+  };
+  const data = {
+    categories: [{ id: 'f', name: 'Feelings' }, { id: 'u', name: 'Unused' }],
+    words: [
+      { finnish: 'iloinen', english: 'happy', categoryIds: ['f'] },
+      { finnish: 'surullinen', english: 'sad', categoryIds: ['f'] },
+    ],
+  };
+  const res = Core.mergeImport(state, data, { onlyNew: true });
+  assert.equal(res.added, 1);
+  assert.equal(res.skipped, 1);
+  assert.equal(res.state.words.find((w) => w.id === 'x').english, 'my own meaning');
+  assert.deepEqual(res.state.categories.map((c) => c.name), ['Feelings']);
+});
+
+test('starter pack: unique words, valid categories, and newerThan() returns only later words', () => {
+  global.self = global;
+  require('../js/starter.js');
+  const S = global.VocabStarter;
+  const names = S.words.map((w) => w.finnish);
+  assert.equal(new Set(names).size, names.length);
+  const catIds = new Set(S.categories.map((c) => c.id));
+  for (const w of S.words) {
+    assert.ok(w.english && w.examples.length, w.finnish);
+    for (const c of w.categoryIds) assert.ok(catIds.has(c), w.finnish + ' → ' + c);
+  }
+  const v2 = S.newerThan(1);
+  assert.ok(v2.words.length > 0 && v2.words.every((w) => w.since === 2));
+  assert.deepEqual(S.newerThan(S.VERSION).words, []);
+});
+
+test('suggestCategories knows shapes', () => {
+  const s = Core.suggestCategories({ english: 'triangle' }, [{ id: 'sh', name: 'Shapes' }], TOPICS);
+  assert.deepEqual(s.map((x) => x.id), ['sh']);
+});

@@ -13,18 +13,36 @@
     };
   }
 
+  const Starter = root.VocabStarter;
+  let upgradeNote = '';
+
   function load() {
     try {
       const raw = localStorage.getItem(KEY);
-      if (raw) return Object.assign(defaults(), JSON.parse(raw));
+      if (raw) return upgradeStarter(Object.assign(defaults(), JSON.parse(raw)));
     } catch (e) {
       console.warn('Could not read saved data', e);
     }
     // First run: seed with the starter pack.
     const s = defaults();
-    s.categories = root.VocabStarter.categories.slice();
-    s.words = root.VocabStarter.words.slice();
+    s.categories = Starter.categories.slice();
+    s.words = Starter.words.map(({ since, ...w }) => w);
+    s.starterVersion = Starter.VERSION;
     return s;
+  }
+
+  /** Give existing users the starter words added since they last opened the app, once. */
+  function upgradeStarter(s) {
+    const from = s.starterVersion || 1;
+    if (from >= Starter.VERSION) return s;
+    const res = root.VocabCore.mergeImport(s, Starter.newerThan(from), { onlyNew: true });
+    const next = Object.assign(res.state, { starterVersion: Starter.VERSION });
+    if (res.added) {
+      const names = Starter.newerThan(from).categories.map((c) => c.name).filter((n) => n !== 'Verbs');
+      upgradeNote = res.added + ' new starter words added' + (names.length ? ': ' + names.join(', ') : '');
+    }
+    try { localStorage.setItem(KEY, JSON.stringify(next)); } catch (e) { /* ignore */ }
+    return next;
   }
 
   let state = load();
@@ -88,13 +106,16 @@
       w.stats.lastSeen = Date.now();
       try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* ignore */ }
     },
+    /** Message about starter words added on this load, shown once. */
+    takeUpgradeNote() { const n = upgradeNote; upgradeNote = ''; return n; },
     addStarterPack() {
-      const res = root.VocabCore.mergeImport(state, root.VocabStarter);
+      const res = root.VocabCore.mergeImport(state, Starter, { onlyNew: true });
       Store.set(res.state);
       return res;
     },
     reset() {
       state = defaults();
+      state.starterVersion = Starter.VERSION; // an emptied app stays empty
       save();
     },
   };

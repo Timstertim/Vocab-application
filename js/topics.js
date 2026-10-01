@@ -56,6 +56,12 @@
         'purple', 'violet', 'orange colour', 'orange color', 'beige', 'turquoise', 'gold', 'silver', 'dark', 'light blue'],
     },
     {
+      name: 'Shapes', aliases: ['shape', 'form', 'geometry', 'colours & shapes', 'shapes & colours'],
+      keywords: ['shape', 'form', 'circle', 'square', 'triangle', 'rectangle', 'oval', 'star', 'heart', 'line', 'dot',
+        'point', 'corner', 'angle', 'cube', 'sphere', 'ball', 'cone', 'cylinder', 'pyramid', 'diamond', 'spiral',
+        'round', 'straight', 'curved', 'flat', 'pointed', 'geometry'],
+    },
+    {
       name: 'Nature', aliases: ['nature', 'outdoors', 'environment', 'landscape', 'plant'],
       keywords: ['nature', 'forest', 'wood', 'tree', 'flower', 'plant', 'grass', 'leaf', 'lake', 'sea', 'ocean', 'river',
         'stream', 'island', 'shore', 'beach', 'mountain', 'hill', 'fell', 'valley', 'field', 'meadow', 'swamp', 'bog',

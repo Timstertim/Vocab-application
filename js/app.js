@@ -711,7 +711,7 @@
     };
     view.querySelector('[data-act=starter]').onclick = () => {
       const res = Store.addStarterPack();
-      toast('Starter words: ' + res.added + ' added, ' + res.updated + ' already there');
+      toast('Starter words: ' + res.added + ' added, ' + res.skipped + ' already there');
     };
     view.querySelector('[data-act=reset]').onclick = () => {
       if (confirm('Delete all words, categories and games? This cannot be undone. Export a backup first if unsure.')) {
@@ -723,4 +723,6 @@
 
   window.addEventListener('hashchange', route);
   route();
+  const note = Store.takeUpgradeNote();
+  if (note) toast(note);
 })(window);

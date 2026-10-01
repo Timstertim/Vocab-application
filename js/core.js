@@ -304,8 +304,12 @@
     return out.filter((x) => x.score > 1 || top < 3).slice(0, limit);
   }
 
-  /** Validate and merge imported data into the current state (by Finnish word). */
-  function mergeImport(state, data) {
+  /**
+   * Validate and merge imported data into the current state (by Finnish word).
+   * With opts.onlyNew, words that already exist are left untouched (counted as skipped).
+   */
+  function mergeImport(state, data, opts) {
+    opts = opts || {};
     if (!data || !Array.isArray(data.words)) throw new Error('File does not contain a "words" list.');
     const cats = state.categories.slice();
     const catIdByName = new Map(cats.map((c) => [c.name.toLowerCase(), c.id]));
@@ -314,7 +318,8 @@
       if (!c || !c.name) continue;
       let id = catIdByName.get(c.name.toLowerCase());
       if (!id) {
-        id = uid();
+        // Keep the imported id when it's free, so links like #/words?cat=… stay stable.
+        id = c.id && !cats.some((x) => x.id === c.id) ? c.id : uid();
         cats.push({ id, name: c.name, color: c.color || '#3b6fd8' });
         catIdByName.set(c.name.toLowerCase(), id);
       }
@@ -322,9 +327,10 @@
     }
     const words = state.words.slice();
     const byFinnish = new Map(words.map((w, i) => [normalize(w.finnish), i]));
-    let added = 0, updated = 0;
+    let added = 0, updated = 0, skipped = 0;
     for (const w of data.words) {
       if (!w || !w.finnish) continue;
+      if (opts.onlyNew && byFinnish.has(normalize(w.finnish))) { skipped++; continue; }
       const clean = {
         id: uid(),
         finnish: String(w.finnish),
@@ -352,7 +358,10 @@
         updated++;
       }
     }
-    return { state: Object.assign({}, state, { words, categories: cats }), added, updated };
+    // Don't create categories that ended up with no imported word (e.g. all skipped).
+    const usedCats = new Set([].concat(...words.map((w) => w.categoryIds || [])));
+    const keep = cats.filter((c, i) => i < state.categories.length || usedCats.has(c.id));
+    return { state: Object.assign({}, state, { words, categories: keep }), added, updated, skipped };
   }
 
   return {
