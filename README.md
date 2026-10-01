@@ -53,13 +53,19 @@ with Quizlet-style mini games.
 - **Pronunciation**: 🔊 buttons read words aloud using your device's text-to-speech
   (install a Finnish voice for the best result).
 - **Backup**: export and import everything as JSON from Settings.
-- Starts with 776 starter words in 41 categories, including **Feelings**, **Shapes**,
+- Starts with 1354 starter words in 63 categories, including **Feelings**, **Shapes**,
   **A2.2 verbs**, a set for daycare teachers (**Daycare**, **Daycare: play**, **Daycare: safety**,
   **Talking to parents**, **ECEC terms**), everyday life (**Time & calendar**, **Weather & seasons**,
   **Body & health**, **Clothes**, **Shopping & money**, **Getting around**, **Services & offices**,
   **Animals**, **Working life**), language building blocks (**Question words**, **Opposites**,
   **Small words**, **Survival phrases**, **Spoken Finnish**) and culture (**Holidays & traditions**,
-  **Finnish food**), plus one category per role-play place (**At the shop**, **At the library**, **Emergency call**…). Each verb shows its verb type, "minä" form, past form and, where it
+  **Finnish food**), the basics (**Pronouns**, **Where things are**, more **Numbers**, **Verbs**,
+  **Colours**, **Family**, **Food & drink**, **Home**), more for daycare (**Daycare: instructions**,
+  **Daycare: praise**, **Daycare: songs & circle time**, **Child development**, **Neuvola & school**),
+  life in Finland (**Housing**, **Recycling**, **Sauna & nature**, **Hobbies & sport**, **Jobs**,
+  **Countries & languages**, **Technology**, **Personality**), towards B1 (**Time expressions**,
+  **Must, may & can**, **Verbs with cases**, **Linking words**, **Work emails**, **Sayings**),
+  **Illnesses** and an expanded **Feelings**, plus one category per role-play place (**At the shop**, **At the library**, **Emergency call**…). Each verb shows its verb type, "minä" form, past form and, where it
   matters, which case it takes. You can delete starter words, or add them back from Settings.
   When new starter words are released, they're added to your list once; words you already
   have, edited or deleted are left alone.

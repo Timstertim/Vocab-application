@@ -443,3 +443,8 @@ legend { font-weight: 600; font-size: .9rem; padding: 0 .3rem; }
 .level-range { display: inline-flex; gap: .4rem; flex-wrap: wrap; }
 .rp-intro { background: var(--bad-soft); border-radius: 12px; padding: .7rem .9rem; }
 .write-choice { display: flex; flex-direction: column; gap: .6rem; }
+
+/* Long category names must not stretch dropdowns past the screen. */
+select { max-width: 100%; text-overflow: ellipsis; }
+.toolbar label.inline { max-width: 100%; min-width: 0; }
+.toolbar label.inline select { min-width: 0; flex: 1 1 auto; }

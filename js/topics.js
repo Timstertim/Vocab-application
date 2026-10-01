@@ -36,7 +36,7 @@
         'marry', 'married', 'wedding', 'man', 'woman', 'boy', 'girl', 'person', 'people', 'neighbour', 'neighbor'],
     },
     {
-      name: 'Home', aliases: ['home', 'house', 'household', 'furniture', 'home & house'],
+      name: 'Home', aliases: ['home', 'house', 'household', 'furniture', 'home & house', 'housing'],
       keywords: ['house', 'home', 'apartment', 'flat', 'room', 'kitchen', 'bedroom', 'bathroom', 'living room', 'toilet',
         'shower', 'door', 'window', 'wall', 'floor', 'ceiling', 'roof', 'stair', 'balcony', 'garden', 'yard', 'garage',
         'sauna', 'furniture', 'table', 'chair', 'sofa', 'couch', 'bed', 'lamp', 'shelf', 'cupboard', 'wardrobe', 'closet',
@@ -91,7 +91,7 @@
         'seal', 'whale', 'lion', 'tiger', 'elephant', 'monkey', 'mammal', 'wildlife'],
     },
     {
-      name: 'Body & health', aliases: ['body', 'health', 'body & health', 'medicine', 'doctor', 'hospital'],
+      name: 'Body & health', aliases: ['body', 'health', 'body & health', 'medicine', 'doctor', 'hospital', 'illness', 'illnesses', 'sickness'],
       keywords: ['body', 'head', 'hair', 'face', 'eye', 'ear', 'nose', 'mouth', 'tooth', 'teeth', 'tongue', 'lip', 'neck',
         'shoulder', 'arm', 'hand', 'finger', 'leg', 'knee', 'foot', 'feet', 'toe', 'back', 'stomach', 'belly', 'heart',
         'blood', 'bone', 'skin', 'health', 'healthy', 'ill', 'sick', 'illness', 'disease', 'pain', 'ache', 'headache',

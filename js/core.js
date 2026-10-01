@@ -458,9 +458,12 @@
       let score = 0;
       topics.forEach((t, i) => {
         const aliases = t.aliases.map((a) => topicText(a).trim()).concat(topicText(t.name).trim());
-        if (aliases.includes(name) || nameTokens.some((tok) => aliases.includes(tok))) {
+        // A category named exactly after the topic ("Technology") ranks above one that only
+        // shares a word with it ("At the office").
+        const exact = aliases.includes(name);
+        if (exact || nameTokens.some((tok) => aliases.includes(tok))) {
           covered.add(i);
-          score = Math.max(score, topicScore[i]);
+          if (topicScore[i] > 0) score = Math.max(score, topicScore[i] + (exact && topicScore[i] >= 2 ? 0.5 : 0));
         }
       });
       // A category named after something in the word itself, e.g. "Sauna" for "sauna".
