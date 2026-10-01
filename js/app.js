@@ -506,7 +506,7 @@
   function gameSummary(g) {
     const cats = (g.categoryIds || []).map((id) => Store.category(id)).filter(Boolean);
     const n = wordsForCategories(g.categoryIds).length;
-    return Games.DIRECTIONS[g.direction] + ' · ' + (cats.length ? cats.map((c) => c.name).join(', ') : 'All words') +
+    return (Games.TYPES[g.type].noDirection ? '' : Games.DIRECTIONS[g.direction] + ' · ') + (cats.length ? cats.map((c) => c.name).join(', ') : 'All words') +
       ' · ' + (g.count ? Math.min(g.count, n) + ' of ' : '') + n + ' words';
   }
 
@@ -581,7 +581,7 @@
         : '<span class="muted">No categories yet – all words will be used.</span>') +
       '</div></fieldset>' +
       '<div class="grid-2">' +
-      '<label>Direction<select name="direction">' + Object.entries(Games.DIRECTIONS).map(([k, v]) =>
+      '<label id="g-dir">Direction<select name="direction">' + Object.entries(Games.DIRECTIONS).map(([k, v]) =>
         '<option value="' + k + '"' + (k === g.direction ? ' selected' : '') + '>' + v + '</option>').join('') + '</select></label>' +
       '<label>Words per round<select name="count">' + [5, 10, 15, 20, 30, 0].map((n) =>
         '<option value="' + n + '"' + (n === g.count ? ' selected' : '') + '>' + (n || 'All') + '</option>').join('') + '</select></label>' +
@@ -600,11 +600,16 @@
           g.count = Number(form.count.value);
           g.categoryIds = Array.from(form.querySelectorAll('input[name=cat]:checked')).map((c) => c.value);
         };
+        const dirLabel = modal.querySelector('#g-dir');
         const update = () => {
           read();
-          const n = wordsForCategories(g.categoryIds).length;
-          summary.textContent = n ? 'This game will use ' + (g.count ? Math.min(g.count, n) + ' of ' : 'all ') + n + ' matching words per round.'
-            : 'No words match these categories yet.';
+          dirLabel.hidden = !!Games.TYPES[g.type].noDirection;
+          let words = wordsForCategories(g.categoryIds);
+          if (g.type === 'gap') words = words.filter((w) => Core.sentenceFor(w));
+          const n = words.length;
+          summary.textContent = n ? 'This game will use ' + (g.count ? Math.min(g.count, n) + ' of ' : 'all ') + n + ' matching words per round.' +
+            (g.type === 'gap' ? ' (Only words with an example sentence that contains the word.)' : '')
+            : g.type === 'gap' ? 'No words here have an example sentence that contains the word yet.' : 'No words match these categories yet.';
           if (!form.name.value.trim() || form.name.dataset.auto) {
             const cs = g.categoryIds.map((id) => Store.category(id).name);
             form.name.value = (cs.length ? cs.join(' + ') : 'All words') + ' – ' + Games.TYPES[g.type].name;
@@ -613,7 +618,7 @@
         };
         form.name.oninput = () => { delete form.name.dataset.auto; };
         form.addEventListener('change', update);
-        if (isNew) update(); else { read(); summary.textContent = gameSummary(g); }
+        if (isNew) update(); else { read(); dirLabel.hidden = !!Games.TYPES[g.type].noDirection; summary.textContent = gameSummary(g); }
         let then = 'save';
         form.querySelectorAll('[data-then]').forEach((b) => { b.onclick = () => { then = b.dataset.then; }; });
         form.onsubmit = (e) => {

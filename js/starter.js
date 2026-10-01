@@ -137,7 +137,7 @@
     ['palata', 'to return, to come back', 'verb', 'Type 4 · minä palaan · hän palasi (past).', [['Palaan kotiin illalla.', 'I\'ll come back home in the evening.']], ['A2.2 verbs', 'Verbs']],
     ['käydä', 'to visit, to go (and come back)', 'verb', 'Type 2 · minä käyn · hän kävi (past). Takes the inessive: käydä kaupassa.', [['Käyn kaupassa.', 'I\'ll pop to the shop.']], ['A2.2 verbs', 'Verbs']],
     ['viedä', 'to take (somewhere)', 'verb', 'Type 2 · minä vien · hän vei (past).', [['Vien lapset kouluun.', 'I take the kids to school.']], ['A2.2 verbs', 'Verbs']],
-    ['tuoda', 'to bring', 'verb', 'Type 2 · minä tuon · hän toi (past).', [['Toin sinulle lahjan.', 'I brought you a present.']], ['A2.2 verbs', 'Verbs']],
+    ['tuoda', 'to bring', 'verb', 'Type 2 · minä tuon · hän toi (past).', [['Tuon sinulle lahjan huomenna.', 'I\'ll bring you a present tomorrow.']], ['A2.2 verbs', 'Verbs']],
     ['etsiä', 'to look for, to search', 'verb', 'Type 1 · minä etsin · hän etsi (past). Takes the partitive.', [['Etsin silmälasejani.', 'I\'m looking for my glasses.']], ['A2.2 verbs', 'Verbs']],
     ['löytää', 'to find', 'verb', 'Type 1 · minä löydän · hän löysi (past).', [['Löysin lompakon kadulta.', 'I found a wallet in the street.']], ['A2.2 verbs', 'Verbs']],
     ['kysyä', 'to ask', 'verb', 'Type 1 · minä kysyn · hän kysyi (past).', [['Saanko kysyä jotain?', 'May I ask something?']], ['A2.2 verbs', 'Verbs']],
@@ -184,7 +184,7 @@
     ['hoitoaika', 'care hours, booked care time', 'noun', 'The hours a child is booked to be at daycare, usually reported in an app. Stem: hoitoajan.', [['Ilmoita lapsen hoitoajat sovellukseen.', 'Report the child\'s care hours in the app.']], D],
     ['poissaolo', 'absence', 'noun', 'When a child is not at daycare, e.g. because of illness.', [['Ilmoitathan poissaolosta aamulla.', 'Please report any absence in the morning.']], D],
     ['tiedote', 'notice, newsletter', 'noun', 'A written message to guardians. Stem: tiedotteen, tiedotetta.', [['Viikon tiedote on sovelluksessa.', 'The weekly newsletter is in the app.']], D],
-    ['työvuoro', 'work shift', 'noun', 'aamuvuoro = morning shift, iltavuoro = evening shift.', [['Minulla on huomenna aamuvuoro.', 'I\'m on the morning shift tomorrow.']], D],
+    ['työvuoro', 'work shift', 'noun', 'aamuvuoro = morning shift, iltavuoro = evening shift.', [['Työvuoroni alkaa kello seitsemän.', 'My shift starts at seven o\'clock.']], D],
     ['palaveri', 'meeting', 'noun', 'A work meeting, e.g. tiimipalaveri = team meeting.', [['Tiimipalaveri on keskiviikkona.', 'The team meeting is on Wednesday.']], D],
     ['havainnointi', 'observation', 'noun', 'Watching and documenting children\'s play and learning to plan activities. Verb: havainnoida.', [['Havainnointi auttaa suunnittelemaan toimintaa.', 'Observation helps in planning activities.']], D],
 

@@ -355,3 +355,13 @@ legend { font-weight: 600; font-size: .9rem; padding: 0 .3rem; }
 .word-detail { overflow-wrap: anywhere; }
 .word-detail .btn { white-space: normal; text-align: center; }
 @media (max-width: 480px) { .wd-head h1 { font-size: 1.7rem; } .fc-text, .q-prompt { font-size: 1.6rem; } }
+
+/* Fill the gap */
+.gap-sentence { font-size: 1.5rem; font-weight: 600; line-height: 1.5; margin: .6rem 0 .4rem; overflow-wrap: anywhere; }
+.gap { color: var(--primary); letter-spacing: .05em; font-weight: 700; padding: 0 .15rem; }
+.gap-filled { background: var(--ok-soft); color: var(--ok); border-radius: 6px; padding: 0 .25rem; }
+.gap-hint { min-height: 2rem; margin-bottom: 1rem; }
+.choices.six { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 640px) { .choices.six { grid-template-columns: 1fr 1fr; } .gap-sentence { font-size: 1.25rem; } }
+@media (max-width: 440px) { .choices.six { grid-template-columns: 1fr; gap: .45rem; } .choices.six .choice { padding: .65rem .9rem; overflow-wrap: normal; } }
+#g-dir[hidden] { display: none; }

@@ -213,6 +213,92 @@
     };
   }
 
+  /* ---------- Fill-the-gap sentences ---------- */
+
+  /**
+   * Find where a word appears in a sentence, allowing for Finnish inflection
+   * (ostaa → Ostin, tavata → Tavataan, sydän → sydämen).
+   * Returns { start, end, form } or null when the word can't be found reliably.
+   */
+  function findWordInSentence(sentence, finnish) {
+    const text = String(sentence || '');
+    const lower = text.toLowerCase();
+    const base = String(finnish || '').toLowerCase().trim();
+    if (!base || !text) return null;
+    if (/\s/.test(base)) {
+      // Phrases must appear as written, e.g. "ole hyvä".
+      const i = lower.indexOf(base);
+      return i < 0 ? null : { start: i, end: i + base.length, form: text.slice(i, i + base.length) };
+    }
+    const required = Math.max(Math.min(3, base.length), Math.ceil(base.length * 0.5));
+    const tokens = Array.from(text.matchAll(/[a-zà-ÿ]+(?:-[a-zà-ÿ]+)*/gi)).map((m) => {
+      const tok = m[0].toLowerCase();
+      let p = 0;
+      while (p < tok.length && p < base.length && tok[p] === base[p]) p++;
+      return { tok, p, start: m.index, end: m.index + m[0].length, form: m[0] };
+    });
+    // 1. An inflected form sharing most of the beginning: Ostin, Tavataan, sydämen.
+    let best = null;
+    for (const t of tokens) if (t.p >= required && (!best || t.p > best.p)) best = t;
+    if (best) return { start: best.start, end: best.end, form: best.form };
+    // 2. The end of a compound: lentopelko → lento____.
+    if (base.length >= 4) {
+      for (const t of tokens) {
+        const i = t.tok.indexOf(base);
+        if (i > 0) return { start: t.start + i, end: t.start + i + base.length, form: t.form.slice(i, i + base.length) };
+      }
+    }
+    // 3. Strong stem changes (vesi → vettä, tehdä → teet): the third letter must follow a
+    //    typical Finnish change, and only one word in the sentence may qualify.
+    const close = tokens.filter((t) => t.p === 2 && t.tok.length >= 3 && stemChange(base, t.tok));
+    if (close.length === 1) return { start: close[0].start, end: close[0].end, form: close[0].form };
+    return null;
+  }
+
+  const VOWELS = 'aeiouyäö';
+  /** Does the third letter of `tok` follow a common stem change from `base`? */
+  function stemChange(base, tok) {
+    const b = base[2], t = tok[2];
+    if (!b || !t) return false;
+    return (b === 't' && t === 'd') ||                       // satu → sadun, pitää → pidän
+      (b === 'k' && (VOWELS.includes(t) || t === 'g' || t === 'j')) || // pukea → puetaan
+      (b === 'p' && t === 'v') ||                            // tupa → tuvan
+      (b === 's' && t === 't') ||                            // vesi → vettä
+      (b === 'm' && t === 'n') ||                            // lumi → lunta
+      (b === 'h' && VOWELS.includes(t)) ||                   // tehdä → teet, nähdä → näin
+      (VOWELS.includes(b) && VOWELS.includes(t)) ||          // myydä → myivät
+      (base[1] === b && base[3] === t);                      // oppia → opin
+  }
+
+  /** A random example sentence of the word with the word located in it, or null. */
+  function sentenceFor(word, rng) {
+    const usable = (word.examples || [])
+      .map((ex) => ({ ex, hit: findWordInSentence(ex.fi, word.finnish) }))
+      .filter((x) => x.hit);
+    if (!usable.length) return null;
+    const { ex, hit } = usable[Math.floor((rng || Math.random)() * usable.length)];
+    return {
+      fi: ex.fi, en: ex.en || '', form: hit.form,
+      before: ex.fi.slice(0, hit.start), after: ex.fi.slice(hit.end),
+    };
+  }
+
+  /** Options for a gap: the word plus distractors, preferring the same part of speech. */
+  function gapChoices(word, pool, n, rng) {
+    const seen = new Set([normalize(word.finnish)]);
+    const others = shuffle(pool.filter((w) => w.id !== word.id), rng);
+    const same = others.filter((w) => w.partOfSpeech && w.partOfSpeech === word.partOfSpeech);
+    const picked = [];
+    for (const w of same.concat(others)) {
+      const key = normalize(w.finnish);
+      if (!key || seen.has(key)) continue;
+      seen.add(key);
+      picked.push(w.finnish);
+      if (picked.length >= n - 1) break;
+    }
+    return shuffle(picked.concat(word.finnish), rng);
+  }
+
   /* ---------- Category suggestions ---------- */
 
   function singular(t) {
@@ -368,5 +454,6 @@
     uid, normalize, stripDiacritics, alternatives, levenshtein, checkAnswer, shuffle,
     filterWords, sortWords, accuracy, makeCard, choicesFor, pickRound,
     stripHtml, parseWiktionary, suggestionFromEntries, mergeImport, suggestCategories,
+    findWordInSentence, sentenceFor, gapChoices,
   };
 });

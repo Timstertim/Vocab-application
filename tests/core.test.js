@@ -195,3 +195,36 @@ test('suggestCategories knows shapes', () => {
   const s = Core.suggestCategories({ english: 'triangle' }, [{ id: 'sh', name: 'Shapes' }], TOPICS);
   assert.deepEqual(s.map((x) => x.id), ['sh']);
 });
+
+test('findWordInSentence locates inflected forms, compounds and phrases', () => {
+  const f = (s, w) => { const h = Core.findWordInSentence(s, w); return h && h.form; };
+  assert.equal(f('Ostin uuden takin.', 'ostaa'), 'Ostin');
+  assert.equal(f('Tavataan huomenna kahvilassa.', 'tavata'), 'Tavataan');
+  assert.equal(f('Piirsin sydämen korttiin.', 'sydän'), 'sydämen');
+  assert.equal(f('Minulla on lentopelko.', 'pelko'), 'pelko');
+  assert.equal(f('Saisinko lasin vettä?', 'vesi'), 'vettä');
+  assert.equal(f('Ole hyvä, tässä on kahvisi.', 'ole hyvä'), 'Ole hyvä');
+  assert.equal(f('Kiitos avusta.', 'talo'), null);
+  // Two equally loose candidates: refuse rather than guess.
+  assert.equal(f('Sanoin sinulle sen.', 'satu'), null);
+});
+
+test('sentenceFor splits the sentence around the word', () => {
+  const s = Core.sentenceFor({ finnish: 'ostaa', examples: [{ fi: 'Ostin uuden takin.', en: 'I bought a new coat.' }] });
+  assert.deepEqual([s.before, s.form, s.after, s.en], ['', 'Ostin', ' uuden takin.', 'I bought a new coat.']);
+  assert.equal(Core.sentenceFor({ finnish: 'talo', examples: [{ fi: 'Kiitos.' }] }), null);
+  assert.equal(Core.sentenceFor({ finnish: 'talo', examples: [] }), null);
+});
+
+test('gapChoices gives six distinct options, preferring the same part of speech', () => {
+  const pool = [
+    ...['ostaa', 'myydä', 'tulla', 'mennä', 'syödä', 'juoda'].map((f, i) => ({ id: 'v' + i, finnish: f, partOfSpeech: 'verb' })),
+    ...['talo', 'kissa', 'koira'].map((f, i) => ({ id: 'n' + i, finnish: f, partOfSpeech: 'noun' })),
+  ];
+  const choices = Core.gapChoices(pool[0], pool, 6);
+  assert.equal(choices.length, 6);
+  assert.equal(new Set(choices).size, 6);
+  assert.ok(choices.includes('ostaa'));
+  assert.ok(choices.every((c) => !['talo', 'kissa', 'koira'].includes(c)));
+  assert.equal(Core.gapChoices(pool[0], pool.slice(0, 3), 6).length, 3);
+});

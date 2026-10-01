@@ -23,6 +23,10 @@ with Quizlet-style mini games.
 - **Games** (pick a category and a direction: Finnish → English, English → Finnish or mixed):
   - 🃏 **Flashcards**: flip cards and mark each one "know it" or "still learning".
   - ✅ **Multiple choice**: four options per question.
+  - 🧩 **Fill the gap**: a Finnish example sentence with one word missing. Pick the right
+    word out of six (in dictionary form). The answer shows the form used in the sentence,
+    e.g. *Tavataan* is a form of *tavata*. Uses each word's own example sentences, and
+    handles inflection, compounds and common stem changes (*vesi → vettä*).
   - ✍️ **Write**: type the answer, with ä / ö / å buttons. It flags near misses and brings
     missed words back at the end of the round.
   - ⚡ **Match**: pair Finnish words with their meanings against the clock. Your best

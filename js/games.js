@@ -1,4 +1,4 @@
-/* Quizlet-style practice games: flashcards, multiple choice, write and match. */
+/* Quizlet-style practice games: flashcards, multiple choice, fill the gap, write and match. */
 (function (root) {
   'use strict';
   const Core = root.VocabCore;
@@ -7,6 +7,7 @@
   const TYPES = {
     flashcards: { name: 'Flashcards', icon: '🃏', blurb: 'Flip cards and sort them into "know it" and "still learning".' },
     quiz: { name: 'Multiple choice', icon: '✅', blurb: 'Pick the right translation out of four options.' },
+    gap: { name: 'Fill the gap', icon: '🧩', blurb: 'Pick the word that completes a Finnish sentence, out of six.', noDirection: true },
     write: { name: 'Write', icon: '✍️', blurb: 'Type the translation. Missed words come back at the end.' },
     match: { name: 'Match', icon: '⚡', blurb: 'Race the clock to pair Finnish words with their meanings.' },
   };
@@ -59,10 +60,25 @@
       el.querySelector('[data-act=exit]').onclick = opts.onExit;
       return;
     }
+    if (opts.type === 'gap') {
+      // Only words whose example sentence actually contains the word can be used.
+      const usable = opts.words.filter((w) => Core.sentenceFor(w));
+      const pool = opts.pool || opts.words;
+      if (!usable.length || pool.length < 2) {
+        el.innerHTML = '<div class="empty card-pad"><p>' + (usable.length
+          ? 'Fill the gap needs at least 2 words.'
+          : 'None of these words has an example sentence that contains the word yet. ' +
+            'Add an example sentence to a word (on its page, press Edit) and it will show up here.') +
+          '</p><button class="btn" data-act="exit">Back</button></div>';
+        el.querySelector('[data-act=exit]').onclick = opts.onExit;
+        return;
+      }
+      opts = Object.assign({}, opts, { words: usable, pool });
+    }
     const round = Core.pickRound(opts.words, opts.count);
     const cards = round.map((w) => Core.makeCard(w, opts.direction || 'fi-en'));
     const session = { opts, cards, results: [], el, startedAt: Date.now() };
-    ({ flashcards, quiz, write, match })[opts.type](session);
+    ({ flashcards, quiz, gap, write, match })[opts.type](session);
   }
 
   function header(session, index, total, extra) {
@@ -213,6 +229,70 @@
     function next() {
       timers.forEach(clearTimeout);
       timers = [];
+      i++;
+      render();
+    }
+    render();
+  }
+
+  /* ---------- Fill the gap ---------- */
+  function gap(session) {
+    let i = 0;
+    const pool = session.opts.pool;
+
+    function render() {
+      if (i >= session.cards.length) return finish(session);
+      const c = session.cards[i];
+      const w = c.word;
+      const sentence = Core.sentenceFor(w);
+      const choices = Core.gapChoices(w, pool, 6);
+      let answered = false;
+      session.el.innerHTML = header(session, i, session.cards.length) +
+        '<div class="question card-pad">' +
+        '<div class="q-label">Which word fits the gap?</div>' +
+        '<p class="gap-sentence" lang="fi">' + esc(sentence.before) + '<span class="gap">' +
+        '________' + '</span>' + esc(sentence.after) + '</p>' +
+        (sentence.en ? '<div class="gap-hint"><button type="button" class="btn ghost small" data-act="hint">💡 Show translation</button></div>' : '') +
+        '<div class="choices six">' +
+        choices.map((ch, n) => '<button class="choice" data-n="' + n + '"><kbd>' + (n + 1) + '</kbd> <span lang="fi">' +
+          esc(ch) + '</span></button>').join('') +
+        '</div><div class="feedback" aria-live="polite"></div></div>';
+      bindExit(session);
+      const hint = session.el.querySelector('[data-act=hint]');
+      if (hint) hint.onclick = () => { hint.parentNode.innerHTML = '<span class="muted">' + esc(sentence.en) + '</span>'; };
+      const buttons = Array.from(session.el.querySelectorAll('.choice'));
+      const choose = (n) => {
+        if (answered || n >= choices.length) return;
+        answered = true;
+        const ok = choices[n] === w.finnish;
+        record(session, c, ok);
+        buttons.forEach((b, k) => {
+          b.disabled = true;
+          if (choices[k] === w.finnish) b.classList.add('right');
+          else if (k === n) b.classList.add('wrong');
+        });
+        // Reveal the full sentence with the word in the form it takes there.
+        session.el.querySelector('.gap-sentence').innerHTML = esc(sentence.before) +
+          '<mark class="gap-filled">' + esc(sentence.form) + '</mark>' + esc(sentence.after) + ' ' + speakButton(sentence.fi, 'fi');
+        const hintBox = session.el.querySelector('.gap-hint');
+        if (hintBox && sentence.en) hintBox.innerHTML = '<span class="muted">' + esc(sentence.en) + '</span>';
+        const formNote = sentence.form.toLowerCase() !== w.finnish.toLowerCase()
+          ? '<p class="muted small"><strong lang="fi">' + esc(sentence.form) + '</strong> is a form of <strong lang="fi">' +
+            esc(w.finnish) + '</strong> (' + esc(w.english) + ').</p>'
+          : '<p class="muted small"><strong lang="fi">' + esc(w.finnish) + '</strong> = ' + esc(w.english) + '</p>';
+        const fb = session.el.querySelector('.feedback');
+        fb.innerHTML = (ok ? '<span class="good">Oikein! ✓</span>' : '<span class="bad">Not quite.</span>') + formNote +
+          '<button class="btn" data-act="next">Continue <kbd>Enter</kbd></button>';
+        fb.querySelector('[data-act=next]').onclick = next;
+        fb.querySelector('[data-act=next]').focus();
+        speak(sentence.fi, 'fi');
+      };
+      buttons.forEach((b, n) => { b.onclick = () => choose(n); });
+      onKey((e) => {
+        if (/^[1-6]$/.test(e.key)) choose(Number(e.key) - 1);
+      });
+    }
+    function next() {
       i++;
       render();
     }
