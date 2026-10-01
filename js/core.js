@@ -213,6 +213,97 @@
     };
   }
 
+  /* ---------- Category suggestions ---------- */
+
+  function singular(t) {
+    if (t.length <= 3 || /(ss|us|is)$/.test(t)) return t;
+    if (/ies$/.test(t)) return t.slice(0, -3) + 'y';
+    if (/(ches|shes|xes|sses)$/.test(t)) return t.slice(0, -2);
+    if (/s$/.test(t)) return t.slice(0, -1);
+    return t;
+  }
+
+  /** Lowercase words, singularised, padded with spaces so " phrase " lookups work. */
+  function topicText(s) {
+    const words = String(s || '').toLowerCase()
+      .replace(/\([^)]*\)/g, ' ')
+      .split(/[^a-zà-ÿ'-]+/i)
+      .map((t) => t.replace(/^['-]+|['-]+$/g, ''))
+      .filter(Boolean)
+      .map(singular);
+    return ' ' + words.join(' ') + ' ';
+  }
+  const has = (text, phrase) => text.includes(' ' + phrase + ' ');
+
+  // Words too common in dictionary definitions to say anything about the topic there.
+  const WEAK_IN_DEFINITION = new Set(['one', 'like', 'back', 'right', 'left', 'second', 'may', 'march', 'fly', 'play',
+    'change', 'light', 'fall', 'match', 'stop', 'word', 'time', 'day', 'now', 'person', 'people', 'man', 'thing',
+    'dark', 'cold', 'warm', 'hot', 'cool', 'test', 'card', 'file', 'run', 'walk', 'kind', 'feel', 'sweet', 'first',
+    'program', 'place', 'family', 'number', 'count', 'good', 'well', 'often', 'always', 'never']);
+  const NAME_STOPWORDS = new Set(['and', 'the', 'for', 'with', 'from', 'chapter', 'lesson', 'unit', 'misc', 'other', 'my', 'word', 'new']);
+
+  /**
+   * Suggest categories for a word.
+   * Returns up to `limit` items: { kind: 'existing', id, name, score } for categories the user
+   * already has, or { kind: 'new', name, score } for a built-in topic with no matching category.
+   * `selectedIds` are left out (already ticked).
+   */
+  function suggestCategories(word, categories, topics, opts) {
+    opts = opts || {};
+    const limit = opts.limit || 3;
+    const selected = new Set(opts.selectedIds || []);
+    const en = topicText(word.english);
+    const def = topicText(word.definition);
+    let pos = String(word.partOfSpeech || '').toLowerCase();
+    if (!pos && /^\s*to [a-z]/i.test(word.english || '')) pos = 'verb';
+    if (en.trim() === '' && def.trim() === '' && !pos) return [];
+
+    const scoreText = (phrase) => {
+      if (has(en, phrase)) return 2;
+      if (!WEAK_IN_DEFINITION.has(phrase) && has(def, phrase)) return 1;
+      return 0;
+    };
+    const topicScore = topics.map((t) => {
+      let s = (t.pos || []).includes(pos) ? 2 : 0;
+      const seen = new Set();
+      for (const kw of t.keywords) {
+        const k = topicText(kw).trim();
+        if (!k || seen.has(k)) continue;
+        seen.add(k);
+        s += scoreText(k);
+      }
+      return s;
+    });
+
+    const covered = new Set();
+    const out = [];
+    for (const c of categories) {
+      const name = topicText(c.name).trim();
+      const nameTokens = name.split(' ').filter((t) => t.length >= 3 && !NAME_STOPWORDS.has(t));
+      let score = 0;
+      topics.forEach((t, i) => {
+        const aliases = t.aliases.map((a) => topicText(a).trim()).concat(topicText(t.name).trim());
+        if (aliases.includes(name) || nameTokens.some((tok) => aliases.includes(tok))) {
+          covered.add(i);
+          score = Math.max(score, topicScore[i]);
+        }
+      });
+      // A category named after something in the word itself, e.g. "Sauna" for "sauna".
+      const direct = nameTokens.reduce((s, tok) => s + scoreText(tok), 0);
+      score = Math.max(score, direct);
+      if (score > 0 && !selected.has(c.id)) out.push({ kind: 'existing', id: c.id, name: c.name, score });
+    }
+    if (opts.allowNew !== false) {
+      topics.forEach((t, i) => {
+        if (!covered.has(i) && topicScore[i] >= 2) out.push({ kind: 'new', name: t.name, score: topicScore[i] });
+      });
+    }
+    out.sort((a, b) => b.score - a.score || (a.kind === b.kind ? 0 : a.kind === 'existing' ? -1 : 1));
+    // A single passing mention in the definition is noise next to a clear match.
+    const top = out.length ? out[0].score : 0;
+    return out.filter((x) => x.score > 1 || top < 3).slice(0, limit);
+  }
+
   /** Validate and merge imported data into the current state (by Finnish word). */
   function mergeImport(state, data) {
     if (!data || !Array.isArray(data.words)) throw new Error('File does not contain a "words" list.');
@@ -267,6 +358,6 @@
   return {
     uid, normalize, stripDiacritics, alternatives, levenshtein, checkAnswer, shuffle,
     filterWords, sortWords, accuracy, makeCard, choicesFor, pickRound,
-    stripHtml, parseWiktionary, suggestionFromEntries, mergeImport,
+    stripHtml, parseWiktionary, suggestionFromEntries, mergeImport, suggestCategories,
   };
 });

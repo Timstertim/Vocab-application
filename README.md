@@ -15,6 +15,11 @@ with Quizlet-style mini games.
   can add more definitions or examples one at a time.
 - **Categories**: colour-coded groups such as "Food & drink" or "Chapter 3". A word can be
   in several categories, and you can create a new category straight from the word form.
+- **Category suggestions**: while you add a word, the app suggests categories based on its
+  English meaning, definition and part of speech. It offers your existing categories when they
+  fit (e.g. "to eat" → *Food & drink* and *Verbs*), or proposes a new one (e.g. "dog" →
+  *+ New: Animals*). One tap creates the category and ticks it. Suggestions come from a
+  built-in list of about 20 everyday topics in `js/topics.js`, so they work offline.
 - **Games** (pick a category and a direction: Finnish → English, English → Finnish or mixed):
   - 🃏 **Flashcards**: flip cards and mark each one "know it" or "still learning".
   - ✅ **Multiple choice**: four options per question.
@@ -59,6 +64,7 @@ npm test        # unit tests for answer checking, search, Wiktionary parsing, im
 | `js/games.js` | The four game modes and the results screen |
 | `js/app.js` | Routing, pages and forms |
 | `js/ui.js` | Shared helpers (escaping, speech, ä/ö buttons) |
+| `js/topics.js` | Topics and keywords used for category suggestions |
 | `js/starter.js` | Starter vocabulary |
 
 Dictionary content from Wiktionary is available under CC BY-SA.

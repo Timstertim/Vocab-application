@@ -117,3 +117,40 @@ test('mergeImport adds new words, updates duplicates and maps categories by name
   assert.deepEqual(res.state.words.find((w) => w.finnish === 'leipä').categoryIds, [food.id]);
   assert.throws(() => Core.mergeImport(state, { nope: 1 }));
 });
+
+const TOPICS = require('../js/topics.js');
+const CATS = [
+  { id: 'g', name: 'Greetings' }, { id: 'f', name: 'Food & drink' }, { id: 'v', name: 'Verbs' },
+  { id: 'col', name: 'Colours' }, { id: 's', name: 'Sauna' },
+];
+const suggest = (w, opts) => Core.suggestCategories(w, CATS, TOPICS, opts);
+
+test('suggestCategories picks a matching existing category', () => {
+  const s = suggest({ english: 'yellow', partOfSpeech: 'adjective' });
+  assert.equal(s[0].kind, 'existing');
+  assert.equal(s[0].id, 'col');
+});
+
+test('suggestCategories proposes a new category when no existing one fits', () => {
+  const s = suggest({ english: 'dog', definition: 'A domesticated mammal kept as a pet.' });
+  assert.deepEqual(s.map((x) => [x.kind, x.name]), [['new', 'Animals']]);
+});
+
+test('suggestCategories recognises verbs from "to ..." and maps category names by alias', () => {
+  const s = suggest({ english: 'to eat' });
+  assert.deepEqual(s.map((x) => x.id).sort(), ['f', 'v']);
+  const other = Core.suggestCategories({ english: 'rain' }, [{ id: 'w', name: 'weather' }], TOPICS);
+  assert.deepEqual(other.map((x) => x.id), ['w']);
+});
+
+test('suggestCategories matches a user category named after the word and skips ticked ones', () => {
+  assert.ok(suggest({ english: 'sauna' }).some((x) => x.id === 's'));
+  assert.ok(!suggest({ english: 'yellow' }, { selectedIds: ['col'] }).some((x) => x.id === 'col'));
+});
+
+test('suggestCategories stays quiet without a clear signal', () => {
+  assert.deepEqual(suggest({ english: '' }), []);
+  assert.deepEqual(suggest({ english: 'something odd' }), []);
+  // "water" only in the definition should not outrank a clear weather match
+  assert.deepEqual(suggest({ english: 'rain', definition: 'Water falling from clouds.' }).map((x) => x.name), ['Weather']);
+});

@@ -331,3 +331,16 @@ legend { font-weight: 600; font-size: .9rem; padding: 0 .3rem; }
   opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; max-width: calc(100vw - 32px);
 }
 #toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* Category suggestions in the word form */
+.cat-suggest { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; margin-bottom: .6rem; }
+.cat-suggest:empty { display: none; }
+.suggest {
+  --chip: var(--primary);
+  font: inherit; font-size: .8rem; font-weight: 700; padding: .2rem .65rem; border-radius: 999px; cursor: pointer;
+  color: var(--chip); background: color-mix(in srgb, var(--chip) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--chip) 45%, transparent);
+}
+.suggest:hover { background: color-mix(in srgb, var(--chip) 22%, transparent); }
+.suggest.new { border-style: dashed; color: var(--muted); --chip: var(--muted); }
+.suggest.new:hover { color: var(--text); }

@@ -274,7 +274,7 @@
       '<fieldset><legend>Example sentences</legend><div id="f-examples">' +
       (w.examples.length ? w.examples : [{ fi: '', en: '' }]).map(exampleRow).join('') +
       '</div><button type="button" class="btn small ghost" data-act="add-ex">+ Add example</button></fieldset>' +
-      '<fieldset><legend>Categories</legend><div class="cat-picks">' +
+      '<fieldset><legend>Categories</legend><div class="cat-suggest" aria-live="polite"></div><div class="cat-picks">' +
       cats.map((c) => '<label class="cat-pick"><input type="checkbox" name="cat" value="' + esc(c.id) + '"' +
         (w.categoryIds.includes(c.id) ? ' checked' : '') + '>' + catChip(c) + '</label>').join('') +
       '</div><div class="row gap nowrap"><input id="f-newcat" placeholder="New category name">' +
@@ -307,10 +307,8 @@
           } else exBox.insertAdjacentHTML('beforeend', exampleRow(ex));
         };
 
-        modal.querySelector('[data-act=new-cat]').onclick = () => {
-          const input = modal.querySelector('#f-newcat');
-          const name = input.value.trim();
-          if (!name) { input.focus(); return; }
+        // Create (or reuse) a category by name and tick it.
+        const addCategory = (name) => {
           let cat = Store.get().categories.find((c) => c.name.toLowerCase() === name.toLowerCase());
           if (!cat) {
             cat = { id: Core.uid(), name, color: PALETTE[Store.get().categories.length % PALETTE.length] };
@@ -319,8 +317,53 @@
               '<label class="cat-pick"><input type="checkbox" name="cat" value="' + esc(cat.id) + '">' + catChip(cat) + '</label>');
           }
           modal.querySelector('input[name=cat][value="' + CSS.escape(cat.id) + '"]').checked = true;
-          input.value = '';
+          return cat;
         };
+        modal.querySelector('[data-act=new-cat]').onclick = () => {
+          const input = modal.querySelector('#f-newcat');
+          const name = input.value.trim();
+          if (!name) { input.focus(); return; }
+          addCategory(name);
+          input.value = '';
+          renderSuggestions();
+        };
+
+        // Category suggestions, based on the meaning, definition and part of speech.
+        const suggestBox = modal.querySelector('.cat-suggest');
+        let suggestions = [];
+        function renderSuggestions() {
+          suggestions = Core.suggestCategories({
+            finnish: fiInput.value, english: form.english.value,
+            definition: form.definition.value, partOfSpeech: form.partOfSpeech.value,
+          }, Store.get().categories, root.VocabTopics, {
+            selectedIds: Array.from(form.querySelectorAll('input[name=cat]:checked')).map((c) => c.value),
+          });
+          suggestBox.innerHTML = suggestions.length ? '<span class="muted small">Suggested:</span> ' + suggestions.map((sg, n) => {
+            const cat = sg.kind === 'existing' ? Store.category(sg.id) : null;
+            return '<button type="button" class="suggest' + (cat ? '' : ' new') + '" data-sg="' + n + '"' +
+              (cat ? ' style="--chip:' + esc(cat.color) + '"' : '') + ' title="' +
+              (cat ? 'Add to ' + esc(sg.name) : 'Create the category ' + esc(sg.name) + ' and add this word to it') + '">+ ' +
+              (cat ? '' : 'New: ') + esc(sg.name) + '</button>';
+          }).join('') : '';
+        }
+        suggestBox.addEventListener('click', (e) => {
+          const b = e.target.closest('[data-sg]');
+          if (!b) return;
+          const sg = suggestions[Number(b.dataset.sg)];
+          if (sg.kind === 'existing') {
+            modal.querySelector('input[name=cat][value="' + CSS.escape(sg.id) + '"]').checked = true;
+          } else {
+            toast('Created category ' + addCategory(sg.name).name);
+          }
+          renderSuggestions();
+        });
+        let suggestTimer;
+        const suggestSoon = () => { clearTimeout(suggestTimer); suggestTimer = setTimeout(renderSuggestions, 250); };
+        form.english.addEventListener('input', suggestSoon);
+        form.definition.addEventListener('input', suggestSoon);
+        form.partOfSpeech.addEventListener('change', renderSuggestions);
+        modal.querySelector('.cat-picks').addEventListener('change', renderSuggestions);
+        renderSuggestions();
         modal.querySelector('#f-newcat').addEventListener('keydown', (e) => {
           if (e.key === 'Enter') { e.preventDefault(); modal.querySelector('[data-act=new-cat]').click(); }
         });
@@ -334,6 +377,7 @@
               form.definition.value = form.definition.value.trim() ? form.definition.value.trim() + '; ' + text : text;
               if (!form.english.value.trim()) form.english.value = Core.suggestionFromEntries([{ partOfSpeech: entry.partOfSpeech, definitions: [{ text, examples: [] }] }]).english;
               setPos(entry.partOfSpeech);
+              renderSuggestions();
             },
             onExample: addExample,
           });
@@ -347,6 +391,7 @@
             if (!hasExample) sg.examples.slice(0, 2).forEach(addExample);
             toast('Filled in from Wiktionary – check and adjust as you like');
           }
+          renderSuggestions();
         };
         function setPos(pos) {
           pos = String(pos || '').toLowerCase();
