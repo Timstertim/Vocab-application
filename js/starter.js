@@ -5,7 +5,8 @@
  */
 (function (root) {
   'use strict';
-  const C = (name, color) => ({ id: 'cat-' + name.toLowerCase().replace(/\W+/g, '-'), name, color });
+  const slug = (n) => n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\W+/g, '-').replace(/-$/, '');
+  const C = (name, color) => ({ id: 'cat-' + slug(name), name, color });
   const categories = [
     C('Greetings', '#3b6fd8'),
     C('Food & drink', '#e07a2e'),
@@ -39,9 +40,17 @@
     C('Spoken Finnish', '#d24545'),
     C('Holidays & traditions', '#b8862a'),
     C('Finnish food', '#e07a2e'),
+    C('At the shop', '#2e9a6b'),
+    C('At the library', '#7a55c7'),
+    C('At the health centre', '#c2417e'),
+    C('At the café', '#a8781f'),
+    C('Bus & train', '#d07a20'),
+    C('Daycare pick-up', '#c0602a'),
+    C('On the phone', '#1f8fa3'),
+    C('At the office', '#55606e'),
   ];
-  const VERSION = 4;
-  const id = (n) => 'cat-' + n.toLowerCase().replace(/\W+/g, '-');
+  const VERSION = 5;
+  const id = (n) => 'cat-' + slug(n);
 
   // [finnish, english, part of speech, definition, [[example fi, example en]...], category]
   const raw = [
@@ -769,16 +778,141 @@
     ['piimä', 'buttermilk', 'noun', 'A sour milk drink.', [['Isoisä juo piimää.', 'Grandad drinks buttermilk.']], 'Finnish food'],
   ];
 
+  // Added in version 5: words and phrases used in the role-play scenarios.
+  const v5 = [
+    // At the shop
+    ['onko teillä', 'do you have …?', 'phrase', 'Polite way to ask a shop for something. The thing is usually partitive: Onko teillä maitoa?', [['Onko teillä tätä mustana?', 'Do you have this in black?']], 'At the shop'],
+    ['löytyykö', 'is there …? do you have …?', 'verb', 'From löytyä (to be found). Very common in shops.', [['Löytyykö tätä isompana?', 'Do you have this in a bigger size?']], 'At the shop'],
+    ['sovituskoppi', 'fitting room', 'noun', 'Where you try on clothes. Stem: sovituskopin.', [['Sovituskoppi on tuolla vasemmalla.', 'The fitting room is over there on the left.']], 'At the shop'],
+    ['varasto', 'stockroom, storage', 'noun', 'katsoa varastosta = to check the stockroom.', [['Katson varastosta.', 'I\'ll check the stockroom.']], 'At the shop'],
+    ['isompi', 'bigger', 'adjective', 'Comparative of iso. isompi koko = a bigger size. Stem: isomman.', [['Tarvitsen isomman koon.', 'I need a bigger size.']], 'At the shop'],
+    ['pienempi', 'smaller', 'adjective', 'Comparative of pieni. Stem: pienemmän.', [['Onko tätä pienempää kokoa?', 'Is there a smaller size of this?']], 'At the shop'],
+    ['numero', 'number; shoe size', 'noun', 'For shoes, Finns say numero: Käytän numeroa 38.', [['Käytän kenkiä numeroa 38.', 'I wear size 38 shoes.']], 'At the shop'],
+    ['myyjä', 'shop assistant, salesperson', 'noun', 'Stem: myyjän.', [['Myyjä auttoi minua.', 'The shop assistant helped me.']], 'At the shop'],
+    ['asiakas', 'customer', 'noun', 'Stem: asiakkaan, asiakasta.', [['Asiakas haluaa palauttaa tuotteen.', 'The customer wants to return a product.']], 'At the shop'],
+    ['tuote', 'product', 'noun', 'Stem: tuotteen, tuotetta.', [['Tuote on loppu.', 'The product is sold out.']], 'At the shop'],
+    ['loppu', 'sold out; end', 'noun', 'olla loppu = to be sold out / to have run out.', [['Tämä koko on valitettavasti loppu.', 'Unfortunately this size is sold out.']], 'At the shop'],
+    ['palautus', 'return (of an item)', 'noun', 'Stem: palautuksen.', [['Palautus onnistuu kuitilla 30 päivän sisällä.', 'Returns are possible with a receipt within 30 days.']], 'At the shop'],
+    ['rahat takaisin', 'money back, refund', 'phrase', 'saada rahat takaisin = to get a refund.', [['Sain rahat takaisin, koska paita oli rikki.', 'I got my money back because the shirt was broken.']], 'At the shop'],
+    ['lähimaksu', 'contactless payment', 'noun', 'Paying by tapping your card.', [['Lähimaksu toimii alle 50 euron ostoksissa.', 'Contactless works for purchases under 50 euros.']], 'At the shop'],
+    ['ostos', 'purchase', 'noun', 'Plural ostokset = shopping. Stem: ostoksen.', [['Kiitos ostoksesta!', 'Thanks for your purchase!']], 'At the shop'],
+
+    // At the library
+    ['dekkari', 'crime novel, detective story', 'noun', 'Everyday word; also rikosromaani. Stem: dekkarin.', [['Luen mielelläni dekkareita.', 'I like reading crime novels.']], 'At the library'],
+    ['lastenkirja', 'children\'s book', 'noun', 'Stem: lastenkirjan.', [['Lastenkirjat ovat alakerrassa.', 'Children\'s books are downstairs.']], 'At the library'],
+    ['äänikirja', 'audiobook', 'noun', 'Stem: äänikirjan.', [['Kuuntelen äänikirjaa bussissa.', 'I listen to an audiobook on the bus.']], 'At the library'],
+    ['suomenkielinen', 'in Finnish, Finnish-language', 'adjective', 'englanninkielinen = in English. Stem: suomenkielisen.', [['Etsin suomenkielisiä kirjoja.', 'I\'m looking for books in Finnish.']], 'At the library'],
+    ['hylly', 'shelf', 'noun', 'hyllyssä / hyllyllä = on the shelf.', [['Kirja on ylimmällä hyllyllä.', 'The book is on the top shelf.']], 'At the library'],
+    ['kerros', 'floor, storey', 'noun', 'toisessa kerroksessa = on the second floor. Stem: kerroksen.', [['Dekkarit ovat toisessa kerroksessa.', 'Crime novels are on the second floor.']], 'At the library'],
+    ['kirjastokortti', 'library card', 'noun', 'Free, and you need it to borrow. Stem: kirjastokortin.', [['Tarvitset kirjastokortin.', 'You need a library card.']], 'At the library'],
+    ['laina-aika', 'loan period', 'noun', 'How long you may keep a book. Stem: laina-ajan.', [['Laina-aika on neljä viikkoa.', 'The loan period is four weeks.']], 'At the library'],
+    ['lainassa', 'on loan, borrowed', 'adverb', 'olla lainassa = to be out on loan.', [['Kirja on lainassa.', 'The book is out on loan.']], 'At the library'],
+    ['uusia', 'to renew', 'verb', 'Type 1 · minä uusin · hän uusi (past). uusia laina = to renew a loan.', [['Voit uusia lainat netissä.', 'You can renew your loans online.']], 'At the library'],
+    ['varaus', 'reservation', 'noun', 'Stem: varauksen.', [['Varaus on noudettavissa.', 'The reservation is ready to collect.']], 'At the library'],
+    ['noutaa', 'to collect, to pick up', 'verb', 'Type 1 · minä noudan · hän nouti (past). noudettavissa = ready for collection.', [['Voit noutaa kirjan huomenna.', 'You can collect the book tomorrow.']], 'At the library'],
+    ['lainausautomaatti', 'self-service machine (for borrowing)', 'noun', 'Stem: lainausautomaatin.', [['Lainausautomaatti on oven vieressä.', 'The self-service machine is next to the door.']], 'At the library'],
+    ['myöhästymismaksu', 'late fee, overdue fine', 'noun', 'Many Finnish libraries no longer charge one for children.', [['Myöhästymismaksu on 20 senttiä päivässä.', 'The late fee is 20 cents a day.']], 'At the library'],
+
+    // At the health centre
+    ['oire', 'symptom', 'noun', 'Stem: oireen, oiretta.', [['Mitä oireita sinulla on?', 'What symptoms do you have?']], 'At the health centre'],
+    ['vaivata', 'to bother, to trouble', 'verb', 'Type 4 · se vaivaa · se vaivasi (past). Mikä sinua vaivaa? = What\'s bothering you?', [['Mikä sinua vaivaa?', 'What\'s bothering you?']], 'At the health centre'],
+    ['hoitaja', 'nurse', 'noun', 'Also: sairaanhoitaja. Stem: hoitajan.', [['Hoitaja mittaa verenpaineen.', 'The nurse measures the blood pressure.']], 'At the health centre'],
+    ['vastaanotto', 'doctor\'s appointment, surgery', 'noun', 'lääkärin vastaanotto = the doctor\'s office or appointment. Stem: vastaanoton.', [['Lääkärin vastaanotto on toisessa kerroksessa.', 'The doctor\'s surgery is on the second floor.']], 'At the health centre'],
+    ['päivystys', 'emergency clinic, A&E', 'noun', 'For urgent care outside office hours. Stem: päivystyksen.', [['Illalla voit mennä päivystykseen.', 'In the evening you can go to the emergency clinic.']], 'At the health centre'],
+    ['sairaala', 'hospital', 'noun', 'Stem: sairaalan. sairaalaan = to the hospital.', [['Sairaala on kaupungin keskustassa.', 'The hospital is in the city centre.']], 'At the health centre'],
+    ['kipu', 'pain', 'noun', 'Stem: kivun, kipua.', [['Kipu on kova.', 'The pain is bad.']], 'At the health centre'],
+    ['tabletti', 'tablet, pill', 'noun', 'Stem: tabletin.', [['Ota yksi tabletti aamulla.', 'Take one tablet in the morning.']], 'At the health centre'],
+    ['kertaa päivässä', 'times a day', 'phrase', 'kaksi kertaa päivässä = twice a day.', [['Ota lääke kaksi kertaa päivässä.', 'Take the medicine twice a day.']], 'At the health centre'],
+    ['sähköinen resepti', 'electronic prescription', 'phrase', 'In Finland prescriptions are electronic; the pharmacy finds them with your ID or Kela card.', [['Sähköinen resepti löytyy Omakannasta.', 'The electronic prescription can be found in OmaKanta.']], 'At the health centre'],
+    ['Kela-kortti', 'Kela card (health insurance card)', 'noun', 'Show it at the pharmacy to get the reimbursement.', [['Näytä Kela-korttisi apteekissa.', 'Show your Kela card at the pharmacy.']], 'At the health centre'],
+    ['mitata', 'to measure', 'verb', 'Type 4 · minä mittaan · hän mittasi (past). mitata kuume = to take a temperature.', [['Mitataan kuume.', 'Let\'s take your temperature.']], 'At the health centre'],
+    ['kuumemittari', 'thermometer', 'noun', 'Stem: kuumemittarin.', [['Kuumemittari on laatikossa.', 'The thermometer is in the drawer.']], 'At the health centre'],
+    ['parane pian', 'get well soon', 'phrase', 'From parantua (to get better).', [['Parane pian, ystäväni!', 'Get well soon, my friend!']], 'At the health centre'],
+
+    // At the café
+    ['kahvila', 'café', 'noun', 'Stem: kahvilan.', [['Kahvila aukeaa kahdeksalta.', 'The café opens at eight.']], 'At the café'],
+    ['mitä saisi olla', 'what can I get you?', 'phrase', 'What staff ask in cafés and shops.', [['Hyvää huomenta, mitä saisi olla tänään?', 'Good morning, what can I get you today?']], 'At the café'],
+    ['tilata', 'to order', 'verb', 'Type 4 · minä tilaan · hän tilasi (past).', [['Haluaisin tilata.', 'I\'d like to order.']], 'At the café'],
+    ['mukaan', 'to take away, along', 'adverb', 'ottaa mukaan = to take away / take along.', [['Otan kahvin mukaan.', 'I\'ll take the coffee to go.']], 'At the café'],
+    ['täällä', 'here', 'adverb', 'Being here. (tänne = to here, täältä = from here.)', [['Syön täällä.', 'I\'ll eat here.']], 'At the café'],
+    ['erikoiskahvi', 'specialty coffee', 'noun', 'e.g. latte or cappuccino, as opposed to regular filter coffee.', [['Erikoiskahvit ovat kalliimpia.', 'Specialty coffees are more expensive.']], 'At the café'],
+    ['kauramaito', 'oat milk', 'noun', 'Stem: kauramaidon.', [['Saisinko kauramaitoa?', 'Could I have oat milk?']], 'At the café'],
+    ['kermavaahto', 'whipped cream', 'noun', 'Stem: kermavaahdon.', [['Kakun päällä on kermavaahtoa.', 'There\'s whipped cream on the cake.']], 'At the café'],
+    ['pähkinä', 'nut', 'noun', 'Stem: pähkinän. Plural partitive: pähkinöitä.', [['Kakussa on pähkinöitä.', 'There are nuts in the cake.']], 'At the café'],
+    ['allerginen', 'allergic', 'adjective', 'Takes the allative: allerginen pähkinöille.', [['Olen allerginen pähkinöille.', 'I\'m allergic to nuts.']], 'At the café'],
+    ['gluteeniton', 'gluten-free', 'adjective', 'Stem: gluteenittoman. -ton = without.', [['Onko teillä gluteenitonta leipää?', 'Do you have gluten-free bread?']], 'At the café'],
+    ['laktoositon', 'lactose-free', 'adjective', 'Very common in Finland. Stem: laktoosittoman.', [['Tämä jäätelö on laktoositonta.', 'This ice cream is lactose-free.']], 'At the café'],
+    ['salasana', 'password', 'noun', 'wifin salasana = the wifi password.', [['Mikä on wifin salasana?', 'What\'s the wifi password?']], 'At the café'],
+
+    // Bus & train
+    ['menolippu', 'single ticket', 'noun', 'At the desk often just: yksi meno.', [['Ostin menolipun Tampereelle.', 'I bought a single ticket to Tampere.']], 'Bus & train'],
+    ['meno-paluu', 'return ticket', 'noun', 'Literally "going-return".', [['Meno-paluu on halvempi.', 'A return ticket is cheaper.']], 'Bus & train'],
+    ['raide', 'track', 'noun', 'Trains leave from a numbered track. Stem: raiteen, raidetta.', [['Juna lähtee raiteelta viisi.', 'The train leaves from track five.']], 'Bus & train'],
+    ['laituri', 'platform', 'noun', 'Stem: laiturin.', [['Odota laiturilla.', 'Wait on the platform.']], 'Bus & train'],
+    ['kuljettaja', 'driver', 'noun', 'bussinkuljettaja = bus driver.', [['Kuljettaja ajaa bussia.', 'The driver drives the bus.']], 'Bus & train'],
+    ['nousta', 'to get on; to get up; to rise', 'verb', 'Type 3 · minä nousen · hän nousi (past). nousta bussiin = to get on the bus.', [['Nouse bussiin etuovesta.', 'Get on the bus through the front door.']], 'Bus & train'],
+    ['jäädä', 'to stay; to get off (jäädä pois)', 'verb', 'Type 2 · minä jään · hän jäi (past). jäädä pois bussista = to get off the bus.', [['Jään pois seuraavalla pysäkillä.', 'I\'m getting off at the next stop.']], 'Bus & train'],
+    ['seuraava', 'next', 'adjective', 'seuraavalla pysäkillä = at the next stop.', [['Seuraava juna lähtee kymmenen minuutin päästä.', 'The next train leaves in ten minutes.']], 'Bus & train'],
+    ['lähtö', 'departure', 'noun', 'Stem: lähdön.', [['Lähtö on kello 14.05.', 'Departure is at 14.05.']], 'Bus & train'],
+    ['saapua', 'to arrive', 'verb', 'Type 1 · minä saavun · hän saapui (past).', [['Juna saapuu Tampereelle kello 16.', 'The train arrives in Tampere at 4 p.m.']], 'Bus & train'],
+    ['myöhästyä', 'to be late; to miss (a train)', 'verb', 'Type 1 · minä myöhästyn · hän myöhästyi (past). myöhästyä junasta = to miss the train.', [['Älä myöhästy junasta!', 'Don\'t miss the train!']], 'Bus & train'],
+    ['keskusta', 'city centre, downtown', 'noun', 'keskustaan = to the centre, keskustassa = in the centre.', [['Asun lähellä keskustaa.', 'I live near the city centre.']], 'Bus & train'],
+    ['lukija', 'card reader', 'noun', 'The device you show your ticket to.', [['Näytä lippu lukijalle.', 'Show your ticket to the reader.']], 'Bus & train'],
+
+    // Daycare pick-up
+    ['ulkona', 'outside, outdoors', 'adverb', 'Being outside. (ulos = going out.)', [['Lapset ovat ulkona.', 'The children are outside.']], 'Daycare pick-up'],
+    ['ulos', 'out, outside (going)', 'adverb', 'Movement out. (ulkona = being outside.)', [['Mennään ulos!', 'Let\'s go outside!']], 'Daycare pick-up'],
+    ['sisällä', 'inside, indoors', 'adverb', 'Being inside. (sisälle = going in.)', [['Sateella leikitään sisällä.', 'When it rains we play inside.']], 'Daycare pick-up'],
+    ['sisälle', 'in, inside (going)', 'adverb', 'Movement in. Also: sisään.', [['Tullaan sisälle syömään.', 'Let\'s come inside to eat.']], 'Daycare pick-up'],
+    ['kastua', 'to get wet', 'verb', 'Type 1 · minä kastun · hän kastui (past). kastua märäksi = to get soaking wet.', [['Hän kastui lätäkössä.', 'They got wet in the puddle.']], 'Daycare pick-up'],
+    ['loppua', 'to run out, to end', 'verb', 'Type 1 · se loppuu · se loppui (past).', [['Vaipat loppuivat.', 'The nappies ran out.']], 'Daycare pick-up'],
+    ['puhdistaa', 'to clean', 'verb', 'Type 1 · minä puhdistan · hän puhdisti (past). puhdistaa haava = to clean a wound.', [['Puhdistimme haavan.', 'We cleaned the wound.']], 'Daycare pick-up'],
+    ['ilmoittaa', 'to inform, to let know, to report', 'verb', 'Type 1 · minä ilmoitan · hän ilmoitti (past).', [['Ilmoitan huoltajille.', 'I\'ll let the guardians know.']], 'Daycare pick-up'],
+    ['muuten', 'otherwise; by the way', 'adverb', 'Muuten hyvin = fine otherwise.', [['Muuten päivä meni hyvin.', 'Otherwise the day went well.']], 'Daycare pick-up'],
+    ['kiva kuulla', 'nice to hear', 'phrase', 'A friendly reaction to good news.', [['Kiva kuulla, että päivä meni hyvin!', 'Nice to hear the day went well!']], 'Daycare pick-up'],
+    ['huomiseksi', 'for tomorrow', 'adverb', 'Translative of huominen.', [['Tarvitaanko huomiseksi jotain?', 'Is anything needed for tomorrow?']], 'Daycare pick-up'],
+
+    // On the phone
+    ['puhelimessa', 'speaking (on the phone)', 'phrase', 'Answering the phone: Anna puhelimessa = Anna speaking.', [['Hei, Anna puhelimessa.', 'Hello, Anna speaking.']], 'On the phone'],
+    ['haloo', 'hello (on the phone)', 'interjection', 'Used when answering or when the line is bad.', [['Haloo, kuuletko minua?', 'Hello, can you hear me?']], 'On the phone'],
+    ['puhelu', 'phone call', 'noun', 'Stem: puhelun.', [['Minulla on tärkeä puhelu.', 'I have an important call.']], 'On the phone'],
+    ['tekstiviesti', 'text message', 'noun', 'Also: viesti. Stem: tekstiviestin.', [['Lähetän sinulle tekstiviestin.', 'I\'ll send you a text message.']], 'On the phone'],
+    ['vastaaja', 'voicemail; answering machine', 'noun', 'jättää viesti vastaajaan = to leave a voicemail.', [['Jätin viestin vastaajaan.', 'I left a message on the voicemail.']], 'On the phone'],
+    ['soittaa takaisin', 'to call back', 'phrase', 'Soitan takaisin = I\'ll call you back.', [['Voitko soittaa takaisin myöhemmin?', 'Can you call back later?']], 'On the phone'],
+    ['huoltoyhtiö', 'property maintenance company', 'noun', 'Fixes problems in apartment buildings.', [['Soitin huoltoyhtiöön.', 'I called the maintenance company.']], 'On the phone'],
+    ['huoltomies', 'maintenance man, caretaker', 'noun', 'Stem: huoltomiehen.', [['Huoltomies korjasi hanan.', 'The maintenance man fixed the tap.']], 'On the phone'],
+    ['hana', 'tap, faucet', 'noun', 'Stem: hanan.', [['Keittiön hana vuotaa.', 'The kitchen tap is leaking.']], 'On the phone'],
+    ['korjata', 'to fix, to repair', 'verb', 'Type 4 · minä korjaan · hän korjasi (past).', [['Voitteko korjata sen huomenna?', 'Could you fix it tomorrow?']], 'On the phone'],
+    ['asunto', 'flat, apartment, home', 'noun', 'Stem: asunnon, asuntoa.', [['Asuntoni on kolmannessa kerroksessa.', 'My flat is on the third floor.']], 'On the phone'],
+    ['osoite', 'address', 'noun', 'Stem: osoitteen, osoitetta.', [['Mikä on osoitteesi?', 'What\'s your address?']], 'On the phone'],
+    ['yleisavain', 'master key', 'noun', 'The maintenance company\'s key to all flats. Stem: yleisavaimen.', [['Huoltomiehellä on yleisavain.', 'The maintenance man has a master key.']], 'On the phone'],
+
+    // At the office
+    ['infopiste', 'information desk', 'noun', 'Stem: infopisteen.', [['Kysy infopisteestä.', 'Ask at the information desk.']], 'At the office'],
+    ['asia', 'matter, errand, thing', 'noun', 'Mitä asiaa sinulla on? = What is your errand?', [['Mitä asiaa sinulla on?', 'What can I help you with?']], 'At the office'],
+    ['asumistuki', 'housing allowance', 'noun', 'Applied for from Kela. Stem: asumistuen, asumistukea.', [['Haen asumistukea Kelasta.', 'I\'m applying for housing allowance from Kela.']], 'At the office'],
+    ['tuki', 'support, benefit', 'noun', 'Stem: tuen, tukea.', [['Voit saada tukea Kelasta.', 'You can get support from Kela.']], 'At the office'],
+    ['liite', 'attachment, enclosure', 'noun', 'A document added to an application. Stem: liitteen, liitettä.', [['Lisää hakemukseen liitteet.', 'Add the attachments to the application.']], 'At the office'],
+    ['vuokrasopimus', 'rental agreement, lease', 'noun', 'Stem: vuokrasopimuksen.', [['Vuokrasopimus on voimassa toistaiseksi.', 'The lease is valid until further notice.']], 'At the office'],
+    ['palkkatodistus', 'pay slip, salary certificate', 'noun', 'Stem: palkkatodistuksen.', [['Tarvitsen palkkatodistuksen.', 'I need a pay slip.']], 'At the office'],
+    ['tulot', 'income', 'noun', 'Always plural.', [['Ilmoita kaikki tulot.', 'Report all income.']], 'At the office'],
+    ['täyttää', 'to fill in; to fill', 'verb', 'Type 1 · minä täytän · hän täytti (past). täyttää lomake = to fill in a form.', [['Täytä lomake huolellisesti.', 'Fill in the form carefully.']], 'At the office'],
+    ['henkilöllisyystodistus', 'proof of identity, ID', 'noun', 'A passport, ID card or driving licence.', [['Ota henkilöllisyystodistus mukaan.', 'Bring proof of identity.']], 'At the office'],
+    ['ajokortti', 'driving licence', 'noun', 'Stem: ajokortin.', [['Ajokortti käy henkilöllisyystodistuksesta.', 'A driving licence counts as ID.']], 'At the office'],
+    ['noutokoodi', 'pickup code', 'noun', 'A code for collecting a parcel.', [['Noutokoodi on tekstiviestissä.', 'The pickup code is in the text message.']], 'At the office'],
+    ['lähettää', 'to send', 'verb', 'Type 1 · minä lähetän · hän lähetti (past).', [['Lähetän paketin postissa.', 'I\'ll send the parcel by post.']], 'At the office'],
+  ];
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.map((r) => {
+  const tagged = v4.concat(v5).map((r) => {
     let cats = [].concat(r[5]);
-    if (/^Daycare:|^Talking to parents$|^ECEC terms$/.test(cats[0])) cats.push('Daycare');
+    if (/^Daycare|^Talking to parents$|^ECEC terms$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$/.test(cats[0])) cats.push('Verbs');
     return r.slice(0, 5).concat([cats]);
   });
 
   const now = Date.now();
-  const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r) => r.concat(4)));
+  const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(i < v4.length ? 4 : 5)));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
     finnish: r[0],

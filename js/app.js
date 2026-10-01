@@ -25,15 +25,20 @@
 
   function route() {
     Games.stop();
+    root.Roleplay.stop();
     closeModal();
     const { parts, params } = parseHash();
-    const tab = { word: 'words', play: 'games' }[parts[0]] || parts[0];
+    const tab = { word: 'words', play: 'games', roleplay: 'games' }[parts[0]] || parts[0];
     document.querySelectorAll('.tabs a').forEach((a) => a.classList.toggle('active', a.dataset.tab === tab));
     switch (parts[0]) {
       case 'word': return renderWordDetail(parts[1]);
       case 'categories': return renderCategories();
       case 'games': return renderGames(params);
       case 'play': return renderPlay(parts[1], params);
+      case 'roleplay':
+        if (parts[2] !== undefined && parts[2] !== '') return root.Roleplay.play(view, parts[1], Number(parts[2]));
+        if (parts[1]) return root.Roleplay.renderScenario(view, parts[1]);
+        return root.Roleplay.renderList(view);
       case 'settings': return renderSettings();
       default: return renderWords(params);
     }
@@ -535,6 +540,9 @@
       '<section class="page">' +
       '<div class="page-head"><h1>Games</h1>' +
       '<button class="btn primary" data-act="create">+ Create a game</button></div>' +
+      '<a class="rp-banner" href="#/roleplay"><span class="rp-icon">🎭</span><span><strong>Role play</strong>' +
+      '<span class="muted small">Practise real conversations: at the shop, the library, the health centre, the café, on the phone…</span></span>' +
+      '<span class="btn primary small">Start</span></a>' +
       '<h2 class="section-title">Quick play</h2>' +
       '<div class="toolbar"><label class="inline">Words from <select id="qp-cat">' + categoryOptions(presetCat, 'All words') + '</select></label>' +
       '<label class="inline">Direction <select id="qp-dir">' +

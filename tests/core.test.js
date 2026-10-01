@@ -188,7 +188,10 @@ test('starter pack: unique words, valid categories, and newerThan() returns only
   const v2 = S.newerThan(1);
   assert.ok(v2.words.length > 0 && v2.words.every((w) => w.since > 1));
   assert.ok(S.newerThan(2).words.filter((w) => w.since === 3).every((w) => w.categoryIds.includes('cat-daycare')));
-  assert.ok(S.newerThan(3).words.length > 0 && S.newerThan(3).words.every((w) => w.since === 4));
+  assert.ok(S.newerThan(3).words.length > 0 && S.newerThan(3).words.every((w) => w.since >= 4));
+  // Every role-play scenario has a word category.
+  const SC = require('../js/scenarios.js');
+  for (const sc of SC) assert.ok(S.categories.some((c) => c.name === sc.category), sc.category);
   // Every starter example must work in Fill the gap.
   for (const w of S.words) for (const ex of w.examples) assert.ok(Core.findWordInSentence(ex.fi, w.finnish), w.finnish + ': ' + ex.fi);
   assert.deepEqual(S.newerThan(S.VERSION).words, []);
@@ -259,4 +262,32 @@ test('gap: words marked as also fitting count as correct, and synonyms are not o
     assert.ok(!Core.gapChoices(happy, pool, 6).includes('onnellinen'));
     assert.ok(!Core.gapChoices(pool[3], pool, 6).includes('jutella'));
   }
+});
+
+test('role play: every scripted reply is accepted and no wrong reply is', () => {
+  const SC = require('../js/scenarios.js');
+  for (const sc of SC) for (const si of sc.situations) {
+    assert.ok(si.goal && si.steps.length >= 3, si.title);
+    for (const st of si.steps) {
+      assert.ok(Core.checkReply(st.reply[0], st).correct, st.reply[0]);
+      assert.ok(Core.checkOrder(Core.replyTiles(st.reply[0]), st), 'order ' + st.reply[0]);
+      for (const a of st.accept || []) assert.ok(Core.checkReply(a, st).correct, 'accept ' + a);
+      assert.ok(st.wrong.length >= 2, st.reply[0]);
+      for (const w of st.wrong) {
+        assert.equal(Core.checkReply(w[0], st).correct, false, 'wrong accepted: ' + w[0]);
+        assert.ok(w[2], 'explanation for ' + w[0]);
+      }
+    }
+  }
+});
+
+test('role play checks: typos are close, known mistakes are recognised, word order matters', () => {
+  const step = { reply: ['Kortilla, kiitos.', 'By card'], accept: ['Maksan kortilla'], wrong: [['Kortti, kiitos.', '', 'why']] };
+  assert.deepEqual(Core.checkReply('kortilla kiitos', step), { correct: true, close: false, wrongIndex: -1 });
+  assert.equal(Core.checkReply('Kortila, kiitos', step).close, true);
+  assert.equal(Core.checkReply('Kortti kiitos', step).wrongIndex, 0);
+  assert.equal(Core.checkReply('', step).correct, false);
+  assert.deepEqual(Core.replyTiles('Mittasimme juuri, se on 38,5 astetta.'), ['Mittasimme', 'juuri', 'se', 'on', '38,5', 'astetta']);
+  assert.equal(Core.checkOrder(['Kortilla', 'kiitos'], step), true);
+  assert.equal(Core.checkOrder(['kiitos', 'Kortilla'], step), false);
 });

@@ -332,6 +332,47 @@
     });
   }
 
+  /* ---------- Role play ---------- */
+
+  /** Word tiles for a reply, without trailing punctuation (keeps "38,5" and "Kela-kortti" intact). */
+  function replyTiles(text) {
+    return String(text || '').replace(/[.!?;:"“”–]+(?=\s|$)|,(?=\s|$)/g, '').split(/\s+/).filter(Boolean);
+  }
+
+  /** All accepted wordings of a step's reply, normalised. */
+  function stepAnswers(step) {
+    return [step.reply[0]].concat(step.accept || []).map((a) => normalize(a)).filter(Boolean);
+  }
+
+  /**
+   * Check a typed reply.
+   * Returns { correct, close, wrongIndex } – close = small typos (counts as right, with a note);
+   * wrongIndex = the typed text matches one of the known wrong replies (to show why it's wrong).
+   */
+  function checkReply(typed, step, opts) {
+    opts = opts || {};
+    const given = normalize(typed, opts);
+    if (!given) return { correct: false, close: false, wrongIndex: -1 };
+    const answers = stepAnswers(step).map((a) => (opts.lenient ? stripDiacritics(a) : a));
+    if (answers.includes(given)) return { correct: true, close: false, wrongIndex: -1 };
+    const wrongs = (step.wrong || []).map((w) => normalize(w[0], opts));
+    const wi = wrongs.findIndex((w) => w === given || levenshtein(w, given) <= 1);
+    if (wi >= 0) return { correct: false, close: false, wrongIndex: wi };
+    const close = answers.some((a) => {
+      const allowed = Math.max(1, Math.floor(a.length * 0.1));
+      return stripDiacritics(a) === stripDiacritics(given) || levenshtein(a, given) <= allowed;
+    });
+    return { correct: close, close, wrongIndex: -1 };
+  }
+
+  /** Is this word order right? Any accepted wording made of exactly the same tiles counts. */
+  function checkOrder(tiles, step) {
+    const given = normalize(tiles.join(' '));
+    const bag = (s) => normalize(s).split(' ').sort().join(' ');
+    const target = bag(step.reply[0]);
+    return [step.reply[0]].concat(step.accept || []).some((a) => bag(a) === target && normalize(a) === given);
+  }
+
   /* ---------- Category suggestions ---------- */
 
   function singular(t) {
@@ -488,5 +529,6 @@
     filterWords, sortWords, accuracy, makeCard, choicesFor, pickRound,
     stripHtml, parseWiktionary, suggestionFromEntries, mergeImport, suggestCategories,
     findWordInSentence, sentenceFor, gapChoices, isGapAnswer, setAlsoFits,
+    replyTiles, checkReply, checkOrder,
   };
 });
