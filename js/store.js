@@ -50,11 +50,13 @@
       if (backfillLevels(s)) { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) { /* ignore */ } }
       return s;
     }
+    const had = new Set(s.categories.map((c) => c.name.toLowerCase()));
     const res = root.VocabCore.mergeImport(s, Starter.newerThan(from), { onlyNew: true });
     const next = Object.assign(res.state, { starterVersion: Starter.VERSION });
     backfillLevels(next);
     if (res.added) {
-      const names = Starter.newerThan(from).categories.map((c) => c.name).filter((n) => n !== 'Verbs' && n !== 'Daycare');
+      // Only categories the user didn't have before.
+      const names = res.state.categories.map((c) => c.name).filter((n) => !had.has(n.toLowerCase()));
       upgradeNote = res.added + ' new starter words added' + (names.length > 4
         ? ' in ' + names.length + ' new categories – see Categories'
         : names.length ? ': ' + names.join(', ') : '');

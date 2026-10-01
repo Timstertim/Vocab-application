@@ -1071,5 +1071,275 @@
         },
       ],
     },
+    {
+      id: 'kids', level: 'A2.1', icon: '🧸', name: 'Talking with children', fi: 'Lasten kanssa', category: 'Daycare: instructions',
+      intro: 'You\'re the teacher. The children speak everyday spoken Finnish (mä, sä, haluun…). You answer in clear, kind Finnish: name the feeling, give a simple instruction, and praise when it goes well.',
+      situations: [
+        {
+          title: 'Finish your plate first',
+          goal: 'Lunchtime. Eero wants to go and play, but he has hardly eaten. Tell him to eat first – then he can play.',
+          steps: [
+            {
+              npc: ['Mä haluun mennä leikkimään!', 'I wanna go and play!'],
+              reply: ['Syö ensin ruokasi, sitten voit mennä leikkimään.', 'Eat your food first, then you can go and play.'],
+              accept: ['Syö ensin ruokasi', 'Syö ensin ruoka', 'Ensin syödään, sitten leikitään', 'Syö ensin, sitten voit leikkiä', 'Syö ensin ja sitten voit mennä leikkimään'],
+              wrong: [
+                ['Mene vain leikkimään.', 'Just go and play.', 'He hasn\'t eaten yet – food comes first.'],
+                ['Syö ensin ruokasi, sitten voit mennä leikkiä.', 'Eat first, then you can go play (wrong form).', 'After mennä, the verb takes -maan: mennä leikkimään.'],
+              ],
+            },
+            {
+              npc: ['Mä en tykkää tästä.', 'I don\'t like this.'],
+              reply: ['Maista edes vähän. Se on hyvää.', 'At least taste a little. It\'s good.'],
+              accept: ['Maista edes vähän', 'Maista vähän', 'Maista edes vähän, se on hyvää', 'Maista edes yksi pala'],
+              wrong: [
+                ['Sitten sinun ei tarvitse syödä mitään.', 'Then you don\'t have to eat anything.', 'Encourage him to taste first – he still needs to eat.'],
+                ['Maista edes vähän. Se on pahaa.', 'At least taste a little. It\'s horrible.', 'Say something encouraging: se on hyvää (it\'s good).'],
+              ],
+            },
+            {
+              npc: ['No okei… Mä söin kaikki perunat!', 'Well, OK… I ate all the potatoes!'],
+              reply: ['Hienoa! Nyt voit viedä lautasen ja mennä leikkimään.', 'Great! Now you can take your plate away and go and play.'],
+              accept: ['Hienoa', 'Hienoa, nyt voit mennä leikkimään', 'Hyvin tehty! Nyt voit mennä leikkimään', 'Hienoa, vie lautanen pois', 'Hienoa! Vie lautanen ja mene leikkimään'],
+              wrong: [
+                ['Hienoa! Nyt voit viedä lautasen ja mennä leikkimässä.', 'Great! Now take your plate and go being playing.', 'Going to do something: leikkimään (-maan). Leikkimässä means "(being) at play".'],
+                ['Ei vielä, syö vielä leipä, salaatti ja keitto.', 'Not yet, eat the bread, salad and soup too.', 'He did what you asked – keep your promise and praise him.'],
+              ],
+            },
+          ],
+        },
+        {
+          title: 'Loud at rest time',
+          goal: 'It\'s rest time. Aino is singing loudly and the others can\'t fall asleep. Ask her to be quiet and help her settle.',
+          steps: [
+            {
+              npc: ['(Aino laulaa kovaa lepohetkellä.) Lalalaa!', '(Aino is singing loudly at rest time.) La la laa!'],
+              reply: ['Aino, nyt on lepohetki. Puhutaan hiljaa.', 'Aino, it\'s rest time now. Let\'s talk quietly.'],
+              accept: ['Nyt on lepohetki', 'Aino, nyt ollaan hiljaa', 'Nyt on lepohetki, ollaan hiljaa', 'Aino, nyt on lepohetki, ole hiljaa', 'Nyt on lepohetki, puhutaan hiljaa'],
+              wrong: [
+                ['Aino, nyt on lepohetki. Lauletaan kovaa!', 'Aino, it\'s rest time. Let\'s sing loudly!', 'The others are trying to sleep – ask for quiet.'],
+                ['Aino, nyt on lepohetki. Puhutaan hiljainen.', 'Aino, it\'s rest time. Let\'s talk quiet (wrong form).', 'Use the adverb hiljaa (quietly). Hiljainen is the adjective (a quiet …).'],
+              ],
+            },
+            {
+              npc: ['Mut mua ei väsytä!', 'But I\'m not tired!'],
+              reply: ['Sinun ei tarvitse nukkua, mutta muut haluavat nukkua. Voit levätä hiljaa.', 'You don\'t have to sleep, but the others want to. You can rest quietly.'],
+              accept: ['Sinun ei tarvitse nukkua', 'Ei tarvitse nukkua', 'Voit levätä hiljaa', 'Ei tarvitse nukkua, mutta ollaan hiljaa', 'Muut haluavat nukkua'],
+              wrong: [
+                ['Sinun täytyy nukkua heti!', 'You must sleep right now!', 'You can\'t force sleep – resting quietly is enough.'],
+                ['Sinun ei tarvitse nukkumaan, mutta muut haluavat nukkua.', 'You don\'t need to sleeping…', 'After ei tarvitse, use the basic form: ei tarvitse nukkua.'],
+              ],
+            },
+            {
+              npc: ['Saanks mä kuunnella satua?', 'Can I listen to a story?'],
+              reply: ['Kyllä saat, jos olet hiljaa.', 'Yes, you can, if you\'re quiet.'],
+              accept: ['Kyllä saat', 'Saat', 'Saat, jos olet hiljaa', 'Kyllä, jos olet hiljaa', 'Joo, saat'],
+              wrong: [
+                ['Kyllä saat, jos olet äänekäs.', 'Yes, you can, if you\'re loud.', 'The condition should be: jos olet hiljaa (if you\'re quiet).'],
+                ['Kyllä saat, jos laulat kovaa.', 'Yes, if you sing loudly.', 'Singing is what kept the others awake!'],
+              ],
+            },
+          ],
+        },
+        {
+          title: 'Hitting in the sandbox',
+          goal: 'Leo hit Mia with a spade because she took it from him. Stop the hitting, check on Mia, and help Leo use words and say sorry.',
+          steps: [
+            {
+              npc: ['(Leo lyö Miaa lapiolla.) Se otti mun lapion!', '(Leo hits Mia with the spade.) She took my spade!'],
+              reply: ['Stop, Leo! Ei saa lyödä. Se sattuu.', 'Stop, Leo! No hitting. It hurts.'],
+              accept: ['Ei saa lyödä', 'Stop! Ei saa lyödä', 'Leo, ei saa lyödä', 'Lopeta, ei saa lyödä', 'Ei saa lyödä, se sattuu'],
+              wrong: [
+                ['Stop, Leo! Ei saa lyö.', 'Stop, Leo! No hit (wrong form).', 'After ei saa, use the basic form: ei saa lyödä.'],
+                ['Leo, lyö vielä kerran!', 'Leo, hit her once more!', 'Never! Stop the hitting: Ei saa lyödä.'],
+              ],
+            },
+            {
+              npc: ['(Mia itkee.) Auts, sattuu!', '(Mia is crying.) Ow, it hurts!'],
+              reply: ['Mia, tule tänne. Mihin sattuu?', 'Mia, come here. Where does it hurt?'],
+              accept: ['Mihin sattuu', 'Mia, mihin sattuu', 'Tule tänne, mihin sattuu', 'Mihin sinua sattuu', 'Mia, tule tänne, mihin sattuu'],
+              wrong: [
+                ['Mia, tule tänne. Missä sattuu?', 'Mia, come here. Where does it hurt (wrong form)?', 'The fixed question is Mihin sattuu? (illative).'],
+                ['Mia, älä itke, ei se mitään.', 'Mia, don\'t cry, it\'s nothing.', 'First check where it hurts – comfort her, don\'t brush it off.'],
+              ],
+            },
+            {
+              npc: ['(Leo:) Mut se otti mun lapion…', '(Leo:) But she took my spade…'],
+              reply: ['Ymmärrän, että harmitti. Käytä sanoja ja sano anteeksi.', 'I understand you were upset. Use your words and say sorry.'],
+              accept: ['Käytä sanoja', 'Sano anteeksi', 'Käytä sanoja ja sano anteeksi', 'Ymmärrän, mutta sano anteeksi', 'Ymmärrän, että harmitti. Sano Mialle anteeksi'],
+              wrong: [
+                ['Ymmärrän, että harmitti. Käytä sanat ja sano anteeksi.', 'I understand… use the words (wrong form) and say sorry.', 'käyttää takes the partitive here: käytä sanoja.'],
+                ['Ymmärrän, että harmitti. Ota lapio takaisin väkisin.', 'I understand… take the spade back by force.', 'Help him use words instead – and apologise.'],
+              ],
+            },
+          ],
+        },
+        {
+          title: 'Getting dressed to go out',
+          goal: 'It\'s cold and time to go outside. Help Ville get dressed: his overall first, then his hat and mittens.',
+          steps: [
+            {
+              npc: ['Mennäänks ulos?', 'Are we going outside?'],
+              reply: ['Mennään! Puetaan ensin haalari päälle.', 'Yes! Let\'s put your overall on first.'],
+              accept: ['Mennään', 'Puetaan haalari', 'Pue ensin haalari', 'Mennään, pue haalari päälle', 'Puetaan ensin haalari päälle'],
+              wrong: [
+                ['Mennään! Puetaan ensin haalari pois.', 'Yes! Let\'s take the overall off first.', 'päälle = on; pois = off.'],
+                ['Mennään! Puetaan ensin uimapuku päälle.', 'Yes! Let\'s put your swimsuit on first.', 'It\'s cold – he needs his overall (haalari).'],
+              ],
+            },
+            {
+              npc: ['Mä en saa vetoketjua kiinni.', 'I can\'t do up the zip.'],
+              reply: ['Autan sinua. Katso, näin se menee.', 'I\'ll help you. Look, this is how it goes.'],
+              accept: ['Autan sinua', 'Minä autan', 'Autan, katso näin', 'Autan sinua, näin se menee', 'Katso, näin se menee'],
+              wrong: [
+                ['Autan sinut. Katso, näin se menee.', 'I\'ll help you (wrong form)…', 'auttaa takes the partitive: autan sinua.'],
+                ['Tee se itse, minulla on kiire.', 'Do it yourself, I\'m busy.', 'Help him – and show him how, so he learns.'],
+              ],
+            },
+            {
+              npc: ['Valmis! Voinks mä mennä?', 'Ready! Can I go?'],
+              reply: ['Melkein! Laita vielä pipo päähän ja lapaset käteen.', 'Almost! Put your hat on your head and your mittens on too.'],
+              accept: ['Laita pipo päähän', 'Laita vielä pipo ja lapaset', 'Pipo ja lapaset vielä', 'Melkein, laita vielä pipo päähän', 'Laita vielä pipo päähän ja lapaset käteen'],
+              wrong: [
+                ['Melkein! Laita vielä pipo käteen ja lapaset päähän.', 'Almost! Put your hat on your hand and mittens on your head.', 'Mixed up: pipo päähän (on the head), lapaset käteen (on the hands).'],
+                ['Joo, mene vaan ilman pipoa.', 'Yes, just go without a hat.', 'It\'s cold – he needs his hat and mittens.'],
+              ],
+            },
+          ],
+        },
+        {
+          title: 'Tidy-up time',
+          goal: 'Playtime is over and lunch is soon. Tell the children to tidy up and show where the blocks go: in the box under the shelf.',
+          steps: [
+            {
+              npc: ['(Lapset leikkivät palikoilla.) Kato, mun torni!', '(The children are playing with blocks.) Look, my tower!'],
+              reply: ['Upea torni! Nyt on siivousaika, kerätään lelut.', 'What a great tower! Now it\'s tidy-up time, let\'s collect the toys.'],
+              accept: ['Kerätään lelut', 'Upea torni! Kerätään lelut', 'Nyt kerätään lelut', 'Nyt on siivousaika', 'Hieno torni, nyt kerätään lelut'],
+              wrong: [
+                ['Upea torni! Nyt on siivousaika, kerätään lelua.', 'Great tower! Tidy-up time, let\'s collect some toy.', 'All the toys: kerätään lelut (plural).'],
+                ['Upea torni! Rakennetaan vielä kymmenen tornia.', 'Great tower! Let\'s build ten more towers.', 'It\'s time to tidy up – lunch is soon.'],
+              ],
+            },
+            {
+              npc: ['Mihin nää palikat laitetaan?', 'Where do these blocks go?'],
+              reply: ['Palikat laitetaan laatikkoon hyllyn alle.', 'The blocks go in the box under the shelf.'],
+              accept: ['Laatikkoon', 'Laita ne laatikkoon', 'Palikat laitetaan laatikkoon', 'Tuohon laatikkoon', 'Laatikkoon hyllyn alle'],
+              wrong: [
+                ['Palikat laitetaan laatikossa hyllyn alla.', 'The blocks are put in the box under the shelf (wrong forms).', 'With laittaa (to put) use the "to" forms: laatikkoon, hyllyn alle.'],
+                ['Palikat heitetään ikkunasta ulos.', 'The blocks are thrown out of the window.', 'Ha – no! They go in the box.'],
+              ],
+            },
+            {
+              npc: ['Valmista tuli!', 'All done!'],
+              reply: ['Kiitos avusta! Nyt mennään pesemään kädet.', 'Thanks for helping! Now let\'s go and wash our hands.'],
+              accept: ['Kiitos avusta', 'Hienoa, kiitos', 'Kiitos! Mennään pesemään kädet', 'Hyvin tehty, nyt pestään kädet', 'Kiitos avusta, mennään pesemään kädet'],
+              wrong: [
+                ['Kiitos avusta! Nyt mennään pesemässä kädet.', 'Thanks! Now let\'s go being washing hands.', 'Going to do something: pesemään (-maan).'],
+                ['Ei ole valmista, tee kaikki uudestaan.', 'It isn\'t done, do it all again.', 'They finished – thank them and move on.'],
+              ],
+            },
+          ],
+        },
+        {
+          title: 'Comforting at drop-off',
+          goal: 'Morning drop-off. Ella\'s dad has just left and she is crying. Comfort her, tell her Dad will come after nap time, and suggest drawing together.',
+          steps: [
+            {
+              npc: ['(Ella itkee.) Mä haluun iskän luo!', '(Ella is crying.) I want my daddy!'],
+              reply: ['Sinulla on ikävä isiä. Isi tulee hakemaan sinut päiväunien jälkeen.', 'You miss Daddy. Daddy will come and get you after nap time.'],
+              accept: ['Sinulla on ikävä isiä', 'Isi tulee hakemaan sinut', 'Isi tulee hakemaan sinut päiväunien jälkeen', 'Sinulla on ikävä isiä, isi tulee hakemaan sinut', 'Isi tulee päiväunien jälkeen'],
+              wrong: [
+                ['Sinulla on ikävä isi.', 'You miss Daddy (wrong form).', 'After ikävä, the person is partitive: ikävä isiä.'],
+                ['Älä itke, isi ei tule enää.', 'Don\'t cry, Daddy isn\'t coming any more.', 'Never say that – reassure her that Daddy will come back.'],
+              ],
+            },
+            {
+              npc: ['Mä en haluu olla täällä.', 'I don\'t want to be here.'],
+              reply: ['Ymmärrän. Haluatko tulla syliin hetkeksi?', 'I understand. Would you like to sit on my lap for a moment?'],
+              accept: ['Haluatko tulla syliin', 'Ymmärrän, haluatko syliin', 'Tule syliin', 'Ymmärrän, tule syliin hetkeksi', 'Haluatko tulla syliin hetkeksi'],
+              wrong: [
+                ['Ymmärrän. Haluatko tulla sylissä?', 'I understand. Do you want to come on the lap (wrong form)?', 'Moving onto the lap: syliin (illative). Sylissä = sitting on the lap.'],
+                ['Sinun pitää olla täällä, lopeta itku.', 'You have to be here, stop crying.', 'Acknowledge her feelings first – comfort comes before rules.'],
+              ],
+            },
+            {
+              npc: ['(Ella rauhoittuu vähän.) Mitä me tehdään?', '(Ella calms down a little.) What are we going to do?'],
+              reply: ['Mennään yhdessä piirtämään. Voit piirtää kuvan isille!', 'Let\'s go and draw together. You can draw a picture for Daddy!'],
+              accept: ['Mennään piirtämään', 'Mennään yhdessä piirtämään', 'Piirretään kuva isille', 'Voit piirtää kuvan isille', 'Mennään piirtämään kuva isille'],
+              wrong: [
+                ['Mennään yhdessä piirtää.', 'Let\'s go draw together (wrong form).', 'mennä + the -maan form: mennään piirtämään.'],
+                ['En tiedä, mene itse jonnekin.', 'I don\'t know, go somewhere by yourself.', 'Stay with her and suggest something nice to do together.'],
+              ],
+            },
+          ],
+        },
+        {
+          title: 'Taking turns on the swing',
+          goal: 'Onni has been on the swing for a long time and Sara is waiting. Help them take turns – Onni\'s idea of counting to ten is a good one.',
+          steps: [
+            {
+              npc: ['(Sara:) Onni ei anna mun keinua!', '(Sara:) Onni won\'t let me swing!'],
+              reply: ['Onni, nyt on Saran vuoro. Vuorotellaan.', 'Onni, now it\'s Sara\'s turn. Let\'s take turns.'],
+              accept: ['Nyt on Saran vuoro', 'Vuorotellaan', 'Onni, nyt on Saran vuoro', 'Onni, vuorotellaan', 'Nyt on Saran vuoro, vuorotellaan'],
+              wrong: [
+                ['Onni, nyt on Sara vuoro.', 'Onni, now it\'s Sara turn.', 'Whose turn: Saran vuoro (genitive, -n).'],
+                ['Sara, mene pois, Onni keinuu.', 'Sara, go away, Onni is swinging.', 'Sara has waited – it\'s fair to take turns.'],
+              ],
+            },
+            {
+              npc: ['(Onni:) Mut mä haluun vielä!', '(Onni:) But I want more!'],
+              reply: ['Voit keinua taas, kun Sara on keinunut. Odota vuoroasi.', 'You can swing again when Sara has had a go. Wait for your turn.'],
+              accept: ['Odota vuoroasi', 'Voit keinua taas myöhemmin', 'Kohta on taas sinun vuoro', 'Voit keinua sitten taas', 'Odota vuoroasi, kohta saat taas'],
+              wrong: [
+                ['Voit keinua taas, kun Sara on keinunut. Odota vuorosi.', 'You can swing again… wait your turn (wrong form).', 'odottaa takes the partitive: odota vuoroasi.'],
+                ['Hyvä on, keinu koko päivä.', 'Fine, swing all day.', 'That isn\'t fair to Sara – help them take turns.'],
+              ],
+            },
+            {
+              npc: ['(Onni:) No okei. Lasketaanks kymmeneen?', '(Onni:) Well OK. Shall we count to ten?'],
+              reply: ['Hyvä idea! Lasketaan yhdessä kymmeneen, ja sitten vaihdetaan.', 'Good idea! Let\'s count to ten together and then swap.'],
+              accept: ['Hyvä idea', 'Lasketaan yhdessä', 'Lasketaan kymmeneen', 'Hyvä idea, lasketaan yhdessä', 'Lasketaan kymmeneen ja sitten vaihdetaan'],
+              wrong: [
+                ['Hyvä idea! Lasketaan yhdessä kymmenen, ja sitten vaihdetaan.', 'Good idea! Let\'s count ten together (wrong form).', 'Counting up to a number: kymmeneen (illative).'],
+                ['Ei, me ei lasketa mitään.', 'No, we\'re not counting anything.', 'It\'s a great idea from Onni – go with it.'],
+              ],
+            },
+          ],
+        },
+        {
+          title: 'Washing hands before lunch',
+          goal: 'Lunch is ready. Send the children to wash their hands – one of them forgot the soap. Then tell them to dry their hands and sit in their own places.',
+          steps: [
+            {
+              npc: ['(Lapset tulevat ulkoa.) Onks jo ruoka-aika?', '(The children come in from outside.) Is it lunchtime already?'],
+              reply: ['On! Mennään ensin pesemään kädet.', 'Yes! Let\'s go and wash our hands first.'],
+              accept: ['On, mennään pesemään kädet', 'Pese ensin kädet', 'Ensin pestään kädet', 'Mennään pesemään kädet', 'On! Pestään ensin kädet'],
+              wrong: [
+                ['On! Mennään ensin syömään kädet.', 'Yes! Let\'s go and eat our hands first.', 'Ha! Pesemään (to wash) – not syömään (to eat).'],
+                ['Ei, ruoka on kylmää.', 'No, the food is cold.', 'Lunch is ready – send them to wash their hands.'],
+              ],
+            },
+            {
+              npc: ['Mä pesin jo! (Vain vedellä.)', 'I already washed them! (Only with water.)'],
+              reply: ['Muista myös saippua. Pestään uudestaan yhdessä.', 'Remember the soap too. Let\'s wash them again together.'],
+              accept: ['Muista saippua', 'Muista myös saippua', 'Pestään uudestaan saippualla', 'Pese saippualla', 'Käytä saippuaa'],
+              wrong: [
+                ['Muista myös shampoo.', 'Remember the shampoo too.', 'Shampoo is for hair – hands are washed with soap (saippua).'],
+                ['Hienoa, mennään syömään.', 'Great, let\'s go and eat.', 'Water alone isn\'t enough – remind them about soap.'],
+              ],
+            },
+            {
+              npc: ['Nyt on puhtaat kädet!', 'Now my hands are clean!'],
+              reply: ['Hienoa! Kuivaa kädet ja istu omalle paikallesi.', 'Great! Dry your hands and sit in your own place.'],
+              accept: ['Kuivaa kädet', 'Hienoa, kuivaa kädet', 'Kuivaa kädet ja istu paikallesi', 'Istu omalle paikallesi', 'Hienoa! Kuivaa kädet ja istu'],
+              wrong: [
+                ['Hienoa! Kuivaa kädet ja istu omalla paikallasi.', 'Great! Dry your hands and sit (being) in your place.', 'Moving to your seat: omalle paikallesi (allative). Omalla paikallasi = already sitting there.'],
+                ['Hienoa! Kastele kädet uudestaan.', 'Great! Get your hands wet again.', 'They\'re done – dry them and sit down.'],
+              ],
+            },
+          ],
+        },
+      ],
+    },
   ];
 });

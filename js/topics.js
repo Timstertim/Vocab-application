@@ -130,7 +130,7 @@
         'centre', 'center', 'suburb', 'neighbourhood', 'neighborhood', 'address', 'finland', 'helsinki', 'sweden', 'europe'],
     },
     {
-      name: 'Work & school', aliases: ['work', 'job', 'school', 'study', 'studies', 'education', 'office', 'profession', 'work & school', 'career'],
+      name: 'Work & school', aliases: ['work', 'job', 'school', 'study', 'studies', 'studying', 'writing', 'education', 'office', 'profession', 'work & school', 'career'],
       keywords: ['work', 'job', 'employ', 'employee', 'employer', 'boss', 'colleague', 'office', 'meeting', 'salary',
         'wage', 'profession', 'occupation', 'career', 'company', 'business', 'customer', 'teacher', 'student', 'pupil',
         'school', 'university', 'college', 'class', 'lesson', 'course', 'exam', 'test', 'homework', 'study', 'learn',
@@ -171,7 +171,7 @@
         'how much', 'how many', 'what kind', 'what time'],
     },
     { name: 'Verbs', aliases: ['verb', 'action', 'verbs & actions'], pos: ['verb'], keywords: [] },
-    { name: 'Adjectives', aliases: ['adjective', 'describing words', 'description', 'opposite'], pos: ['adjective'], keywords: [] },
+    { name: 'Adjectives', aliases: ['adjective', 'describing words', 'description', 'describing', 'opposite'], pos: ['adjective'], keywords: [] },
     {
       name: 'Holidays & traditions', aliases: ['holiday', 'tradition', 'festival', 'celebration', 'holidays & traditions', 'culture'],
       keywords: ['christmas', 'easter', 'midsummer', 'may day', 'new year', 'birthday', 'name day', 'present', 'gift',

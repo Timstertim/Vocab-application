@@ -71,8 +71,12 @@
     C('Work emails', '#4a6fa5'),
     C('Sayings', '#b8862a'),
     C('Illnesses', '#c43b3b'),
+    C('Everyday actions', '#2e9a6b'),
+    C('Describing things', '#a8781f'),
+    C('Computer problems', '#3f8fc0'),
+    C('Studying & writing', '#7a55c7'),
   ];
-  const VERSION = 7;
+  const VERSION = 8;
   const id = (n) => 'cat-' + slug(n);
 
   // [finnish, english, part of speech, definition, [[example fi, example en]...], category]
@@ -1592,8 +1596,157 @@
     ['verenpaine', 'blood pressure', 'noun', 'mitata verenpaine = to take blood pressure.', [['Verenpaine on normaali.', 'Your blood pressure is normal.']], 'Illnesses'],
   ];
 
+  // Added in version 8: everyday actions, describing things, computer problems, studying and writing.
+  const v8 = [
+    // Everyday actions
+    ['suihku', 'shower', 'noun', 'käydä suihkussa = to take a shower.', [['Menen suihkuun.', 'I\'m going for a shower.']], 'Everyday actions'],
+    ['harjata', 'to brush', 'verb', 'Type 4 · minä harjaan · hän harjasi (past). harjata hampaat = to brush your teeth.', [['Harjaan hampaat.', 'I brush my teeth.']], 'Everyday actions'],
+    ['kammata', 'to comb', 'verb', 'Type 4 · minä kampaan · hän kampasi (past).', [['Pitää vielä kammata hiukset.', 'I still need to comb my hair.']], 'Everyday actions'],
+    ['meikata', 'to put on make-up', 'verb', 'Type 4 · minä meikkaan · hän meikkasi (past).', [['Meikkaan aamulla.', 'I put on make-up in the morning.']], 'Everyday actions'],
+    ['pedata', 'to make the bed', 'verb', 'Type 4 · minä petaan · hän petasi (past). pedata sänky.', [['Muista pedata sänky.', 'Remember to make the bed.']], 'Everyday actions'],
+    ['keittää', 'to boil, to make (coffee, tea)', 'verb', 'Type 1 · minä keitän · hän keitti (past).', [['Keitän kahvia.', 'I\'m making coffee.']], 'Everyday actions'],
+    ['leipoa', 'to bake', 'verb', 'Type 1 · minä leivon · hän leipoi (past).', [['Leivon pullaa.', 'I\'m baking pulla.']], 'Everyday actions'],
+    ['tiskata', 'to do the dishes', 'verb', 'Type 4 · minä tiskaan · hän tiskasi (past).', [['Tiskaan illalla.', 'I do the dishes in the evening.']], 'Everyday actions'],
+    ['imuroida', 'to vacuum', 'verb', 'Type 2 · minä imuroin · hän imuroi (past).', [['Imuroin lattian.', 'I vacuum the floor.']], 'Everyday actions'],
+    ['pyykki', 'laundry, washing', 'noun', 'pestä pyykkiä = to do the laundry.', [['Pesen pyykkiä.', 'I\'m doing the laundry.']], 'Everyday actions'],
+    ['ripustaa', 'to hang (up)', 'verb', 'Type 1 · minä ripustan · hän ripusti (past).', [['Ripusta pyykit kuivumaan.', 'Hang the laundry up to dry.']], 'Everyday actions'],
+    ['viikata', 'to fold', 'verb', 'Type 4 · minä viikkaan · hän viikkasi (past).', [['Viikkaan vaatteet.', 'I fold the clothes.']], 'Everyday actions'],
+    ['silittää', 'to iron; to stroke', 'verb', 'Type 1 · minä silitän · hän silitti (past).', [['Silitän paidan.', 'I\'ll iron the shirt.']], 'Everyday actions'],
+    ['kastella', 'to water (plants)', 'verb', 'Type 3 · minä kastelen · hän kasteli (past).', [['Kastelen kukat.', 'I water the flowers.']], 'Everyday actions'],
+    ['ulkoiluttaa', 'to walk (a dog)', 'verb', 'Type 1 · minä ulkoilutan · hän ulkoilutti (past).', [['Ulkoilutan koiraa.', 'I\'m walking the dog.']], 'Everyday actions'],
+    ['kantaa', 'to carry', 'verb', 'Type 1 · minä kannan · hän kantoi (past).', [['Kanna kassit sisään.', 'Carry the bags in.']], 'Everyday actions'],
+    ['työntää', 'to push', 'verb', 'Type 1 · minä työnnän · hän työnsi (past).', [['Työnnä rattaita.', 'Push the pushchair.']], 'Everyday actions'],
+    ['vetää', 'to pull', 'verb', 'Type 1 · minä vedän · hän veti (past).', [['Vedä ovea.', 'Pull the door.']], 'Everyday actions'],
+    ['pysähtyä', 'to stop', 'verb', 'Type 1 · minä pysähdyn · hän pysähtyi (past).', [['Bussi pysähtyy tähän.', 'The bus stops here.']], 'Everyday actions'],
+    ['kiirehtiä', 'to hurry', 'verb', 'Type 1 · minä kiirehdin · hän kiirehti (past). Also: pitää kiirettä.', [['Kiirehdi, bussi lähtee!', 'Hurry, the bus is leaving!']], 'Everyday actions'],
+    ['sammuttaa', 'to turn off, to switch off', 'verb', 'Type 1 · minä sammutan · hän sammutti (past). Also: to put out (a fire).', [['Sammuta valot.', 'Turn off the lights.']], 'Everyday actions'],
+    ['sytyttää', 'to turn on (a light), to light', 'verb', 'Type 1 · minä sytytän · hän sytytti (past).', [['Sytytä valo.', 'Turn on the light.']], 'Everyday actions'],
+    ['lukita', 'to lock', 'verb', 'Type 5 · minä lukitsen · hän lukitsi (past).', [['Lukitse ovi.', 'Lock the door.']], 'Everyday actions'],
+    ['tarkistaa', 'to check', 'verb', 'Type 1 · minä tarkistan · hän tarkisti (past).', [['Tarkista posti.', 'Check the mail.']], 'Everyday actions'],
+    ['jutella', 'to chat', 'verb', 'Type 3 · minä juttelen · hän jutteli (past).', [['Haluatko jutella hetken?', 'Do you want to chat for a moment?']], 'Everyday actions'],
+    ['nukahtaa', 'to fall asleep', 'verb', 'Type 1 · minä nukahdan · hän nukahti (past).', [['Nukahdin sohvalle.', 'I fell asleep on the sofa.']], 'Everyday actions'],
+    ['herättää', 'to wake (someone) up', 'verb', 'Type 1 · minä herätän · hän herätti (past). (herätä = to wake up yourself.)', [['Herätä minut seitsemältä.', 'Wake me up at seven.']], 'Everyday actions'],
+    ['käydä kaupassa', 'to go to the shop, to do the shopping', 'phrase', 'Käyn kaupassa = I\'ll pop to the shop.', [['Pitää käydä kaupassa illalla.', 'I need to go to the shop this evening.']], 'Everyday actions'],
+
+    // Describing things
+    ['pehmeä', 'soft', 'adjective', 'Opposite: kova.', [['Tyyny on pehmeä.', 'The pillow is soft.']], 'Describing things'],
+    ['kova', 'hard; loud; strong', 'adjective', 'kova ääni = a loud noise.', [['Kivi on kova.', 'The stone is hard.']], 'Describing things'],
+    ['sileä', 'smooth', 'adjective', 'Opposite: karhea.', [['Pöytä on sileä.', 'The table is smooth.']], 'Describing things'],
+    ['karhea', 'rough', 'adjective', 'Opposite: sileä.', [['Puu on karhea.', 'The wood is rough.']], 'Describing things'],
+    ['terävä', 'sharp', 'adjective', 'Opposite: tylsä.', [['Veitsi on terävä.', 'The knife is sharp.']], 'Describing things'],
+    ['tylsä', 'blunt; boring', 'adjective', 'tylsä kynä = blunt pencil; tylsä elokuva = boring film.', [['Kynä on tylsä.', 'The pencil is blunt.']], 'Describing things'],
+    ['painava', 'heavy', 'adjective', 'Also: raskas.', [['Laatikko on painava.', 'The box is heavy.']], 'Describing things'],
+    ['ohut', 'thin', 'adjective', 'Opposite: paksu. Stem: ohuen, ohutta.', [['Paperi on ohut.', 'The paper is thin.']], 'Describing things'],
+    ['paksu', 'thick', 'adjective', 'Opposite: ohut.', [['Kirja on paksu.', 'The book is thick.']], 'Describing things'],
+    ['leveä', 'wide, broad', 'adjective', 'Opposite: kapea.', [['Tie on leveä.', 'The road is wide.']], 'Describing things'],
+    ['kapea', 'narrow', 'adjective', 'Opposite: leveä.', [['Polku on kapea.', 'The path is narrow.']], 'Describing things'],
+    ['korkea', 'high, tall', 'adjective', 'For buildings and things; people are pitkä.', [['Torni on korkea.', 'The tower is tall.']], 'Describing things'],
+    ['matala', 'low; shallow', 'adjective', 'Opposite: korkea / syvä.', [['Pöytä on matala.', 'The table is low.']], 'Describing things'],
+    ['syvä', 'deep', 'adjective', 'Opposite: matala.', [['Järvi on syvä.', 'The lake is deep.']], 'Describing things'],
+    ['litteä', 'flat', 'adjective', 'Not round or thick.', [['Kivi on litteä.', 'The stone is flat.']], 'Describing things'],
+    ['rikki', 'broken', 'adverb', 'olla rikki = to be broken; mennä rikki = to break.', [['Lelu on rikki.', 'The toy is broken.']], 'Describing things'],
+    ['ehjä', 'whole, intact, not broken', 'adjective', 'Opposite: rikki.', [['Kuppi on vielä ehjä.', 'The cup is still in one piece.']], 'Describing things'],
+    ['kulunut', 'worn, worn out', 'adjective', 'From kulua (to wear).', [['Matto on kulunut.', 'The rug is worn.']], 'Describing things'],
+    ['tahmea', 'sticky', 'adjective', 'Very useful at daycare!', [['Pöytä on tahmea.', 'The table is sticky.']], 'Describing things'],
+    ['läpinäkyvä', 'transparent, see-through', 'adjective', 'Literally "through-visible".', [['Pussi on läpinäkyvä.', 'The bag is see-through.']], 'Describing things'],
+    ['kirkas', 'bright; clear', 'adjective', 'Stem: kirkkaan, kirkasta.', [['Vesi on kirkasta.', 'The water is clear.']], 'Describing things'],
+    ['himmeä', 'dim; dull', 'adjective', 'Opposite: kirkas.', [['Valo on himmeä.', 'The light is dim.']], 'Describing things'],
+    ['äänekäs', 'loud, noisy', 'adjective', 'Stem: äänekkään.', [['Kone on äänekäs.', 'The machine is noisy.']], 'Describing things'],
+    ['puinen', 'wooden', 'adjective', 'Materials take -inen: puinen, muovinen, lasinen…', [['Lelu on puinen.', 'The toy is wooden.']], 'Describing things'],
+    ['muovinen', 'plastic', 'adjective', 'From muovi.', [['Pullo on muovinen.', 'The bottle is plastic.']], 'Describing things'],
+    ['metallinen', 'metal', 'adjective', 'From metalli.', [['Lusikka on metallinen.', 'The spoon is metal.']], 'Describing things'],
+    ['lasinen', 'glass', 'adjective', 'From lasi.', [['Maljakko on lasinen.', 'The vase is glass.']], 'Describing things'],
+    ['villainen', 'woollen', 'adjective', 'From villa (wool).', [['Pipo on villainen.', 'The hat is woollen.']], 'Describing things'],
+    ['materiaali', 'material', 'noun', 'Mitä materiaalia? = What material?', [['Mitä materiaalia tämä on?', 'What material is this?']], 'Describing things'],
+    ['mukava', 'comfortable; nice', 'adjective', 'mukava tuoli = comfortable chair; mukava ihminen = nice person.', [['Sohva on mukava.', 'The sofa is comfortable.']], 'Describing things'],
+    ['käytännöllinen', 'practical', 'adjective', 'Stem: käytännöllisen.', [['Laukku on käytännöllinen.', 'The bag is practical.']], 'Describing things'],
+    ['tärkeä', 'important', 'adjective', 'Stem: tärkeän.', [['Tämä on tärkeä asia.', 'This is an important matter.']], 'Describing things'],
+    ['samanlainen', 'similar, the same kind', 'adjective', 'Opposite: erilainen.', [['Meillä on samanlaiset kengät.', 'We have the same shoes.']], 'Describing things'],
+    ['erilainen', 'different', 'adjective', 'Opposite: samanlainen.', [['Nämä ovat erilaisia.', 'These are different.']], 'Describing things'],
+
+    // Computer problems
+    ['toimia', 'to work, to function', 'verb', 'Type 1 · se toimii · se toimi (past). Ei toimi = doesn\'t work.', [['Tulostin ei toimi.', 'The printer doesn\'t work.']], 'Computer problems'],
+    ['jumittaa', 'to freeze, to hang', 'verb', 'Type 1 · se jumittaa · se jumitti (past). Colloquial but very common.', [['Kone jumittaa taas.', 'The computer has frozen again.']], 'Computer problems'],
+    ['jumissa', 'stuck, frozen', 'adverb', 'olla jumissa = to be stuck.', [['Paperi on jumissa.', 'The paper is stuck.']], 'Computer problems'],
+    ['käynnistää', 'to start; to restart (uudelleen)', 'verb', 'Type 1 · minä käynnistän · hän käynnisti (past).', [['Käynnistä tietokone uudelleen.', 'Restart the computer.']], 'Computer problems'],
+    ['päivitys', 'update', 'noun', 'Stem: päivityksen.', [['Päivitys on kesken.', 'The update isn\'t finished.']], 'Computer problems'],
+    ['asentaa', 'to install', 'verb', 'Type 1 · minä asennan · hän asensi (past).', [['Asenna sovellus.', 'Install the app.']], 'Computer problems'],
+    ['poistaa', 'to delete, to remove', 'verb', 'Type 1 · minä poistan · hän poisti (past).', [['Poista vanha tiedosto.', 'Delete the old file.']], 'Computer problems'],
+    ['tallentaa', 'to save', 'verb', 'Type 1 · minä tallennan · hän tallensi (past).', [['Muista tallentaa tiedosto.', 'Remember to save the file.']], 'Computer problems'],
+    ['tiedosto', 'file', 'noun', 'Stem: tiedoston.', [['Tiedosto on liian suuri.', 'The file is too big.']], 'Computer problems'],
+    ['kansio', 'folder', 'noun', 'Stem: kansion.', [['Tallenna se kansioon.', 'Save it in the folder.']], 'Computer problems'],
+    ['virheilmoitus', 'error message', 'noun', 'Stem: virheilmoituksen.', [['Näytölle tuli virheilmoitus.', 'An error message came up on the screen.']], 'Computer problems'],
+    ['yhteys', 'connection', 'noun', 'nettiyhteys = internet connection. Stem: yhteyden.', [['Nettiyhteys katkesi.', 'The internet connection dropped.']], 'Computer problems'],
+    ['wifi', 'wifi', 'noun', 'Also: langaton verkko.', [['Wifi ei toimi.', 'The wifi isn\'t working.']], 'Computer problems'],
+    ['yhdistää', 'to connect', 'verb', 'Type 1 · minä yhdistän · hän yhdisti (past).', [['Yhdistä puhelin wifiin.', 'Connect the phone to the wifi.']], 'Computer problems'],
+    ['reititin', 'router', 'noun', 'Stem: reitittimen.', [['Käynnistä reititin uudelleen.', 'Restart the router.']], 'Computer problems'],
+    ['kaapeli', 'cable', 'noun', 'Stem: kaapelin.', [['Onko kaapeli kiinni?', 'Is the cable plugged in?']], 'Computer problems'],
+    ['näppäimistö', 'keyboard', 'noun', 'näppäin = key.', [['Näppäimistö ei toimi.', 'The keyboard doesn\'t work.']], 'Computer problems'],
+    ['klikata', 'to click', 'verb', 'Type 4 · minä klikkaan · hän klikkasi (past).', [['Klikkaa tästä.', 'Click here.']], 'Computer problems'],
+    ['painaa', 'to press; to weigh', 'verb', 'Type 1 · minä painan · hän painoi (past).', [['Paina tätä nappia.', 'Press this button.']], 'Computer problems'],
+    ['painike', 'button (on screen)', 'noun', 'Stem: painikkeen.', [['Paina painiketta Tallenna.', 'Press the Save button.']], 'Computer problems'],
+    ['latautua', 'to charge; to load', 'verb', 'Type 1 · se latautuu · se latautui (past).', [['Puhelin latautuu.', 'The phone is charging.']], 'Computer problems'],
+    ['lataus', 'download; charging; loading', 'noun', 'Stem: latauksen.', [['Lataus kestää kauan.', 'The download takes a long time.']], 'Computer problems'],
+    ['tulostin', 'printer', 'noun', 'Stem: tulostimen.', [['Tulostin on jumissa.', 'The printer is jammed.']], 'Computer problems'],
+    ['ruutu', 'screen (spoken); square', 'noun', 'Stem: ruudun.', [['Ruutu on ihan musta.', 'The screen is completely black.']], 'Computer problems'],
+    ['ruutukaappaus', 'screenshot', 'noun', 'ottaa ruutukaappaus = to take a screenshot.', [['Ota ruutukaappaus virheestä.', 'Take a screenshot of the error.']], 'Computer problems'],
+    ['varmuuskopio', 'backup', 'noun', 'tehdä varmuuskopio = to make a backup.', [['Tee varmuuskopio.', 'Make a backup.']], 'Computer problems'],
+    ['tietoturva', 'data security', 'noun', 'Stem: tietoturvan.', [['Tietoturva on tärkeää.', 'Data security is important.']], 'Computer problems'],
+    ['virus', 'virus', 'noun', 'Stem: viruksen.', [['Koneessa on virus.', 'There\'s a virus on the computer.']], 'Computer problems'],
+    ['IT-tuki', 'IT support, helpdesk', 'noun', 'Stem: IT-tuen. Soita IT-tukeen = call IT support.', [['Soita IT-tukeen.', 'Call IT support.']], 'Computer problems'],
+
+    // Studying and writing
+    ['kurssi', 'course', 'noun', 'Stem: kurssin.', [['Kurssi alkaa syyskuussa.', 'The course starts in September.']], 'Studying & writing'],
+    ['kielikurssi', 'language course', 'noun', 'suomen kielen kurssi = Finnish course.', [['Olen suomen kielikurssilla.', 'I\'m on a Finnish language course.']], 'Studying & writing'],
+    ['oppitunti', 'lesson', 'noun', 'Also just tunti. Stem: oppitunnin.', [['Oppitunti kestää 45 minuuttia.', 'The lesson lasts 45 minutes.']], 'Studying & writing'],
+    ['luento', 'lecture', 'noun', 'Stem: luennon.', [['Luento on isossa salissa.', 'The lecture is in the big hall.']], 'Studying & writing'],
+    ['lukujärjestys', 'school timetable', 'noun', 'Stem: lukujärjestyksen.', [['Katso lukujärjestyksestä.', 'Check the timetable.']], 'Studying & writing'],
+    ['tehtävä', 'task, exercise', 'noun', 'Stem: tehtävän.', [['Tee tehtävä kaksi.', 'Do exercise two.']], 'Studying & writing'],
+    ['kotitehtävä', 'homework task', 'noun', 'Also: läksy.', [['Kotitehtävät ovat kirjassa.', 'The homework is in the book.']], 'Studying & writing'],
+    ['harjoitus', 'exercise, practice', 'noun', 'Stem: harjoituksen.', [['Tämä harjoitus on vaikea.', 'This exercise is difficult.']], 'Studying & writing'],
+    ['koe', 'test, exam', 'noun', 'Stem: kokeen, koetta.', [['Huomenna on koe.', 'There\'s a test tomorrow.']], 'Studying & writing'],
+    ['tentti', 'exam (university)', 'noun', 'Stem: tentin.', [['Tentti on perjantaina.', 'The exam is on Friday.']], 'Studying & writing'],
+    ['YKI-testi', 'YKI test (Finnish language test)', 'noun', 'The National Certificate of Language Proficiency, often needed for citizenship.', [['Menen YKI-testiin keväällä.', 'I\'m taking the YKI test in the spring.']], 'Studying & writing'],
+    ['arvosana', 'grade, mark', 'noun', 'Stem: arvosanan.', [['Sain hyvän arvosanan.', 'I got a good grade.']], 'Studying & writing'],
+    ['kirjoitelma', 'essay, written composition', 'noun', 'Stem: kirjoitelman.', [['Kirjoitan kirjoitelman lomasta.', 'I\'m writing an essay about my holiday.']], 'Studying & writing'],
+    ['essee', 'essay (academic)', 'noun', 'Stem: esseen.', [['Essee pitää palauttaa maanantaina.', 'The essay must be handed in on Monday.']], 'Studying & writing'],
+    ['teksti', 'text', 'noun', 'Stem: tekstin.', [['Lue teksti ääneen.', 'Read the text aloud.']], 'Studying & writing'],
+    ['otsikko', 'title, heading', 'noun', 'Stem: otsikon.', [['Keksi tekstille otsikko.', 'Think of a title for the text.']], 'Studying & writing'],
+    ['kappale', 'paragraph; piece; song', 'noun', 'Stem: kappaleen.', [['Kirjoita kaksi kappaletta.', 'Write two paragraphs.']], 'Studying & writing'],
+    ['lause', 'sentence', 'noun', 'Stem: lauseen.', [['Kirjoita lause vihkoon.', 'Write the sentence in your notebook.']], 'Studying & writing'],
+    ['sana', 'word', 'noun', 'Stem: sanan.', [['Mitä tämä sana tarkoittaa?', 'What does this word mean?']], 'Studying & writing'],
+    ['kielioppi', 'grammar', 'noun', 'Stem: kieliopin.', [['Suomen kielioppi on vaikea.', 'Finnish grammar is difficult.']], 'Studying & writing'],
+    ['oikeinkirjoitus', 'spelling', 'noun', 'Stem: oikeinkirjoituksen.', [['Tarkista oikeinkirjoitus.', 'Check the spelling.']], 'Studying & writing'],
+    ['virhe', 'mistake, error', 'noun', 'Stem: virheen, virhettä.', [['Tekstissä on yksi virhe.', 'There\'s one mistake in the text.']], 'Studying & writing'],
+    ['sanakirja', 'dictionary', 'noun', 'Stem: sanakirjan.', [['Katso sanakirjasta.', 'Look it up in the dictionary.']], 'Studying & writing'],
+    ['vihko', 'notebook, exercise book', 'noun', 'Stem: vihon.', [['Kirjoita vihkoon.', 'Write in your notebook.']], 'Studying & writing'],
+    ['kynä', 'pen', 'noun', 'Stem: kynän.', [['Lainaatko kynää?', 'Can you lend me a pen?']], 'Studying & writing'],
+    ['lyijykynä', 'pencil', 'noun', 'Stem: lyijykynän.', [['Kirjoita lyijykynällä.', 'Write in pencil.']], 'Studying & writing'],
+    ['kumi', 'eraser, rubber', 'noun', 'Also: pyyhekumi.', [['Pyyhi virhe kumilla.', 'Rub out the mistake with the eraser.']], 'Studying & writing'],
+    ['muistiinpanot', 'notes', 'noun', 'Plural. tehdä muistiinpanoja = to take notes.', [['Teen muistiinpanoja.', 'I take notes.']], 'Studying & writing'],
+    ['ääneen', 'aloud, out loud', 'adverb', 'lukea ääneen = to read aloud.', [['Lue ääneen.', 'Read aloud.']], 'Studying & writing'],
+    ['toistaa', 'to repeat', 'verb', 'Type 1 · minä toistan · hän toisti (past).', [['Toista perässäni.', 'Repeat after me.']], 'Studying & writing'],
+    ['selittää', 'to explain', 'verb', 'Type 1 · minä selitän · hän selitti (past).', [['Voitko selittää tämän?', 'Can you explain this?']], 'Studying & writing'],
+    ['tarkoittaa', 'to mean', 'verb', 'Type 1 · se tarkoittaa · se tarkoitti (past).', [['Mitä tämä tarkoittaa?', 'What does this mean?']], 'Studying & writing'],
+    ['kääntää', 'to translate; to turn', 'verb', 'Type 1 · minä käännän · hän käänsi (past).', [['Käännä lause englanniksi.', 'Translate the sentence into English.']], 'Studying & writing'],
+    ['kysymys', 'question', 'noun', 'Stem: kysymyksen.', [['Minulla on kysymys.', 'I have a question.']], 'Studying & writing'],
+    ['vastaus', 'answer', 'noun', 'Stem: vastauksen.', [['Kirjoita vastaus tähän.', 'Write the answer here.']], 'Studying & writing'],
+    ['opetella', 'to learn (by practising)', 'verb', 'Type 3 · minä opettelen · hän opetteli (past).', [['Opettelen uusia sanoja.', 'I\'m learning new words.']], 'Studying & writing'],
+
+    // Words from the "Talking with children" role play
+    ['lautanen', 'plate', 'noun', 'Stem: lautasen.', [['Vie lautanen pois.', 'Take your plate away.']], 'Daycare: instructions'],
+    ['laatikko', 'box; drawer', 'noun', 'Stem: laatikon.', [['Palikat ovat laatikossa.', 'The blocks are in the box.']], 'Daycare: instructions'],
+    ['siivousaika', 'tidy-up time', 'noun', 'siivota = to tidy.', [['Nyt on siivousaika.', 'Now it\'s tidy-up time.']], 'Daycare: instructions'],
+    ['haalari', 'overall, snowsuit', 'noun', 'välikausihaalari, toppahaalari… Stem: haalarin.', [['Pue haalari päälle.', 'Put your overall on.']], 'Daycare: instructions'],
+    ['syli', 'lap; arms (hug)', 'noun', 'tulla syliin = to come onto someone\'s lap; olla sylissä = to sit on someone\'s lap.', [['Haluatko tulla syliin?', 'Do you want to sit on my lap?']], 'Daycare: instructions'],
+    ['saippua', 'soap', 'noun', 'Stem: saippuan.', [['Pese kädet saippualla.', 'Wash your hands with soap.']], 'Daycare: instructions'],
+    ['kuivata', 'to dry', 'verb', 'Type 4 · minä kuivaan · hän kuivasi (past).', [['Kuivaa kädet.', 'Dry your hands.']], 'Daycare: instructions'],
+    ['laskea', 'to count; to slide down; to lower', 'verb', 'Type 1 · minä lasken · hän laski (past). laskea kymmeneen = to count to ten.', [['Lasketaan kymmeneen.', 'Let\'s count to ten.']], 'Daycare: instructions'],
+    ['isi', 'daddy', 'noun', 'Also: iskä (spoken). Standard: isä.', [['Isi tulee pian.', 'Daddy is coming soon.']], 'Daycare: instructions'],
+  ];
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5, v6, v7).map((r) => {
+  const tagged = v4.concat(v5, v6, v7, v8).map((r) => {
     let cats = [].concat(r[5]);
     if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$/.test(cats[0])) cats.push('Verbs');
@@ -1602,7 +1755,7 @@
 
   const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
-  const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(i < v4.length ? 4 : i < v4.length + v5.length ? 5 : i < v4.length + v5.length + v6.length ? 6 : 7)));
+  const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(i < v4.length ? 4 : i < v4.length + v5.length ? 5 : i < v4.length + v5.length + v6.length ? 6 : i < v4.length + v5.length + v6.length + v7.length ? 7 : 8)));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
     finnish: r[0],

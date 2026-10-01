@@ -448,3 +448,11 @@ legend { font-weight: 600; font-size: .9rem; padding: 0 .3rem; }
 select { max-width: 100%; text-overflow: ellipsis; }
 .toolbar label.inline { max-width: 100%; min-width: 0; }
 .toolbar label.inline select { min-width: 0; flex: 1 1 auto; }
+
+/* Number practice */
+.level-picker.two { grid-template-columns: repeat(2, 1fr); }
+.num-shown { font-size: 2.4rem; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+.num-context { font-size: 1.25rem; }
+.num-choices { grid-template-columns: 1fr; }
+.num-choices .choice span, .num-context, .expected { overflow-wrap: anywhere; }
+.num-type .big-input { margin-top: .5rem; }
