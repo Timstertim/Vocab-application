@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sanasto – Finnish Vocabulary</title>
+  <meta name="description" content="Save Finnish vocabulary, look up definitions and examples, and practise with Quizlet-style games.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#/words">
+      <span class="brand-flag" aria-hidden="true"></span>
+      <span>Sanasto</span>
+    </a>
+    <nav class="tabs" aria-label="Main">
+      <a href="#/words" data-tab="words">Words</a>
+      <a href="#/categories" data-tab="categories">Categories</a>
+      <a href="#/games" data-tab="games">Games</a>
+      <a href="#/settings" data-tab="settings">Settings</a>
+    </nav>
+  </header>
+
+  <main id="view" tabindex="-1"></main>
+
+  <div id="modal-root"></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/core.js"></script>
+  <script src="js/starter.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/lookup.js"></script>
+  <script src="js/games.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
