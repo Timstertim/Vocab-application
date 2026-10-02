@@ -62,7 +62,7 @@ with Quizlet-style mini games.
 - **Pronunciation**: 🔊 buttons read words aloud using your device's text-to-speech
   (install a Finnish voice for the best result).
 - **Backup**: export and import everything as JSON from Settings.
-- Starts with 1503 starter words in 67 categories, including **Feelings**, **Shapes**,
+- Starts with 1840 starter words in 87 categories, including **Feelings**, **Shapes**,
   **A2.2 verbs**, a set for daycare teachers (**Daycare**, **Daycare: play**, **Daycare: safety**,
   **Talking to parents**, **ECEC terms**), everyday life (**Time & calendar**, **Weather & seasons**,
   **Body & health**, **Clothes**, **Shopping & money**, **Getting around**, **Services & offices**,
@@ -75,7 +75,11 @@ with Quizlet-style mini games.
   **Countries & languages**, **Technology**, **Personality**), towards B1 (**Time expressions**,
   **Must, may & can**, **Verbs with cases**, **Linking words**, **Work emails**, **Sayings**),
   **Illnesses**, **Everyday actions**, **Describing things**, **Computer problems**,
-  **Studying & writing** and an expanded **Feelings**, plus one category per role-play place (**At the shop**, **At the library**, **Emergency call**…). Each verb shows its verb type, "minä" form, past form and, where it
+  **Studying & writing** and an expanded **Feelings**; daycare routines (**Daycare: meals**, **Daycare: rest & hygiene**,
+  **Daycare: outdoors**, **Daycare: arts & crafts**, **Daycare: friends & conflicts**, **Daycare: games & stories**,
+  **Planning & documentation**, **Support & inclusion**), everyday admin (**Cooking & kitchen**, **Banking & bills**,
+  **Kela, taxes & forms**, **Car & driving**, **Doctor & pharmacy**), language (**Feeling verbs**, **Opinions & discussion**,
+  **Polite requests**, **Abbreviations**, **Confusing words**, **Slang**) and **Finnish customs**, plus one category per role-play place (**At the shop**, **At the library**, **Emergency call**…). Each verb shows its verb type, "minä" form, past form and, where it
   matters, which case it takes. You can delete starter words, or add them back from Settings.
   When new starter words are released, they're added to your list once; words you already
   have, edited or deleted are left alone.

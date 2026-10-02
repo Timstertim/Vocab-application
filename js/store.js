@@ -56,6 +56,14 @@
         if (norm(w.finnish) !== norm(fix.finnish)) continue;
         for (const field of Object.keys(fix)) {
           if (field === 'finnish') continue;
+          if (field === 'addCategories') {
+            for (const cid of fix.addCategories) {
+              const starterCat = Starter.categories.find((c) => c.id === cid);
+              const cat = s.categories.find((c) => c.id === cid || c.name.toLowerCase() === starterCat.name.toLowerCase());
+              if (cat && !w.categoryIds.includes(cat.id)) w.categoryIds.push(cat.id);
+            }
+            continue;
+          }
           if (JSON.stringify(w[field]) === JSON.stringify(fix[field])) w[field] = JSON.parse(JSON.stringify(now[field]));
         }
       }

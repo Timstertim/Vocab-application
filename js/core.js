@@ -245,6 +245,12 @@
       const i = lower.indexOf(base);
       return i < 0 ? null : { start: i, end: i + base.length, form: text.slice(i, i + base.length) };
     }
+    if (/[^a-zà-ÿ-]/.test(base)) {
+      // Abbreviations and codes (mm., S2, ma–pe) too, starting at a word boundary.
+      const esc = base.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const m = new RegExp('(?<![a-zà-ÿ0-9])' + esc, 'i').exec(text);
+      return m ? { start: m.index, end: m.index + base.length, form: m[0] } : null;
+    }
     const required = Math.max(Math.min(3, base.length), Math.ceil(base.length * 0.5));
     const tokens = Array.from(text.matchAll(/[a-zà-ÿ]+(?:-[a-zà-ÿ]+)*/gi)).map((m) => {
       const tok = m[0].toLowerCase();

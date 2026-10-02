@@ -29,6 +29,11 @@
     'Technology': 'A2.1', 'Personality': 'A2.2', 'Time expressions': 'A2.1', 'Must, may & can': 'A2.2',
     'Verbs with cases': 'B1.1', 'Linking words': 'B1.1', 'Work emails': 'B1.1', 'Sayings': 'B1.2', 'Illnesses': 'A2.2',
     'Everyday actions': 'A2.1', 'Describing things': 'A2.1', 'Computer problems': 'B1.1', 'Studying & writing': 'A2.2',
+    'Daycare: meals': 'A2.1', 'Daycare: rest & hygiene': 'A2.1', 'Daycare: outdoors': 'A2.1', 'Daycare: arts & crafts': 'A2.1',
+    'Daycare: friends & conflicts': 'A2.2', 'Daycare: games & stories': 'A2.1', 'Planning & documentation': 'B1.2',
+    'Support & inclusion': 'B1.2', 'Cooking & kitchen': 'A2.1', 'Banking & bills': 'B1.1', 'Kela, taxes & forms': 'B1.1',
+    'Car & driving': 'A2.2', 'Doctor & pharmacy': 'A2.2', 'Feeling verbs': 'A2.2', 'Opinions & discussion': 'B1.1',
+    'Polite requests': 'A2.2', 'Abbreviations': 'A2.2', 'Confusing words': 'A2.1', 'Slang': 'A2.2', 'Finnish customs': 'A2.2',
   };
 
   // Words that are easier or harder than their category.
@@ -108,6 +113,13 @@
     groups['A2.1'] = groups['A2.1'].concat(['viisari', 'kellonaika', 'keskipäivä', 'keskiyö']);
     groups['A2.2'] = groups['A2.2'].concat(['viimeistään', 'vuosiluku', 'vuosikymmen', 'vuosisata']);
     groups['B1.1'] = groups['B1.1'].concat(['aikaisintaan']);
+  // Version 10 additions.
+    groups['A1.2'] = groups['A1.2'].concat(['puu', 'kukka', 'taivas', 'meri', 'aamupala', 'hauska tutustua', 'kuinka voit', 'huomenta', 'hyvää yötä', 'tervetuloa', 'nähdään', 'hei hei']);
+    groups['A1.3'] = groups['A1.3'].concat(['kiitos ruoasta', 'hyvää ruokahalua', 'hyvää päivänjatkoa', 'kattila', 'klo', 'esim.', 'kuu', 'kerta', 'kesäloma']);
+    groups['A2.1'] = groups['A2.1'].concat(['pitkästä aikaa', 'mukava kuulla', 'keli', 'helle', 'lämpötila', 'salama', 'lumisade', 'sateinen', 'mikro', 'turvavyö', 'kipulääke', 'janottaa', 'nukuttaa', 'voisitko', 'haluaisin', 'saisinko', 'tunnusluku', 'eräpäivä', 'mielestäni', 'minusta', 'mitä mieltä olet', 'olla oikeassa']);
+    groups['A2.2'] = groups['A2.2'].concat(['pärjäillään', 'loska', 'kuura', 'sataa kaatamalla', 'tiimipalaveri', 'viikkosuunnitelma', 'tavoite', 'sijainen', 'monikielinen', 'tulkki', 'puheterapeutti']);
+    groups['B1.1'] = groups['B1.1'].concat(['erityisruokavalio', 'nollakeli', 'poutainen', 'lähete', 'lääkärintodistus', 'sivuvaikutus', 'kaduttaa', 'mietityttää', 'ihmetyttää', 'olisitko ystävällinen', 'dokumentoida', 'kirjata', 'läsnäolo', 'tiedote', 'kuvatuki', 'tukiviittomat', 'avustaja', 'toimintaterapeutti', 'yhdenvertaisuus', 'tasa-arvo']);
+    groups['B1.2'] = groups['B1.2'].concat(['lääkemääräys', 'muutoksenhaku', 'valtakirja', 'vireillä', 'perintä']);
   const WORD = {};
   for (const [level, words] of Object.entries(groups)) for (const w of words) WORD[w] = level;
 
