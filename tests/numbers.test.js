@@ -105,10 +105,27 @@ test('dates: the month as an ordinal is partitive (kuudes kahdettatoista)', () =
   assert.equal(N.MONTHS_ORD_PARTITIVE[6], 'kuudetta');
   for (let i = 0; i < 200; i++) {
     const ex = N.round('dates', 1)[0];
+    if (ex.digits || /puhekieli/.test(ex.task)) continue;
     const [d, m] = ex.shown.split('.').map(Number);
     const day = ex.answer.split(' ')[0];
     assert.equal(N.checkNumberAnswer(day + ' ' + N.MONTHS_ORD_PARTITIVE[m], ex).correct, true, ex.shown);
     assert.equal(N.checkNumberAnswer(day + ' ' + N.ordinal(m), ex).correct, false, ex.shown);
     assert.ok(day === N.ordinal(d) || day === N.ordinalEssive(d), ex.shown);
+  }
+});
+
+test('dates in puhekieli', () => {
+  const said = { 1: 'eka', 2: 'toka', 8: 'kaheksas', 10: 'kymmenes', 12: 'kahdestoist', 20: 'kahdeskymmenes', 21: 'kakskytensimmäinen', 28: 'kakskytkaheksas', 31: 'kolkytensimmäinen' };
+  for (const [d, w] of Object.entries(said)) assert.equal(N.spokenDay(+d, 0), w, d);
+  const on = { 1: 'ekana', 12: 'kahdentenatoist', 28: 'kakskytkaheksantena' };
+  for (const [d, w] of Object.entries(on)) assert.equal(N.spokenDay(+d, 1), w, d);
+  // Hearing a spoken date: the answer is compared as day and month, so 2.12. ≠ 21.2.
+  const ex = { kind: 'dates', digits: true, answer: '2.12.' };
+  assert.equal(N.checkNumberAnswer('2.12', ex).correct, true);
+  assert.equal(N.checkNumberAnswer('21.2.', ex).correct, false);
+  for (let i = 0; i < 500; i++) {
+    const e = N.round('dates', 1)[0];
+    assert.equal(e.options.length, 4, e.shown);
+    assert.equal(e.options.filter((o) => N.checkNumberAnswer(o, e).correct).length, 1, e.shown);
   }
 });

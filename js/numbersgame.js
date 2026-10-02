@@ -109,7 +109,7 @@
         (m === 'choose'
           ? '<div class="choices num-choices">' + ex.options.map((o, n) => '<button class="choice" data-n="' + n + '"><kbd>' + (n + 1) + '</kbd> <span lang="fi">' + esc(o) + '</span></button>').join('') + '</div>'
           : '<form class="num-type" autocomplete="off"><input id="num-input" class="big-input" ' + (ex.digits ? 'inputmode="numeric" ' : 'lang="fi" ') +
-            'placeholder="' + (ex.digits ? 'Type the number in digits' : 'Kirjoita suomeksi…') + '" spellcheck="false" autocapitalize="off">' +
+            'placeholder="' + (ex.digits ? (ex.kind === 'dates' ? 'Type the date, e.g. 6.12.' : 'Type the number in digits') : 'Kirjoita suomeksi…') + '" spellcheck="false" autocapitalize="off">' +
             (ex.digits ? '' : letterBar('#num-input')) +
             '<div class="row gap center"><button class="btn primary" type="submit">Check <kbd>Enter</kbd></button>' +
             '<button class="btn ghost" type="button" data-act="show">Show answer</button></div></form>') +

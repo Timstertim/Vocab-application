@@ -99,6 +99,12 @@
       given = String(typed || '').toLowerCase().split(/[\s,]+/).map((w) => SPOKEN_DIGITS[w] || w).join('');
       given = squash(given);
     }
+    if (ex.kind === 'dates' && ex.digits) {
+      // Compare day and month as numbers, so 2.12. and 21.2. never get mixed up.
+      const dm = (x) => (String(x).match(/^\s*(\d{1,2})\s*[.\/-]\s*(\d{1,2})\s*\.?\s*$/) || []).slice(1).map(Number).join('.');
+      const inWords = (ex.accept || []).map(squash).includes(squash(typed));
+      return { correct: inWords || (!!dm(typed) && dm(typed) === dm(ex.answer)), close: false };
+    }
     if (!given) return { correct: false, close: false };
     const answers = [ex.answer].concat(ex.accept || []).map(squash);
     if (answers.includes(given)) return { correct: true, close: false };
@@ -115,7 +121,7 @@
   const uniq = (list, answer) => Array.from(new Set(list.filter((x) => x && squash(x) !== squash(answer))));
 
   const SETS = {
-    dates: { name: 'Dates', icon: '📅', blurb: 'Tänään on kuudes joulukuuta · juhla on kuudentena joulukuuta' },
+    dates: { name: 'Dates', icon: '📅', blurb: 'Tänään on kuudes joulukuuta · juhla on kuudentena joulukuuta · puhekieli: kakskytkaheksas' },
     times: { name: 'Clock times', icon: '🕒', blurb: 'puoli neljä, varttia yli kaksi, kymmentä vaille viisi' },
     atuntil: { name: 'At & until', icon: '⏰', blurb: 'kahdelta (at two), neljään asti (until four)' },
     prices: { name: 'Prices', icon: '💶', blurb: '3,50 € = kolme euroa viisikymmentä senttiä' },
@@ -133,7 +139,75 @@
   const UNITS = [['minuutti', 'minuutin', 'minuuttia', 'minute'], ['tunti', 'tunnin', 'tuntia', 'hour'], ['päivä', 'päivän', 'päivää', 'day'],
     ['viikko', 'viikon', 'viikkoa', 'week'], ['kuukausi', 'kuukauden', 'kuukautta', 'month'], ['vuosi', 'vuoden', 'vuotta', 'year']];
 
+  /*
+   * Dates in puhekieli: eka / toka for 1st and 2nd, -toist for the teens, kakskyt- and kolkyt- for 21st–31st,
+   * and the dropped sounds of everyday speech (kaheksas, yheksäs). 10th, 20th and 30th are said as in the standard form.
+   * [nominative, essive] of the last part, with the common alternatives people also say.
+   */
+  const SPOKEN_ORD = ['', ['eka', 'ekana'], ['toka', 'tokana'], ['kolmas', 'kolmantena'], ['neljäs', 'neljäntenä'], ['viides', 'viidentenä'],
+    ['kuudes', 'kuudentena'], ['seitsemäs', 'seitsemäntenä'], ['kaheksas', 'kaheksantena'], ['yheksäs', 'yheksäntenä']];
+  const SPOKEN_ORD_PREFIX = ['', ['yhdes', 'yhdentenä'], ['kahdes', 'kahdentena'], ['kolmas', 'kolmantena'], ['neljäs', 'neljäntenä'], ['viides', 'viidentenä'],
+    ['kuudes', 'kuudentena'], ['seitsemäs', 'seitsemäntenä'], ['kaheksas', 'kaheksantena'], ['yheksäs', 'yheksäntenä']];
+  /** Days whose spoken form differs from the standard one. */
+  const SPOKEN_DAYS = [1, 2, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31];
+  /** The spoken ordinal of a day: case 0 = "Tänään on …", 1 = "on the …" (essive). */
+  function spokenDay(d, c) {
+    if (d < 10) return SPOKEN_ORD[d][c];
+    if (d === 10) return c ? ordinalEssive(d) : ordinal(d);
+    if (d < 20) return SPOKEN_ORD_PREFIX[d - 10][c] + 'toist';
+    const tens = d < 30 ? 'kakskyt' : 'kolkyt', u = d % 10;
+    if (!u) return c ? ordinalEssive(d) : ordinal(d);
+    // In compounds the 1st and 2nd keep their full forms: kakskytensimmäinen, kakskyttoinen.
+    return tens + (u === 1 ? ['ensimmäinen', 'ensimmäisenä'][c] : u === 2 ? ['toinen', 'toisena'][c] : SPOKEN_ORD[u][c]);
+  }
+  /** Other spoken forms people use too (the standard sounds, the full -toista). */
+  function spokenDayAlternatives(d, c) {
+    const std = c ? ordinalEssive(d) : ordinal(d);
+    const alts = [spokenDay(d, c).replace(/kaheksa/g, 'kahdeksa').replace(/yheksä/g, 'yhdeksä')];
+    if (d >= 11 && d <= 19) alts.push(std);
+    if (d > 20) alts.push((d < 30 ? 'kakskyt' : 'kolkyt') + (c ? ordinalEssive(d % 10) : ordinal(d % 10)));
+    if (d === 1 || d === 2) alts.push(std);
+    return alts;
+  }
+  const SPOKEN_DATE_NOTE = 'Puhekieli: 1st and 2nd are eka and toka (ekana, tokana), the teens drop the final -a (kahdestoist), ' +
+    '21st–31st start with kakskyt- or kolkyt- (kakskytkaheksas), and kahdeksas / yhdeksäs often sound like kaheksas / yheksäs.';
+
+  function spokenDateExercise(rng) {
+    const m = int(1, 12, rng);
+    const days = SPOKEN_DAYS.filter((x) => x <= MONTH_DAYS[m]);
+    const d = pick(days, rng), month = MONTHS_PARTITIVE[m], shown = d + '.' + m + '.';
+    const near = pick(days.filter((x) => x !== d), rng);
+    const r = rng();
+    if (r < 0.5) {
+      // Hear it: the spoken date → the date in digits.
+      const say = spokenDay(d, 0) + ' ' + month;
+      const ok = (x, y) => x >= 1 && y >= 1 && y <= 12 && x <= MONTH_DAYS[y];
+      const wrong = [];
+      // The likely mix-ups first: the teens heard as single digits, day and month swapped, the days next to it.
+      if (d >= 11 && d <= 19) wrong.push([d - 10, m]);
+      wrong.push([m, d], [d + 1, m], [d - 1, m], [d, m === 12 ? 11 : m + 1], [near, m], [d, m === 1 ? 2 : m - 1], [d > 30 ? d - 10 : d + 10, m], [d - 2, m]);
+      const wrongDates = uniq(wrong.filter(([x, y]) => ok(x, y)).map(([x, y]) => x + '.' + y + '.'), shown);
+      return {
+        kind: 'dates', shown: '“' + say + '”', task: 'Which date is this (spoken Finnish)?', context: '',
+        answer: shown, accept: [ordinal(d) + ' ' + month], wrong: wrongDates.slice(0, 3), digits: true,
+        note: '"' + spokenDay(d, 0) + '" is the spoken form of ' + ordinal(d) + ' (' + d + '.). ' + SPOKEN_DATE_NOTE,
+      };
+    }
+    const c = r < 0.75 ? 0 : 1;
+    const answer = spokenDay(d, c) + ' ' + month;
+    return {
+      kind: 'dates', shown, task: c ? 'Say "on" this date in spoken Finnish (puhekieli)' : 'Say the date in spoken Finnish (puhekieli)',
+      context: c ? pick(['Mä synnyin ___.', 'Juhlat on ___.', 'Me lähetään lomalle ___.'], rng) : pick(['Tänään on ___.', 'Huomenna on ___.', 'Eilen oli ___.'], rng),
+      answer,
+      accept: uniq(spokenDayAlternatives(d, c).map((x) => x + ' ' + month), answer),
+      wrong: uniq([spokenDay(d, 1 - c) + ' ' + month, spokenDay(near, c) + ' ' + month,
+        spokenDay(d, c) + ' ' + MONTHS_PARTITIVE[m === 12 ? 11 : m + 1], (SPOKEN.find((x) => x[0] === d) || [0, cardinal(d)])[1] + ' ' + month], answer),
+      note: 'Standard: ' + (c ? ordinalEssive(d) : ordinal(d)) + ' ' + month + '. ' + SPOKEN_DATE_NOTE,
+    };
+  }
+
   function dateExercise(rng) {
+    if (rng() < 0.4) return spokenDateExercise(rng);
     const m = int(1, 12, rng), d = int(1, MONTH_DAYS[m], rng);
     const shown = d + '.' + m + '.';
     if (rng() < 0.5) {
@@ -450,6 +524,6 @@
 
   return {
     cardinal, ordinal, ordinalEssive, ORD_INESSIVE, ORD_TRANSLATIVE, MONTHS_PARTITIVE, MONTHS_ORD_PARTITIVE, HOUR_AT, HOUR_UNTIL,
-    NUMBER_NOUNS, SPOKEN, SETS, round, checkNumberAnswer, squash, decadeWord,
+    NUMBER_NOUNS, SPOKEN, SETS, round, checkNumberAnswer, squash, decadeWord, spokenDay,
   };
 });

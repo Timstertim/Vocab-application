@@ -47,7 +47,7 @@ with Quizlet-style mini games.
   creating a game, so you only practise words at your level. Set the level of your own words
   in the word form. Starter levels are in `js/levels.js`.
 - **Number practice**: numbers the way they're really used, with new questions every round:
-  dates (*kuudes joulukuuta*, *kuudentena joulukuuta*), clock times (*puoli neljä*,
+  dates (*kuudes joulukuuta*, *kuudentena joulukuuta*, and in puhekieli: *eka toukokuuta*, *kahdestoist*, *kakskytkaheksas*), clock times (*puoli neljä*,
   *varttia vaille*), "at" and "until" (*kahdelta*, *neljään asti*), prices, ordinals in
   context (*kolmannessa kerroksessa*, *tuli toiseksi*), spoken forms and number nouns
   (*kakskyt*, *Mennään ysillä*, *Sain kympin*), years, ages and phone numbers. Choose or
