@@ -99,3 +99,16 @@ test('clock, time spans and years exercises use the right forms', () => {
   assert.equal(N.checkNumberAnswer('kahden tunnin kuluttua', ex).correct, true);
   assert.equal(N.checkNumberAnswer('kaksi tuntia päästä', ex).correct, false);
 });
+
+test('dates: the month as an ordinal is partitive (kuudes kahdettatoista)', () => {
+  assert.equal(N.MONTHS_ORD_PARTITIVE[12], 'kahdettatoista');
+  assert.equal(N.MONTHS_ORD_PARTITIVE[6], 'kuudetta');
+  for (let i = 0; i < 200; i++) {
+    const ex = N.round('dates', 1)[0];
+    const [d, m] = ex.shown.split('.').map(Number);
+    const day = ex.answer.split(' ')[0];
+    assert.equal(N.checkNumberAnswer(day + ' ' + N.MONTHS_ORD_PARTITIVE[m], ex).correct, true, ex.shown);
+    assert.equal(N.checkNumberAnswer(day + ' ' + N.ordinal(m), ex).correct, false, ex.shown);
+    assert.ok(day === N.ordinal(d) || day === N.ordinalEssive(d), ex.shown);
+  }
+});

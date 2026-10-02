@@ -55,6 +55,9 @@
   const MONTHS_PARTITIVE = ['', 'tammikuuta', 'helmikuuta', 'maaliskuuta', 'huhtikuuta', 'toukokuuta', 'kesäkuuta',
     'heinäkuuta', 'elokuuta', 'syyskuuta', 'lokakuuta', 'marraskuuta', 'joulukuuta'];
   const MONTH_DAYS = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  // The month as an ordinal is partitive too: 6.12. = kuudes kahdettatoista (like kuudes joulukuuta).
+  const MONTHS_ORD_PARTITIVE = ['', 'ensimmäistä', 'toista', 'kolmatta', 'neljättä', 'viidettä', 'kuudetta',
+    'seitsemättä', 'kahdeksatta', 'yhdeksättä', 'kymmenettä', 'yhdettätoista', 'kahdettatoista'];
 
   // Clock hours 1–12: "at" (-lta) and "until" (-an … asti).
   const HOUR_AT = ['', 'yhdeltä', 'kahdelta', 'kolmelta', 'neljältä', 'viideltä', 'kuudelta', 'seitsemältä', 'kahdeksalta', 'yhdeksältä', 'kymmeneltä', 'yhdeltätoista', 'kahdeltatoista'];
@@ -137,19 +140,22 @@
       return {
         kind: 'dates', shown, task: 'Say the date', context: pick(['Tänään on ___.', 'Huomenna on ___.', 'Eilen oli ___.'], rng),
         answer: ordinal(d) + ' ' + MONTHS_PARTITIVE[m],
-        accept: [ordinal(d) + ' ' + ordinal(m)],
+        accept: [ordinal(d) + ' ' + MONTHS_ORD_PARTITIVE[m], ordinal(d) + ' päivä ' + MONTHS_PARTITIVE[m]],
         wrong: uniq([ordinalEssive(d) + ' ' + MONTHS_PARTITIVE[m], cardinal(d) + ' ' + MONTHS_PARTITIVE[m],
-          ordinal(d) + ' ' + MONTHS_PARTITIVE[m === 12 ? 11 : m + 1], ordinal(d === 1 ? 2 : d - 1) + ' ' + MONTHS_PARTITIVE[m]], ''),
-        note: 'Day = ordinal (' + ordinal(d) + '), month = partitive (' + MONTHS_PARTITIVE[m] + '). People also say the month as an ordinal: ' + ordinal(d) + ' ' + ordinal(m) + '.',
+          ordinal(d) + ' ' + MONTHS_PARTITIVE[m === 12 ? 11 : m + 1], ordinal(d === 1 ? 2 : d - 1) + ' ' + MONTHS_PARTITIVE[m],
+          ordinal(d) + ' ' + ordinal(m)], ''),
+        note: 'Day = ordinal (' + ordinal(d) + '), month = partitive (' + MONTHS_PARTITIVE[m] + '). The month can also be said as an ordinal, ' +
+          'and it is partitive too: ' + ordinal(d) + ' ' + MONTHS_ORD_PARTITIVE[m] + ' (not ' + ordinal(m) + ').',
       };
     }
     return {
       kind: 'dates', shown, task: 'Say "on" this date', context: pick(['Juhla on ___.', 'Synnyin ___.', 'Loma alkaa ___.', 'Vanhempainilta on ___.'], rng),
       answer: ordinalEssive(d) + ' ' + MONTHS_PARTITIVE[m],
-      accept: [],
+      accept: [ordinalEssive(d) + ' ' + MONTHS_ORD_PARTITIVE[m], ordinalEssive(d) + ' päivänä ' + MONTHS_PARTITIVE[m]],
       wrong: uniq([ordinal(d) + ' ' + MONTHS_PARTITIVE[m], ordinalEssive(d) + ' ' + MONTHS_PARTITIVE[m].replace(/kuuta$/, 'kuussa'),
-        ordinalEssive(d === 1 ? 2 : d - 1) + ' ' + MONTHS_PARTITIVE[m]], ''),
-      note: '"On the …" uses the essive of the ordinal: ' + ordinalEssive(d) + '. The month stays partitive: ' + MONTHS_PARTITIVE[m] + '.',
+        ordinalEssive(d === 1 ? 2 : d - 1) + ' ' + MONTHS_PARTITIVE[m], ordinalEssive(d) + ' ' + ordinal(m)], ''),
+      note: '"On the …" uses the essive of the ordinal: ' + ordinalEssive(d) + '. The month stays partitive: ' + MONTHS_PARTITIVE[m] +
+        ' (or as an ordinal: ' + ordinalEssive(d) + ' ' + MONTHS_ORD_PARTITIVE[m] + ').',
     };
   }
 
@@ -443,7 +449,7 @@
   }
 
   return {
-    cardinal, ordinal, ordinalEssive, ORD_INESSIVE, ORD_TRANSLATIVE, MONTHS_PARTITIVE, HOUR_AT, HOUR_UNTIL,
+    cardinal, ordinal, ordinalEssive, ORD_INESSIVE, ORD_TRANSLATIVE, MONTHS_PARTITIVE, MONTHS_ORD_PARTITIVE, HOUR_AT, HOUR_UNTIL,
     NUMBER_NOUNS, SPOKEN, SETS, round, checkNumberAnswer, squash, decadeWord,
   };
 });
