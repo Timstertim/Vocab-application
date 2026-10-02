@@ -436,7 +436,7 @@
     ['lauantai', 'Saturday', 'noun', 'lauantaina = on Saturday.', [['Lauantaina siivoan.', 'On Saturday I clean.']], 'Time & calendar'],
     ['sunnuntai', 'Sunday', 'noun', 'sunnuntaina = on Sunday.', [['Sunnuntaina lepään.', 'On Sunday I rest.']], 'Time & calendar'],
     ['tammikuu', 'January', 'noun', 'tammikuussa = in January. Months are not capitalised.', [['Tammikuussa on kylmä.', 'It\'s cold in January.']], 'Time & calendar'],
-    ['helmikuu', 'February', 'noun', 'helmikuussa = in February.', [['Helmikuussa on hiihtoloma.', 'The winter holiday is in February.']], 'Time & calendar'],
+    ['helmikuu', 'February', 'noun', 'helmikuussa = in February.', [['Hiihtoloma on yleensä helmikuussa tai maaliskuun alussa.', 'The winter holiday is usually in February or early March.']], 'Time & calendar'],
     ['maaliskuu', 'March', 'noun', 'maaliskuussa = in March.', [['Maaliskuussa aurinko paistaa jo pidempään.', 'In March the sun already shines for longer.']], 'Time & calendar'],
     ['huhtikuu', 'April', 'noun', 'huhtikuussa = in April.', [['Huhtikuussa lumi sulaa.', 'In April the snow melts.']], 'Time & calendar'],
     ['toukokuu', 'May', 'noun', 'toukokuussa = in May.', [['Toukokuussa koivut saavat lehdet.', 'In May the birches get their leaves.']], 'Time & calendar'],
@@ -447,14 +447,14 @@
     ['lokakuu', 'October', 'noun', 'lokakuussa = in October.', [['Lokakuussa lehdet putoavat.', 'In October the leaves fall.']], 'Time & calendar'],
     ['marraskuu', 'November', 'noun', 'marraskuussa = in November.', [['Marraskuu on pimeä.', 'November is dark.']], 'Time & calendar'],
     ['joulukuu', 'December', 'noun', 'joulukuussa = in December.', [['Joulukuussa vietetään joulua.', 'Christmas is celebrated in December.']], 'Time & calendar'],
-    ['eilen', 'yesterday', 'adverb', 'toissa päivänä = the day before yesterday.', [['Eilen satoi.', 'It rained yesterday.']], 'Time & calendar'],
+    ['eilen', 'yesterday', 'adverb', 'eilen illalla = last night; toissapäivänä = the day before yesterday.', [['Eilen satoi.', 'It rained yesterday.']], 'Time & calendar'],
     ['tänään', 'today', 'adverb', 'tänä aamuna = this morning.', [['Tänään on kaunis päivä.', 'Today is a beautiful day.']], 'Time & calendar'],
     ['huomenna', 'tomorrow', 'adverb', 'ylihuomenna = the day after tomorrow.', [['Huomenna mennään retkelle.', 'Tomorrow we\'re going on an outing.']], 'Time & calendar'],
-    ['aamupäivä', 'morning (before noon)', 'noun', 'aamupäivällä = in the late morning.', [['Aamupäivällä ulkoillaan.', 'We go outside in the morning.']], 'Time & calendar'],
+    ['aamupäivä', 'late morning (before noon)', 'noun', 'Roughly 9–12 o\'clock. aamupäivällä = in the late morning, before lunch. aamu = morning in general.', [['Aamupäivällä ulkoillaan.', 'We go outside in the late morning.']], 'Time & calendar'],
     ['iltapäivä', 'afternoon', 'noun', 'iltapäivällä = in the afternoon.', [['Iltapäivällä on välipala.', 'In the afternoon there\'s a snack.']], 'Time & calendar'],
     ['viikko', 'week', 'noun', 'ensi viikolla = next week, viime viikolla = last week. Stem: viikon.', [['Ensi viikolla on vanhempainilta.', 'Next week there\'s a parents\' evening.']], 'Time & calendar'],
     ['kuukausi', 'month', 'noun', 'Stem: kuukauden, kuukautta.', [['Kerran kuukaudessa on palaveri.', 'Once a month there\'s a meeting.']], 'Time & calendar'],
-    ['vuosi', 'year', 'noun', 'Stem: vuoden, vuotta. kolme vuotta vanha = three years old.', [['Lapsi on kolme vuotta vanha.', 'The child is three years old.']], 'Time & calendar'],
+    ['vuosi', 'year', 'noun', 'Stem: vuoden, vuotta. kolme vuotta vanha = kolmevuotias = three years old.', [['Lapsi on kolme vuotta vanha.', 'The child is three years old.']], 'Time & calendar'],
     ['viikonloppu', 'weekend', 'noun', 'viikonloppuna = at the weekend.', [['Mitä teit viikonloppuna?', 'What did you do at the weekend?']], 'Time & calendar'],
     ['kello', 'clock, watch, o\'clock', 'noun', 'Paljonko kello on? = What time is it?', [['Kello on kolme.', 'It\'s three o\'clock.']], 'Time & calendar'],
     ['puoli', 'half (past)', 'noun', 'puoli kolme = half past two (literally "half three", counting towards the next hour).', [['Kello on puoli kolme.', 'It\'s half past two.']], 'Time & calendar'],
@@ -462,7 +462,7 @@
     ['tunti', 'hour', 'noun', 'Stem: tunnin, tuntia.', [['Odotin tunnin.', 'I waited an hour.']], 'Time & calendar'],
     ['minuutti', 'minute', 'noun', 'viiden minuutin päästä = in five minutes.', [['Bussi tulee viiden minuutin päästä.', 'The bus comes in five minutes.']], 'Time & calendar'],
     ['kalenteri', 'calendar', 'noun', 'Stem: kalenterin.', [['Katsotaan kalenterista.', 'Let\'s check the calendar.']], 'Time & calendar'],
-    ['päivämäärä', 'date', 'noun', 'Finnish dates are written day.month.: 6.12.', [['Mikä päivämäärä tänään on?', 'What\'s the date today?']], 'Time & calendar'],
+    ['päivämäärä', 'date', 'noun', 'Finnish dates are written day.month.year: 6.12.2024. Monesko päivä tänään on? = What\'s the date today?', [['Kirjoita päivämäärä lomakkeeseen.', 'Write the date on the form.']], 'Time & calendar'],
 
     // Weather and seasons
     ['sää', 'weather', 'noun', 'Millainen sää on? = What\'s the weather like?', [['Millainen sää huomenna on?', 'What\'s the weather like tomorrow?']], 'Weather & seasons'],
@@ -1751,14 +1751,14 @@
     ['noin', 'about, approximately', 'adverb', 'noin kello viisi = at about five.', [['Tulen noin kello viisi.', 'I\'ll come at about five.']], 'Time & calendar'],
     ['yli', 'past (time); over', 'postposition', 'kymmentä yli kaksi = ten past two.', [['Kello on kymmentä yli kaksi.', 'It\'s ten past two.']], 'Time & calendar'],
     ['vaille', 'to (time)', 'postposition', 'viittä vaille neljä = five to four.', [['Kello on viittä vaille neljä.', 'It\'s five to four.']], 'Time & calendar'],
-    ['viisari', 'clock hand', 'noun', 'iso viisari = minute hand, pieni viisari = hour hand.', [['Pieni viisari näyttää tunnit.', 'The small hand shows the hours.']], 'Time & calendar'],
-    ['kellonaika', 'time (of day)', 'noun', 'Mikä kellonaika? = What time?', [['Mikä kellonaika sopii sinulle?', 'What time suits you?']], 'Time & calendar'],
+    ['viisari', 'clock hand', 'noun', 'iso viisari = minuuttiviisari = minute hand, pieni viisari = tuntiviisari = hour hand.', [['Pieni viisari näyttää tunnit.', 'The small hand shows the hours.']], 'Time & calendar'],
+    ['kellonaika', 'time (of day)', 'noun', 'Mihin kellonaikaan? = At what time?', [['Mikä kellonaika sinulle sopii?', 'What time suits you?']], 'Time & calendar'],
     ['keskipäivä', 'noon, midday', 'noun', 'keskipäivällä = at noon.', [['Lounas on keskipäivällä.', 'Lunch is at noon.']], 'Time & calendar'],
     ['keskiyö', 'midnight', 'noun', 'keskiyöllä = at midnight.', [['Juna saapuu keskiyöllä.', 'The train arrives at midnight.']], 'Time & calendar'],
     ['viimeistään', 'at the latest', 'adverb', 'viimeistään perjantaina = by Friday at the latest.', [['Palauta kirja viimeistään perjantaina.', 'Return the book by Friday at the latest.']], 'Time & calendar'],
     ['aikaisintaan', 'at the earliest', 'adverb', 'Opposite: viimeistään.', [['Tulen aikaisintaan kuudelta.', 'I\'ll come at six at the earliest.']], 'Time & calendar'],
     ['vuosiluku', 'year (as a number)', 'noun', 'e.g. 2024. Stem: vuosiluvun.', [['Kirjoita vuosiluku tähän.', 'Write the year here.']], 'Time & calendar'],
-    ['vuosikymmen', 'decade', 'noun', 'Stem: vuosikymmenen. In dates: -luku (1990-luku).', [['Vuosikymmen on kymmenen vuotta.', 'A decade is ten years.']], 'Time & calendar'],
+    ['vuosikymmen', 'decade', 'noun', 'Stem: vuosikymmenen. Decades are written with -luku: 1990-luku = the 1990s.', [['Vuosikymmen on kymmenen vuotta.', 'A decade is ten years.']], 'Time & calendar'],
     ['vuosisata', 'century', 'noun', 'Stem: vuosisadan. 1800-luku = the 19th century.', [['Kirkko on vuosisatoja vanha.', 'The church is centuries old.']], 'Time & calendar'],
   ];
 
@@ -1795,5 +1795,25 @@
     return { categories: categories.filter((c) => used.has(c.id)), words: ws };
   }
 
-  root.VocabStarter = { VERSION, categories, words, newerThan };
+  /*
+   * Corrections to starter words. Each entry lists the old text; a saved word is updated
+   * only in the fields that still have exactly the old text (so the user's own edits stay).
+   * Bump FIXES when adding entries.
+   */
+  const FIXES = 1;
+  const fixes = [
+    { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
+    { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
+      examples: [{ fi: 'Aamupäivällä ulkoillaan.', en: 'We go outside in the morning.' }] },
+    { finnish: 'helmikuu', examples: [{ fi: 'Helmikuussa on hiihtoloma.', en: 'The winter holiday is in February.' }] },
+    { finnish: 'vuosi', definition: 'Stem: vuoden, vuotta. kolme vuotta vanha = three years old.' },
+    { finnish: 'päivämäärä', definition: 'Finnish dates are written day.month.: 6.12.',
+      examples: [{ fi: 'Mikä päivämäärä tänään on?', en: 'What\'s the date today?' }] },
+    { finnish: 'viisari', definition: 'iso viisari = minute hand, pieni viisari = hour hand.' },
+    { finnish: 'kellonaika', definition: 'Mikä kellonaika? = What time?',
+      examples: [{ fi: 'Mikä kellonaika sopii sinulle?', en: 'What time suits you?' }] },
+    { finnish: 'vuosikymmen', definition: 'Stem: vuosikymmenen. In dates: -luku (1990-luku).' },
+  ];
+
+  root.VocabStarter = { VERSION, categories, words, newerThan, FIXES, fixes };
 })(typeof self !== 'undefined' ? self : this);

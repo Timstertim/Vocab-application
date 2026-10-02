@@ -28,6 +28,7 @@
     s.categories = Starter.categories.slice();
     s.words = Starter.words.map(({ since, ...w }) => w);
     s.starterVersion = Starter.VERSION;
+    s.starterFixes = Starter.FIXES;
     return s;
   }
 
@@ -43,17 +44,39 @@
     return changed;
   }
 
+  /** Apply corrections to starter words, once. Fields the user has changed are left alone. */
+  function applyFixes(s) {
+    if ((s.starterFixes || 0) >= (Starter.FIXES || 0)) return false;
+    const norm = root.VocabCore.normalize;
+    const current = new Map(Starter.words.map((w) => [norm(w.finnish), w]));
+    for (const fix of Starter.fixes || []) {
+      const now = current.get(norm(fix.finnish));
+      if (!now) continue;
+      for (const w of s.words) {
+        if (norm(w.finnish) !== norm(fix.finnish)) continue;
+        for (const field of Object.keys(fix)) {
+          if (field === 'finnish') continue;
+          if (JSON.stringify(w[field]) === JSON.stringify(fix[field])) w[field] = JSON.parse(JSON.stringify(now[field]));
+        }
+      }
+    }
+    s.starterFixes = Starter.FIXES;
+    return true;
+  }
+
   /** Give existing users the starter words added since they last opened the app, once. */
   function upgradeStarter(s) {
     const from = s.starterVersion || 1;
     if (from >= Starter.VERSION) {
-      if (backfillLevels(s)) { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) { /* ignore */ } }
+      const fixed = applyFixes(s);
+      if (backfillLevels(s) || fixed) { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) { /* ignore */ } }
       return s;
     }
     const had = new Set(s.categories.map((c) => c.name.toLowerCase()));
     const res = root.VocabCore.mergeImport(s, Starter.newerThan(from), { onlyNew: true });
     const next = Object.assign(res.state, { starterVersion: Starter.VERSION });
     backfillLevels(next);
+    applyFixes(next);
     if (res.added) {
       // Only categories the user didn't have before.
       const names = res.state.categories.map((c) => c.name).filter((n) => !had.has(n.toLowerCase()));
@@ -141,6 +164,7 @@
     reset() {
       state = defaults();
       state.starterVersion = Starter.VERSION; // an emptied app stays empty
+      state.starterFixes = Starter.FIXES;
       save();
     },
   };
