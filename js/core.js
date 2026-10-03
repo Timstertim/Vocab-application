@@ -245,6 +245,14 @@
       const i = lower.indexOf(base);
       return i < 0 ? null : { start: i, end: i + base.length, form: text.slice(i, i + base.length) };
     }
+    if (/^[a-zà-ÿ]{2,}-$/.test(base)) {
+      // Prefixes (ylä-, etu-): the beginning of a word, e.g. Ylä-Malmi → ____-Malmi.
+      const stem = base.slice(0, -1);
+      const m = new RegExp('(?<![a-zà-ÿ])' + stem + '(?=-?[a-zà-ÿ])', 'i').exec(text);
+      if (!m) return null;
+      const end = m.index + stem.length + (text[m.index + stem.length] === '-' ? 1 : 0);
+      return { start: m.index, end, form: text.slice(m.index, end) };
+    }
     if (/[^a-zà-ÿ-]/.test(base)) {
       // Abbreviations and codes (mm., S2, ma–pe) too, starting at a word boundary.
       const esc = base.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

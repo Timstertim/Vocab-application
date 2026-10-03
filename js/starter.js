@@ -97,7 +97,7 @@
     C('Finnish customs', '#b8862a'),
     C('Streets & place names', '#55606e'),
   ];
-  const VERSION = 11;
+  const VERSION = 12;
   const id = (n) => 'cat-' + slug(n);
 
   // [finnish, english, part of speech, definition, [[example fi, example en]...], category]
@@ -511,7 +511,7 @@
     ['sateenvarjo', 'umbrella', 'noun', 'Literally "rain shade".', [['Ota sateenvarjo mukaan.', 'Take an umbrella with you.']], 'Weather & seasons'],
 
     // Body and health
-    ['pää', 'head', 'noun', 'Päätä särkee = I have a headache.', [['Päätä särkee.', 'I have a headache.']], 'Body & health'],
+    ['pää', 'head; end', 'noun', 'Päätä särkee = I have a headache. Also the end of something: kadun päässä = at the end of the street. In names: Hatanpää (Tampere).', [['Päätä särkee.', 'I have a headache.']], 'Body & health'],
     ['käsi', 'hand, arm', 'noun', 'Stem: käden, kättä. Plural: kädet.', [['Nosta käsi ylös.', 'Raise your hand.']], 'Body & health'],
     ['jalka', 'leg, foot', 'noun', 'Stem: jalan, jalkaa.', [['Jalka on kipeä.', 'My leg hurts.']], 'Body & health'],
     ['vatsa', 'stomach, tummy', 'noun', 'Vatsaan sattuu = my tummy hurts.', [['Vatsaan sattuu.', 'My tummy hurts.']], 'Body & health'],
@@ -520,7 +520,7 @@
     ['korva', 'ear', 'noun', 'Korvaan sattuu = my ear hurts.', [['Korvaan sattuu.', 'My ear hurts.']], 'Body & health'],
     ['nenä', 'nose', 'noun', 'niistää nenä = to blow one\'s nose.', [['Niistä nenäsi.', 'Blow your nose.']], 'Body & health'],
     ['suu', 'mouth', 'noun', 'Stem: suun, suuta.', [['Avaa suu.', 'Open your mouth.']], 'Body & health'],
-    ['selkä', 'back', 'noun', 'Stem: selän, selkää.', [['Selkää särkee.', 'My back aches.']], 'Body & health'],
+    ['selkä', 'back; open part of a lake', 'noun', 'Stem: selän, selkää. In lake names: a wide, open stretch of water, e.g. Pyhäselkä.', [['Selkää särkee.', 'My back aches.']], 'Body & health'],
     ['polvi', 'knee', 'noun', 'Stem: polven, polvea.', [['Polvessa on haava.', 'There\'s a cut on the knee.']], 'Body & health'],
     ['sormi', 'finger', 'noun', 'Stem: sormen, sormea.', [['Sormi on turvoksissa.', 'The finger is swollen.']], 'Body & health'],
     ['kurkku', 'throat; cucumber', 'noun', 'kurkkukipu = sore throat.', [['Minulla on kurkkukipu.', 'I have a sore throat.']], 'Body & health'],
@@ -1835,7 +1835,7 @@
     ['kuivua', 'to dry', 'verb', 'Type 1 · minä kuivun · hän kuivui (past). Anna kuivua = let it dry.', [['Maalaus saa kuivua hyllyllä.', 'The painting can dry on the shelf.']], 'Daycare: arts & crafts'],
     ['rypistää', 'to crumple', 'verb', 'Type 1 · minä rypistän · hän rypisti (past).', [['Rypistä paperi palloksi.', 'Crumple the paper into a ball.']], 'Daycare: arts & crafts'],
     ['helmi', 'bead; pearl', 'noun', 'Stem: helmen. pujotella helmiä = to thread beads.', [['Pujotellaan helmiä nauhaan.', 'Let\'s thread beads onto a string.']], 'Daycare: arts & crafts'],
-    ['kangas', 'fabric, cloth', 'noun', 'Stem: kankaan, kangasta.', [['Leikataan kankaasta sydän.', 'Let\'s cut a heart out of the fabric.']], 'Daycare: arts & crafts'],
+    ['kangas', 'fabric, cloth; heath', 'noun', 'Stem: kankaan, kangasta. In place names: a dry, sandy pine heath, one of the most common name endings, e.g. Kangasala.', [['Leikataan kankaasta sydän.', 'Let\'s cut a heart out of the fabric.']], 'Daycare: arts & crafts'],
     ['sotkea', 'to make a mess', 'verb', 'Type 1 · minä sotken · hän sotki (past). sotku = mess.', [['Ei haittaa, jos vähän sotkee.', 'It doesn\'t matter if it gets a bit messy.']], 'Daycare: arts & crafts'],
     ['riidellä', 'to argue, to quarrel', 'verb', 'Type 3 · minä riitelen · hän riiteli (past).', [['Älkää riidelkö.', 'Please don\'t argue.']], 'Daycare: friends & conflicts'],
     ['sopia riita', 'to settle an argument, to make up', 'phrase', 'sopia: minä sovin · hän sopi (past). Sovitaanko? = Shall we make up?', [['Nyt pitää sopia riita.', 'Now you need to make up.']], 'Daycare: friends & conflicts'],
@@ -2291,8 +2291,59 @@
     'kunta': ['Streets & place names'], 'asema': ['Streets & place names'],
   };
 
+  // Added in version 12: more parts of real place names (water, land, trees, animals, prefixes).
+  const v12 = [
+    ['puro', 'brook, stream', 'noun', 'A small stream. Stem: puron. In names: Myllypuro (Helsinki).', [['Puro virtaa metsän läpi.', 'The stream flows through the forest.']], 'Streets & place names'],
+    ['lähde', 'spring (of water); source', 'noun', 'Stem: lähteen, lähdettä. Also a source of information. Common in place names.', [['Lähteestä saa raikasta vettä.', 'You get fresh water from the spring.']], 'Streets & place names'],
+    ['kaivo', 'well', 'noun', 'Stem: kaivon. In names: Kaivopuisto, named after an old spa well.', [['Pihalla on vanha kaivo.', 'There\'s an old well in the yard.']], 'Streets & place names'],
+    ['kaivos', 'mine', 'noun', 'Stem: kaivoksen. In names: Kaivoksela (Vantaa).', [['Kaivoksessa louhittiin kuparia.', 'Copper was mined in the mine.']], 'Streets & place names'],
+    ['neva', 'open bog (treeless)', 'noun', 'Stem: nevan. Common in western and northern Finland. In names: Maununneva (Helsinki).', [['Nevalla kasvaa lakkoja.', 'Cloudberries grow on the open bog.']], 'Streets & place names'],
+    ['salo', 'large wooded island; wilderness', 'noun', 'Stem: salon. In names: Hirvensalo (Turku, "elk island"), and the town of Salo.', [['Hirvensalo on Turun suurin saari.', 'Hirvensalo is the biggest island in Turku.']], 'Streets & place names'],
+    ['hamina', 'harbour (old word)', 'noun', 'Stem: haminan. In names: the town of Hamina, Santahamina ("sand harbour").', [['Vanha hamina oli tässä lahdessa.', 'The old harbour was in this bay.']], 'Streets & place names'],
+    ['varsi', 'bank (along a river); handle, stem', 'noun', 'Stem: varren, vartta. joen varrella = along the river. In names: Jokivarsi (Vantaa).', [['Asumme joen varrella.', 'We live along the river.']], 'Streets & place names'],
+    ['hiekka', 'sand', 'noun', 'Stem: hiekan. In names: Hiekkaharju (Vantaa, "sand ridge").', [['Lapset leikkivät hiekassa.', 'The children are playing in the sand.']], 'Streets & place names'],
+    ['santa', 'sand (old or everyday word)', 'noun', 'Stem: sannan, santaa. In names: Santahamina, Ruskeasanta ("brown sand").', [['Rannalla on pehmeää santaa.', 'There\'s soft sand on the beach.']], 'Streets & place names'],
+    ['savi', 'clay', 'noun', 'Stem: saven, savea. In names: Savela (Helsinki), Savitaipale.', [['Savesta voi muovailla kuppeja.', 'You can shape cups out of clay.']], 'Streets & place names'],
+    ['haka', 'pasture, enclosure', 'noun', 'Stem: haan, hakaa. In names: Hakaniemi, Koivuhaka (Vantaa), Kuninkaanhaka.', [['Aita kiertää hakaa.', 'A fence goes around the pasture.']], 'Streets & place names'],
+    ['nurmi', 'lawn, grassy meadow', 'noun', 'Stem: nurmen, nurmea. In names: Nurmijärvi.', [['Lapset leikkivät nurmella.', 'The children are playing on the lawn.']], 'Streets & place names'],
+    ['kenttä', 'field, ground (open area)', 'noun', 'Stem: kentän, kenttää. urheilukenttä = sports field. In names: Malmin lentokenttä.', [['Pelataan jalkapalloa kentällä.', 'Let\'s play football on the field.']], 'Streets & place names'],
+    ['lentokenttä', 'airport', 'noun', 'Stem: lentokentän. Official: lentoasema.', [['Lentokentälle on pitkä matka.', 'It\'s a long way to the airport.']], 'Streets & place names'],
+    ['perä', 'far end, back', 'noun', 'Stem: perän. perällä = at the back. In names: Peräseinäjoki ("the far end of Seinäjoki").', [['Istun bussin perällä.', 'I sit at the back of the bus.']], 'Streets & place names'],
+    ['nokka', 'beak; point (of land)', 'noun', 'Stem: nokan. In names: Katajanokka ("juniper point").', [['Linnulla on keltainen nokka.', 'The bird has a yellow beak.']], 'Streets & place names'],
+    ['keskus', 'centre, hub', 'noun', 'Stem: keskuksen. In names: Itäkeskus, Länsikeskus. ostoskeskus = shopping centre.', [['Ostoskeskus on lähellä.', 'The shopping centre is close by.']], 'Streets & place names'],
+    ['leppä', 'alder', 'noun', 'Stem: lepän, leppää. In names: Leppävaara (Espoo), Leppäkorpi (Vantaa).', [['Lepän lehdet ovat tummanvihreitä.', 'Alder leaves are dark green.']], 'Streets & place names'],
+    ['pihlaja', 'rowan', 'noun', 'Stem: pihlajan. In names: Pihlajamäki, Pihlajisto (-sto / -stö = a group of: pihlajisto = a stand of rowans).', [['Pihlajassa on punaisia marjoja.', 'There are red berries on the rowan.']], 'Streets & place names'],
+    ['tammi', 'oak', 'noun', 'Stem: tammen, tammea. In names: Tammela (Tampere), Tammisaari.', [['Tammi kasvaa hitaasti.', 'An oak grows slowly.']], 'Streets & place names'],
+    ['haapa', 'aspen', 'noun', 'Stem: haavan, haapaa. In names: Haapajärvi.', [['Pihalla kasvaa iso haapa.', 'A big aspen grows in the yard.']], 'Streets & place names'],
+    ['kataja', 'juniper', 'noun', 'Stem: katajan. In names: Katajanokka (Helsinki).', [['Kataja on matala pensas.', 'Juniper is a low bush.']], 'Streets & place names'],
+    ['honka', 'tall pine', 'noun', 'A big, old pine. Stem: hongan. In surnames: Honkanen.', [['Vanha honka on hyvin korkea.', 'The old pine is very tall.']], 'Streets & place names'],
+    ['koivikko', 'birch grove', 'noun', 'The ending -ikko / -ikkö = a place full of something: koivikko, kuusikko, kivikko. Common in names.', [['Talon takana on koivikko.', 'There\'s a birch grove behind the house.']], 'Streets & place names'],
+    ['kuusikko', 'spruce forest', 'noun', 'Stem: kuusikon. kuusi = spruce (and six!).', [['Kuusikossa on pimeää.', 'It\'s dark in the spruce forest.']], 'Streets & place names'],
+    ['männikkö', 'pine forest', 'noun', 'Stem: männikön. From mänty.', [['Männikössä on helppo kävellä.', 'It\'s easy to walk in a pine forest.']], 'Streets & place names'],
+    ['kivikko', 'stony ground', 'noun', 'Stem: kivikon. In names: Kivikko (Helsinki). Kivistö (Vantaa) is formed the same way with -stö.', [['Kivikossa pitää kävellä varovasti.', 'You have to walk carefully on stony ground.']], 'Streets & place names'],
+    ['mylly', 'mill', 'noun', 'Stem: myllyn. In names: Myllypuro ("mill stream").', [['Vanha mylly on joen rannalla.', 'The old mill is on the river bank.']], 'Streets & place names'],
+    ['torppa', 'croft (small tenant farm)', 'noun', 'Stem: torpan. torppari = crofter. In names: Torpparinmäki (Helsinki).', [['Isoisä syntyi torpassa.', 'Grandfather was born in a croft.']], 'Streets & place names'],
+    ['tulli', 'customs', 'noun', 'Stem: tullin. In names: Tulli (Tampere), where the old customs gate was.', [['Laukut tarkistetaan tullissa.', 'Bags are checked at customs.']], 'Streets & place names'],
+    ['varis', 'crow', 'noun', 'Stem: variksen. In names: Varissuo (Turku, "crow bog").', [['Varis istuu katolla.', 'A crow is sitting on the roof.']], 'Streets & place names'],
+    ['kurki', 'crane (bird)', 'noun', 'Stem: kurjen, kurkea. In names: Kurkimäki (Helsinki).', [['Kurjet lentävät syksyllä etelään.', 'Cranes fly south in the autumn.']], 'Streets & place names'],
+    ['pukki', 'billy goat', 'noun', 'Stem: pukin. In names: Pukinmäki (Helsinki). joulupukki = Father Christmas.', [['Joulupukki tuo lahjoja.', 'Father Christmas brings presents.']], 'Streets & place names'],
+    ['valkea', 'white (literary)', 'adjective', 'An older word for valkoinen. Stem: valkean. In names: Valkeakoski.', [['Lumi on valkeaa.', 'The snow is white.']], 'Streets & place names'],
+    ['puna', 'red colour; blush', 'noun', 'Stem: punan. At the start of words it means red: Punavuori ("red hill"), punaviini.', [['Poskille nousi puna.', 'Their cheeks went red.']], 'Streets & place names'],
+    ['pikku', 'little', 'adjective', 'Does not inflect: pikku. In names: Pikku Huopalahti (Helsinki).', [['Meillä on pikku ongelma.', 'We have a little problem.']], 'Streets & place names'],
+    ['ylä-', 'upper', 'prefix', 'In names: Ylä-Malmi. Also in words: yläkerta = upstairs. Opposite: ala-.', [['Asumme Ylä-Malmilla.', 'We live in Upper Malmi.']], 'Streets & place names'],
+    ['ala-', 'lower', 'prefix', 'In names: Ala-Malmi. Also in words: alakerta = downstairs. Opposite: ylä-.', [['Ala-Malmi on lähellä asemaa.', 'Lower Malmi is near the station.']], 'Streets & place names'],
+    ['etu-', 'front', 'prefix', 'In names: Etu-Töölö. Opposite: taka-.', [['Etu-Töölö on lähellä keskustaa.', 'Etu-Töölö is close to the city centre.']], 'Streets & place names'],
+    ['taka-', 'back, rear', 'prefix', 'In names: Taka-Töölö. takapiha = back yard.', [['Taka-Töölössä on paljon kerrostaloja.', 'There are lots of blocks of flats in Taka-Töölö.']], 'Streets & place names'],
+    ['keski-', 'middle, central', 'prefix', 'In names: Keski-Pasila, Keski-Suomi.', [['Jyväskylä on Keski-Suomessa.', 'Jyväskylä is in Central Finland.']], 'Streets & place names'],
+  ];
+  // Starter words that also belong to a category added in version 12.
+  const ALSO_IN_V12 = {
+    'pää': ['Streets & place names'], 'selkä': ['Streets & place names'], 'kangas': ['Streets & place names'], 'laituri': ['Streets & place names'], 'maa': ['Streets & place names'], 'koivu': ['Streets & place names'], 'ruoho': ['Streets & place names'], 'kivi': ['Streets & place names'],
+    'hirvi': ['Streets & place names'], 'ruskea': ['Streets & place names'], 'musta': ['Streets & place names'], 'iso': ['Streets & place names'], 'vanha': ['Streets & place names'], 'uusi': ['Streets & place names'], 'pitkä': ['Streets & place names'],
+  };
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11).map((r) => {
+  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12).map((r) => {
     let cats = [].concat(r[5]);
     if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$|^Planning & documentation$|^Support & inclusion$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$|^Slang$/.test(cats[0])) cats.push('Verbs');
@@ -2302,7 +2353,7 @@
   const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
   // The version each tagged word was added in (v4 onwards).
-  const since = [v4, v5, v6, v7, v8, v9, v10, v11].flatMap((list, n) => list.map(() => n + 4));
+  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12].flatMap((list, n) => list.map(() => n + 4));
   const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(since[i])));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
@@ -2311,7 +2362,7 @@
     partOfSpeech: r[2],
     definition: r[3],
     examples: r[4].map(([fi, en]) => ({ fi, en })),
-    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || []).map(id))),
+    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || []).map(id))),
     level: L ? L.levelFor(r[0], [].concat(r[5])[0]) : '',
     notes: '',
     stats: { correct: 0, wrong: 0 },
@@ -2333,7 +2384,7 @@
    * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 3;
+  const FIXES = 4;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -2350,6 +2401,11 @@
     ...Object.entries(ALSO_IN).map(([finnish, cats]) => ({ v: 2, finnish, addCategories: cats.map(id) })),
     // Version 11.
     ...Object.entries(ALSO_IN_V11).map(([finnish, cats]) => ({ v: 3, finnish, addCategories: cats.map(id) })),
+    // Version 12: place-name meanings, and more words in Streets & place names.
+    { v: 4, finnish: 'pää', english: 'head', definition: 'Päätä särkee = I have a headache.' },
+    { v: 4, finnish: 'selkä', english: 'back', definition: 'Stem: selän, selkää.' },
+    { v: 4, finnish: 'kangas', english: 'fabric, cloth', definition: 'Stem: kankaan, kangasta.' },
+    ...Object.entries(ALSO_IN_V12).map(([finnish, cats]) => ({ v: 4, finnish, addCategories: cats.map(id) })),
   ].map((f) => Object.assign({ v: 1 }, f));
 
   root.VocabStarter = { VERSION, categories, words, newerThan, FIXES, fixes };

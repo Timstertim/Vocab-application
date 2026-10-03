@@ -125,6 +125,9 @@
     groups['A1.2'] = groups['A1.2'].concat(['tie', 'katu', 'kaupunki', 'kylä', 'puisto', 'kirkko', 'tori', 'silta', 'itä', 'länsi', 'etelä', 'pohjoinen']);
     groups['A1.3'] = groups['A1.3'].concat(['kuja', 'polku', 'satama', 'linna', 'lahti', 'postinumero']);
     groups['B1.1'] = groups['B1.1'].concat(['raitti', 'kaari', 'väylä', 'harju', 'korpi', 'nummi', 'luoto', 'kari', 'aho', 'lehto', 'kumpu', 'salmi', 'vaara', 'kortteli', 'esplanadi', 'bulevardi']);
+  // Version 12 additions.
+    groups['A1.3'] = groups['A1.3'].concat(['hiekka', 'keskus', 'lentokenttä', 'kenttä']);
+    groups['B1.1'] = groups['B1.1'].concat(['neva', 'salo', 'hamina', 'haka', 'santa', 'torppa', 'kataja', 'honka', 'varsi', 'koivikko', 'kuusikko', 'männikkö', 'kivikko', 'perä', 'valkea', 'puna']);
   const WORD = {};
   for (const [level, words] of Object.entries(groups)) for (const w of words) WORD[w] = level;
 

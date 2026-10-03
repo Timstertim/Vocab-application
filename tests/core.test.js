@@ -313,3 +313,11 @@ test('levels: every starter word has a valid level, and level filters work', () 
   const SC = require('../js/scenarios.js');
   for (const sc of SC) assert.ok(Core.levelIndex(sc.level) >= 0, sc.id);
 });
+
+test('findWordInSentence: prefixes and abbreviations', () => {
+  assert.equal(Core.findWordInSentence('Asumme Ylä-Malmilla.', 'ylä-').form, 'Ylä-');
+  assert.equal(Core.findWordInSentence('Jyväskylä on Keski-Suomessa.', 'keski-').form, 'Keski-');
+  assert.equal(Core.findWordInSentence('Syö ylä', 'ylä-'), null);
+  assert.equal(Core.findWordInSentence('Retkellä on mm. eväät.', 'mm.').form, 'mm.');
+  assert.equal(Core.findWordInSentence('Kuva on kuv. 3', 'v.'), null);
+});

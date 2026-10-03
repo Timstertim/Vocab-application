@@ -10,7 +10,7 @@
   const modalRoot = document.getElementById('modal-root');
   const PALETTE = ['#3b6fd8', '#e07a2e', '#c2417e', '#2e9a6b', '#7a55c7', '#d24545', '#1f8fa3', '#5b8f2a', '#a8781f', '#55606e'];
   const POS = ['', 'noun', 'verb', 'adjective', 'adverb', 'pronoun', 'numeral', 'preposition', 'postposition',
-    'conjunction', 'interjection', 'phrase', 'particle', 'abbreviation'];
+    'conjunction', 'interjection', 'phrase', 'particle', 'abbreviation', 'prefix'];
 
   /* ---------- Routing ---------- */
   function parseHash() {
