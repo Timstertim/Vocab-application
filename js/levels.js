@@ -34,6 +34,7 @@
     'Support & inclusion': 'B1.2', 'Cooking & kitchen': 'A2.1', 'Banking & bills': 'B1.1', 'Kela, taxes & forms': 'B1.1',
     'Car & driving': 'A2.2', 'Doctor & pharmacy': 'A2.2', 'Feeling verbs': 'A2.2', 'Opinions & discussion': 'B1.1',
     'Polite requests': 'A2.2', 'Abbreviations': 'A2.2', 'Confusing words': 'A2.1', 'Slang': 'A2.2', 'Finnish customs': 'A2.2',
+    'Streets & place names': 'A2.1',
   };
 
   // Words that are easier or harder than their category.
@@ -120,6 +121,10 @@
     groups['A2.2'] = groups['A2.2'].concat(['pärjäillään', 'loska', 'kuura', 'sataa kaatamalla', 'tiimipalaveri', 'viikkosuunnitelma', 'tavoite', 'sijainen', 'monikielinen', 'tulkki', 'puheterapeutti']);
     groups['B1.1'] = groups['B1.1'].concat(['erityisruokavalio', 'nollakeli', 'poutainen', 'lähete', 'lääkärintodistus', 'sivuvaikutus', 'kaduttaa', 'mietityttää', 'ihmetyttää', 'olisitko ystävällinen', 'dokumentoida', 'kirjata', 'läsnäolo', 'tiedote', 'kuvatuki', 'tukiviittomat', 'avustaja', 'toimintaterapeutti', 'yhdenvertaisuus', 'tasa-arvo']);
     groups['B1.2'] = groups['B1.2'].concat(['lääkemääräys', 'muutoksenhaku', 'valtakirja', 'vireillä', 'perintä']);
+  // Version 11 additions.
+    groups['A1.2'] = groups['A1.2'].concat(['tie', 'katu', 'kaupunki', 'kylä', 'puisto', 'kirkko', 'tori', 'silta', 'itä', 'länsi', 'etelä', 'pohjoinen']);
+    groups['A1.3'] = groups['A1.3'].concat(['kuja', 'polku', 'satama', 'linna', 'lahti', 'postinumero']);
+    groups['B1.1'] = groups['B1.1'].concat(['raitti', 'kaari', 'väylä', 'harju', 'korpi', 'nummi', 'luoto', 'kari', 'aho', 'lehto', 'kumpu', 'salmi', 'vaara', 'kortteli', 'esplanadi', 'bulevardi']);
   const WORD = {};
   for (const [level, words] of Object.entries(groups)) for (const w of words) WORD[w] = level;
 

@@ -95,8 +95,9 @@
     C('Confusing words', '#a8781f'),
     C('Slang', '#d24545'),
     C('Finnish customs', '#b8862a'),
+    C('Streets & place names', '#55606e'),
   ];
-  const VERSION = 10;
+  const VERSION = 11;
   const id = (n) => 'cat-' + slug(n);
 
   // [finnish, english, part of speech, definition, [[example fi, example en]...], category]
@@ -2227,8 +2228,71 @@
     'hiljaisuus': ['Finnish customs'],
   };
 
+  // Added in version 11: street names, towns and the nature words used in place names.
+  const v11 = [
+    ['tie', 'road; -tie in street names', 'noun', 'Stem: tien, tietä. Big streets are often -tie: Mannerheimintie. Asun Koivutiellä = I live on Koivutie.', [['Tie on kapea ja mutkainen.', 'The road is narrow and winding.']], 'Streets & place names'],
+    ['katu', 'street', 'noun', 'Stem: kadun, katua. Aleksanterinkatu, Kalevankatu. Asun Kalevankadulla = I live on Kalevankatu.', [['Tämä katu on suljettu.', 'This street is closed.']], 'Streets & place names'],
+    ['kuja', 'lane, small street', 'noun', 'A small, quiet street, often a dead end: Pihlajakuja. Stem: kujan. Asun Kuusikujalla.', [['Asumme Pihlajakujalla.', 'We live on Pihlajakuja.']], 'Streets & place names'],
+    ['polku', 'path; footpath street', 'noun', 'Stem: polun, polkua. Small streets are often called -polku.', [['Metsäpolku vie järvelle.', 'The forest path leads to the lake.']], 'Streets & place names'],
+    ['raitti', 'village street; walkway', 'noun', 'An old word for a village road, also used in street names (-raitti). Stem: raitin.', [['Kävelimme kylän raittia pitkin.', 'We walked along the village street.']], 'Streets & place names'],
+    ['kaari', 'arc; curved street', 'noun', 'A street that curves is often called -kaari. Stem: kaaren, kaarta.', [['Katu kulkee kaaressa järven ympäri.', 'The street curves around the lake.']], 'Streets & place names'],
+    ['rinne', 'slope; street on a slope', 'noun', 'Stem: rinteen, rinnettä. Common in street names (-rinne). laskettelurinne = ski slope.', [['Talo on rinteessä.', 'The house is on a slope.']], 'Streets & place names'],
+    ['väylä', 'main road; route', 'noun', 'A big road into or across a city: Länsiväylä, Itäväylä. Also: vesiväylä = waterway.', [['Länsiväylä on aamulla ruuhkainen.', 'Länsiväylä is busy in the morning.']], 'Streets & place names'],
+    ['bulevardi', 'boulevard', 'noun', 'Stem: bulevardin. Helsinki has Bulevardi, a wide street with trees.', [['Bulevardilla on vanhoja puita.', 'There are old trees on the boulevard.']], 'Streets & place names'],
+    ['esplanadi', 'esplanade', 'noun', 'A wide street with a park in the middle. In Helsinki: Esplanadi, spoken Espa.', [['Kävellään Esplanadilla.', 'Let\'s walk along the Esplanade.']], 'Streets & place names'],
+    ['aukio', 'square, open space', 'noun', 'Stem: aukion. Many squares are named -aukio after a person or a building.', [['Aukiolla on suihkulähde.', 'There\'s a fountain in the square.']], 'Streets & place names'],
+    ['tori', 'market square; square', 'noun', 'Stem: torin. kauppatori = market square. In names: Senaatintori.', [['Torilla myydään mansikoita.', 'They sell strawberries at the market square.']], 'Streets & place names'],
+    ['puisto', 'park', 'noun', 'Stem: puiston. In names: Kaivopuisto. puistikko = small park.', [['Lapset leikkivät puistossa.', 'The children are playing in the park.']], 'Streets & place names'],
+    ['silta', 'bridge', 'noun', 'Stem: sillan, siltaa. In names: Pitkäsilta, Siltasaari.', [['Silta menee joen yli.', 'The bridge goes over the river.']], 'Streets & place names'],
+    ['kortteli', 'city block', 'noun', 'Stem: korttelin. Kauppa on kahden korttelin päässä = the shop is two blocks away.', [['Kauppa on seuraavassa korttelissa.', 'The shop is in the next block.']], 'Streets & place names'],
+    ['liikenneympyrä', 'roundabout', 'noun', 'Stem: liikenneympyrän. Official: kiertoliittymä.', [['Ota liikenneympyrästä toinen liittymä.', 'Take the second exit at the roundabout.']], 'Streets & place names'],
+    ['tienviitta', 'road sign, signpost', 'noun', 'Stem: tienviitan. katukyltti = street sign.', [['Tienviitta näyttää Lahteen.', 'The signpost points to Lahti.']], 'Streets & place names'],
+    ['rappu', 'stairwell, entrance (A, B…)', 'noun', 'Stem: rapun. In addresses: Koivukuja 3 B 12 = building 3, stairwell B, flat 12. Also: porras.', [['Rappu on lukossa.', 'The stairwell door is locked.']], 'Streets & place names'],
+    ['postinumero', 'postcode', 'noun', 'Five digits before the town: 00100 Helsinki.', [['Mikä on postinumerosi?', 'What\'s your postcode?']], 'Streets & place names'],
+    ['kaupunki', 'town, city', 'noun', 'Stem: kaupungin, kaupunkia. kaupungilla = in town (out and about).', [['Asun pienessä kaupungissa.', 'I live in a small town.']], 'Streets & place names'],
+    ['kaupunginosa', 'district, part of town', 'noun', 'Stem: kaupunginosan. e.g. Kallio and Töölö in Helsinki.', [['Missä kaupunginosassa asut?', 'Which part of town do you live in?']], 'Streets & place names'],
+    ['lähiö', 'suburb, housing estate', 'noun', 'Stem: lähiön. Usually built in the 1960s–80s around a shopping centre.', [['Asumme lähiössä.', 'We live in a suburb.']], 'Streets & place names'],
+    ['asuinalue', 'residential area', 'noun', 'Stem: asuinalueen.', [['Tämä on rauhallinen asuinalue.', 'This is a quiet residential area.']], 'Streets & place names'],
+    ['kylä', 'village', 'noun', 'Stem: kylän. In names: Koivukylä. kirkonkylä = the village around the church, the centre of a rural municipality.', [['Mummo asuu pienessä kylässä.', 'Grandma lives in a small village.']], 'Streets & place names'],
+    ['kirkko', 'church', 'noun', 'Stem: kirkon. In names: Kirkkonummi, Kirkkokatu.', [['Kirkko on torin laidalla.', 'The church is at the edge of the square.']], 'Streets & place names'],
+    ['linna', 'castle', 'noun', 'Stem: linnan. In town names: Hämeenlinna, Savonlinna.', [['Hämeenlinnassa on vanha linna.', 'There\'s an old castle in Hämeenlinna.']], 'Streets & place names'],
+    ['kartano', 'manor house', 'noun', 'Stem: kartanon. Many areas are named after old manors.', [['Vanha kartano on nyt museo.', 'The old manor house is now a museum.']], 'Streets & place names'],
+    ['satama', 'harbour, port', 'noun', 'Stem: sataman. In names: Länsisatama, Vuosaaren satama.', [['Laiva lähtee satamasta kello yhdeksän.', 'The ship leaves the harbour at nine.']], 'Streets & place names'],
+    ['itä', 'east', 'noun', 'Stem: idän, itää. In names: Itäkeskus, Itä-Suomi. idässä = in the east.', [['Ikkuna on itään päin.', 'The window faces east.']], 'Streets & place names'],
+    ['länsi', 'west', 'noun', 'Stem: lännen, länttä. In names: Länsi-Pasila, Länsiväylä. lännessä = in the west.', [['Aurinko laskee länteen.', 'The sun sets in the west.']], 'Streets & place names'],
+    ['etelä', 'south', 'noun', 'Stem: etelän. In names: Etelä-Suomi, Eteläsatama. etelässä = in the south.', [['Linnut lentävät syksyllä etelään.', 'Birds fly south in the autumn.']], 'Streets & place names'],
+    ['pohjoinen', 'north; northern', 'noun', 'Stem: pohjoisen. In names: Pohjois-Karjala, Pohjois-Haaga (pohjois- as a prefix). pohjoisessa = in the north.', [['Lappi on pohjoisessa.', 'Lapland is in the north.']], 'Streets & place names'],
+    ['lahti', 'bay', 'noun', 'Stem: lahden, lahtea. Also a city: Lahti (Lahdessa = in Lahti). In names: Ruoholahti, Kivenlahti.', [['Asun Lahdessa.', 'I live in Lahti.']], 'Streets & place names'],
+    ['niemi', 'cape, peninsula', 'noun', 'Stem: niemen, nientä. In names: Hakaniemi, Rovaniemi. Note: Hakaniemessä but Rovaniemellä.', [['Mökki on niemen kärjessä.', 'The cottage is at the tip of the peninsula.']], 'Streets & place names'],
+    ['salmi', 'strait, sound', 'noun', 'A narrow stretch of water between two shores. Stem: salmen. In names: Salmisaari.', [['Silta ylittää salmen.', 'The bridge crosses the strait.']], 'Streets & place names'],
+    ['koski', 'rapids', 'noun', 'Stem: kosken, koskea. In names: Valkeakoski, Tammerkoski, Koskela.', [['Koski kuohuu keväällä.', 'The rapids foam in the spring.']], 'Streets & place names'],
+    ['lampi', 'pond, small lake', 'noun', 'Stem: lammen, lampea. Many small lakes are called -lampi: Mustalampi, Valkealampi.', [['Uimme lammessa.', 'We swam in the pond.']], 'Streets & place names'],
+    ['oja', 'ditch', 'noun', 'Stem: ojan. In names and surnames: Ojala.', [['Pallo meni ojaan.', 'The ball went into the ditch.']], 'Streets & place names'],
+    ['vuori', 'mountain; big hill', 'noun', 'Stem: vuoren, vuorta. In Finnish place names often just a big rocky hill: Mustavuori.', [['Kiipesimme vuoren huipulle.', 'We climbed to the top of the hill.']], 'Streets & place names'],
+    ['vaara', 'wooded hill; danger', 'noun', 'In Eastern and Northern Finland: a high forested hill (Kolin vaarat). The same word means danger.', [['Vaaran päältä näkyy kauas.', 'From the top of the hill you can see far.']], 'Streets & place names'],
+    ['harju', 'ridge (esker)', 'noun', 'A long gravel ridge left by the ice age. In names: Pyynikinharju, Punkaharju, Harju.', [['Kävelimme harjulla.', 'We walked along the ridge.']], 'Streets & place names'],
+    ['laakso', 'valley', 'noun', 'Stem: laakson. In names: Laakso, Laaksolahti.', [['Joki virtaa laaksossa.', 'The river flows through the valley.']], 'Streets & place names'],
+    ['pelto', 'field (farmland)', 'noun', 'Stem: pellon, peltoa. In names and surnames: Peltola.', [['Pellolla kasvaa ohraa.', 'Barley is growing in the field.']], 'Streets & place names'],
+    ['niitty', 'meadow', 'noun', 'Stem: niityn, niittyä. In names: Niittykumpu.', [['Niityllä kasvaa kukkia.', 'Flowers grow in the meadow.']], 'Streets & place names'],
+    ['aho', 'clearing, glade', 'noun', 'An open place in the forest. Stem: ahon. Common in place names and surnames.', [['Metsän keskellä on aho.', 'There\'s a clearing in the middle of the forest.']], 'Streets & place names'],
+    ['lehto', 'grove', 'noun', 'A leafy, green forest. Stem: lehdon, lehtoa. Surnames: Lehtonen.', [['Lehdossa kasvaa vanhoja lehmuksia.', 'Old lime trees grow in the grove.']], 'Streets & place names'],
+    ['kumpu', 'mound, small hill', 'noun', 'Stem: kummun, kumpua. In names: Kumpula, Niittykumpu. (-la / -lä = "the place of".)', [['Talo on kummulla.', 'The house is on a mound.']], 'Streets & place names'],
+    ['korpi', 'deep forest, wilderness', 'noun', 'Stem: korven, korpea. In names: Korpilahti.', [['Korvessa on hiljaista.', 'It\'s quiet deep in the forest.']], 'Streets & place names'],
+    ['nummi', 'heath, moor', 'noun', 'Stem: nummen, nummea. In names: Kirkkonummi, Nummela. kangas = a dry pine heath (also means fabric).', [['Nummella kasvaa kanervaa.', 'Heather grows on the heath.']], 'Streets & place names'],
+    ['luoto', 'skerry, small rocky island', 'noun', 'Stem: luodon, luotoa. Many small islands are called -luoto.', [['Lokit istuvat luodolla.', 'The gulls are sitting on the skerry.']], 'Streets & place names'],
+    ['kari', 'reef, rock under the water', 'noun', 'Stem: karin. ajaa karille = to run aground.', [['Vene ajoi karille.', 'The boat ran aground.']], 'Streets & place names'],
+  ];
+  // Starter words that also belong to a category added in version 11.
+  const ALSO_IN_V11 = {
+    'piha': ['Streets & place names'], 'mäki': ['Streets & place names'], 'saari': ['Streets & place names'],
+    'suo': ['Streets & place names'], 'joki': ['Streets & place names'], 'järvi': ['Streets & place names'],
+    'ranta': ['Streets & place names'], 'kallio': ['Streets & place names'], 'metsä': ['Streets & place names'],
+    'keskusta': ['Streets & place names'], 'osoite': ['Streets & place names'], 'risteys': ['Streets & place names'],
+    'kunta': ['Streets & place names'], 'asema': ['Streets & place names'],
+  };
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5, v6, v7, v8, v9, v10).map((r) => {
+  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11).map((r) => {
     let cats = [].concat(r[5]);
     if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$|^Planning & documentation$|^Support & inclusion$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$|^Slang$/.test(cats[0])) cats.push('Verbs');
@@ -2238,7 +2302,7 @@
   const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
   // The version each tagged word was added in (v4 onwards).
-  const since = [v4, v5, v6, v7, v8, v9, v10].flatMap((list, n) => list.map(() => n + 4));
+  const since = [v4, v5, v6, v7, v8, v9, v10, v11].flatMap((list, n) => list.map(() => n + 4));
   const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(since[i])));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
@@ -2247,7 +2311,7 @@
     partOfSpeech: r[2],
     definition: r[3],
     examples: r[4].map(([fi, en]) => ({ fi, en })),
-    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || []).map(id))),
+    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || []).map(id))),
     level: L ? L.levelFor(r[0], [].concat(r[5])[0]) : '',
     notes: '',
     stats: { correct: 0, wrong: 0 },
@@ -2266,9 +2330,10 @@
    * Corrections to starter words. Each entry lists the old text; a saved word is updated
    * only in the fields that still have exactly the old text (so the user's own edits stay).
    * addCategories adds a saved word to more categories.
+   * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 2;
+  const FIXES = 3;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -2282,8 +2347,10 @@
       examples: [{ fi: 'Mikä kellonaika sopii sinulle?', en: 'What time suits you?' }] },
     { finnish: 'vuosikymmen', definition: 'Stem: vuosikymmenen. In dates: -luku (1990-luku).' },
     // Version 10: existing words that also belong to the new categories.
-    ...Object.entries(ALSO_IN).map(([finnish, cats]) => ({ finnish, addCategories: cats.map(id) })),
-  ];
+    ...Object.entries(ALSO_IN).map(([finnish, cats]) => ({ v: 2, finnish, addCategories: cats.map(id) })),
+    // Version 11.
+    ...Object.entries(ALSO_IN_V11).map(([finnish, cats]) => ({ v: 3, finnish, addCategories: cats.map(id) })),
+  ].map((f) => Object.assign({ v: 1 }, f));
 
   root.VocabStarter = { VERSION, categories, words, newerThan, FIXES, fixes };
 })(typeof self !== 'undefined' ? self : this);

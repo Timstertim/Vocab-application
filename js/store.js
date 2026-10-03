@@ -46,16 +46,17 @@
 
   /** Apply corrections to starter words, once. Fields the user has changed are left alone. */
   function applyFixes(s) {
-    if ((s.starterFixes || 0) >= (Starter.FIXES || 0)) return false;
+    const done = s.starterFixes || 0;
+    if (done >= (Starter.FIXES || 0)) return false;
     const norm = root.VocabCore.normalize;
     const current = new Map(Starter.words.map((w) => [norm(w.finnish), w]));
-    for (const fix of Starter.fixes || []) {
+    for (const fix of (Starter.fixes || []).filter((f) => f.v > done)) {
       const now = current.get(norm(fix.finnish));
       if (!now) continue;
       for (const w of s.words) {
         if (norm(w.finnish) !== norm(fix.finnish)) continue;
         for (const field of Object.keys(fix)) {
-          if (field === 'finnish') continue;
+          if (field === 'finnish' || field === 'v') continue;
           if (field === 'addCategories') {
             for (const cid of fix.addCategories) {
               const starterCat = Starter.categories.find((c) => c.id === cid);
