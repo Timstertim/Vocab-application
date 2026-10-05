@@ -55,6 +55,11 @@ with Quizlet-style mini games.
   analogue clock face), **Time spans** (*kahden tunnin päästä*, *kolme päivää sitten*,
   *puoli tuntia*) and **Years & decades** (*vuodesta 2018*, *vuoteen 2030 mennessä*,
   *yhdeksänkymmentäluvulla*, *tuhatkahdeksansataaluvulla*). Logic in `js/numbers.js`.
+- **Which case?**: a sentence with a gap and a word in its basic form; put the word in the form the sentence
+  needs. Three sets: **Verbs & their cases** (*Pidän suklaasta*, *Luotan sinuun*, *Kysy opettajalta*, *Vesi muuttuu
+  jääksi*), **Minua, minulla, minun** (*Minua pelottaa*, *Minulla on kylmä*, *Minun täytyy lähteä*) and **Numbers,
+  amounts & "not"** (*kaksi kissaa*, *lasi maitoa*, *Minulla ei ole autoa*), plus Mixed. Choose from four forms of
+  the same word or type it; each answer shows the full sentence, its translation and the rule. Exercises in `js/cases.js`.
 - **Your own mini games**: save a game type, its categories, direction and round size
   under a name, then replay it from the Games page.
 - **Progress**: every answer is recorded per word. Games pick weak words more often, and
@@ -117,7 +122,8 @@ npm test        # unit tests for answer checking, search, Wiktionary parsing, im
 | `js/roleplay.js` | The role-play game |
 | `js/levels.js` | Levels of the starter words |
 | `js/numbers.js` | Finnish number words and the number exercises |
-| `js/numbersgame.js` | The number practice screens |
+| `js/numbersgame.js` | The drill screens used by Number practice and Which case? |
+| `js/cases.js` | The Which case? exercises |
 | `js/topics.js` | Topics and keywords used for category suggestions |
 | `js/starter.js` | Starter vocabulary |
 

@@ -29,7 +29,7 @@
     root.NumbersGame.stop();
     closeModal();
     const { parts, params } = parseHash();
-    const tab = { word: 'words', play: 'games', roleplay: 'games', numbers: 'games' }[parts[0]] || parts[0];
+    const tab = { word: 'words', play: 'games', roleplay: 'games', numbers: 'games', cases: 'games' }[parts[0]] || parts[0];
     document.querySelectorAll('.tabs a').forEach((a) => a.classList.toggle('active', a.dataset.tab === tab));
     switch (parts[0]) {
       case 'word': return renderWordDetail(parts[1]);
@@ -43,6 +43,9 @@
       case 'numbers':
         if (parts[1]) return root.NumbersGame.play(view, parts[1]);
         return root.NumbersGame.renderList(view);
+      case 'cases':
+        if (parts[1]) return root.CasesGame.play(view, parts[1]);
+        return root.CasesGame.renderList(view);
       case 'settings': return renderSettings();
       default: return renderWords(params);
     }
@@ -582,6 +585,9 @@
       '<span class="btn primary small">Start</span></a>' +
       '<a class="rp-banner" href="#/numbers"><span class="rp-icon">🔢</span><span><strong>Number practice</strong>' +
       '<span class="muted small">Dates, clock times, prices, floors and places, spoken forms and bus numbers</span></span>' +
+      '<span class="btn primary small">Start</span></a>' +
+      '<a class="rp-banner" href="#/cases"><span class="rp-icon">🎯</span><span><strong>Which case?</strong>' +
+      '<span class="muted small">Put the word in the right form: Pidän suklaasta, Minua pelottaa, kaksi kissaa</span></span>' +
       '<span class="btn primary small">Start</span></a>' +
       '<h2 class="section-title">Quick play</h2>' +
       '<div class="toolbar"><label class="inline">Words from <select id="qp-cat">' + categoryOptions(presetCat, 'All words') + '</select></label>' +

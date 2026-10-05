@@ -1,7 +1,9 @@
-/* Number practice: dates, clock times, prices, positions, spoken forms… generated fresh each round. */
+/*
+ * Drill screens: pick a set, then choose or type the answer to ten questions.
+ * Used by Number practice (dates, clock times, prices…) and Which case?.
+ */
 (function (root) {
   'use strict';
-  const N = root.VocabNumbers;
   const Store = root.Store;
   const { esc, speak, speakButton, letterBar } = root.UI;
   const ROUND = 10;
@@ -46,38 +48,55 @@
       hand(hourAngle, 45, 7, 'hour') + hand(minuteAngle, 70, 4, 'minute') + '<circle class="pin" cx="100" cy="100" r="5"/></svg>';
   }
 
-  const mode = () => (Store.get().settings.numMode === 'type' ? 'type' : 'choose');
-  const best = (set) => (Store.get().settings.numBest || {})[set];
+  // What differs between the drills. The source has SETS, round(set, n) and check(typed, ex).
+  const NUMBERS = {
+    src: () => root.VocabNumbers, hash: '#/numbers', title: '🔢 Number practice', modeKey: 'numMode', bestKey: 'numBest',
+    intro: 'Numbers the way they\'re really used: dates, the time, prices, floors and places, spoken forms and bus numbers. New questions every round.',
+    check: (typed, ex) => root.VocabNumbers.checkNumberAnswer(typed, ex),
+  };
+  const CASES = {
+    src: () => root.VocabCases, hash: '#/cases', title: '🎯 Which case?', modeKey: 'caseMode', bestKey: 'caseBest', sentence: true,
+    intro: 'A sentence with a gap and a word in its basic form. Put the word in the form the sentence needs: Pidän ___ (suklaa) → suklaasta.',
+    check: (typed, ex) => root.VocabCases.check(typed, ex),
+  };
 
-  function renderList(view) {
+  const mode = (cfg) => (Store.get().settings[cfg.modeKey] === 'type' ? 'type' : 'choose');
+  const best = (cfg, set) => (Store.get().settings[cfg.bestKey] || {})[set];
+
+  function renderList(view, cfg) {
+    cfg = cfg || NUMBERS;
     stop();
-    const sets = Object.entries(N.SETS).concat([['mixed', { name: 'Mixed', icon: '🎲', blurb: 'A bit of everything' }]]);
+    const sets = Object.entries(cfg.src().SETS).concat([['mixed', { name: 'Mixed', icon: '🎲', blurb: 'A bit of everything' }]]);
     view.innerHTML = '<section class="page">' +
       '<a class="back" href="#/games">← Games</a>' +
-      '<div class="page-head"><h1>🔢 Number practice</h1></div>' +
-      '<p class="muted">Numbers the way they\'re really used: dates, the time, prices, floors and places, spoken forms and bus numbers. New questions every round.</p>' +
+      '<div class="page-head"><h1>' + cfg.title + '</h1></div>' +
+      '<p class="muted">' + esc(cfg.intro) + '</p>' +
       '<h2 class="section-title">How do you answer?</h2>' +
       '<div class="level-picker two">' +
       [['choose', 'Choose', 'Pick the right form out of four'], ['type', 'Type', 'Write it yourself']].map(([k, n, b]) =>
-        '<button type="button" class="level' + (k === mode() ? ' on' : '') + '" data-mode="' + k + '" aria-pressed="' + (k === mode()) + '"><strong>' + n +
+        '<button type="button" class="level' + (k === mode(cfg) ? ' on' : '') + '" data-mode="' + k + '" aria-pressed="' + (k === mode(cfg)) + '"><strong>' + n +
         '</strong><span class="muted small">' + b + '</span></button>').join('') + '</div>' +
       '<h2 class="section-title">What do you want to practise?</h2>' +
       '<div class="rp-grid">' + sets.map(([k, s]) => {
-        const b = best(k);
-        return '<a class="rp-card" href="#/numbers/' + k + '"><span class="rp-icon">' + s.icon + '</span><strong>' + esc(s.name) + '</strong>' +
+        const b = best(cfg, k);
+        return '<a class="rp-card" href="' + cfg.hash + '/' + k + '"><span class="rp-icon">' + s.icon + '</span><strong>' + esc(s.name) + '</strong>' +
           '<span class="muted small" lang="fi">' + esc(s.blurb) + '</span>' + (b != null ? '<span class="muted small">Best: ' + b + '/' + ROUND + '</span>' : '') + '</a>';
       }).join('') + '</div></section>';
     view.querySelectorAll('[data-mode]').forEach((b) => {
-      b.onclick = () => { Store.update((s) => { s.settings.numMode = b.dataset.mode; }); renderList(view); };
+      b.onclick = () => { Store.update((s) => { s.settings[cfg.modeKey] = b.dataset.mode; }); renderList(view, cfg); };
     });
   }
 
-  function play(view, set) {
+  function play(view, set, cfg) {
+    cfg = cfg || NUMBERS;
     stop();
-    if (set !== 'mixed' && !N.SETS[set]) { view.innerHTML = '<section class="page"><p>Not found.</p><a href="#/numbers">Back</a></section>'; return; }
+    const N = cfg.src();
+    if (set !== 'mixed' && !N.SETS[set]) { view.innerHTML = '<section class="page"><p>Not found.</p><a href="' + cfg.hash + '">Back</a></section>'; return; }
     const info = set === 'mixed' ? { name: 'Mixed', icon: '🎲' } : N.SETS[set];
     const exercises = N.round(set, ROUND);
-    const m = mode();
+    const m = mode(cfg);
+    // What the 🔊 button reads: the whole sentence in Which case?, otherwise the answer.
+    const sayIt = (ex) => (ex.digits ? ex.shown.replace(/[“”]/g, '') : cfg.sentence && ex.context ? ex.context.replace('___', ex.answer) : ex.answer);
     let i = 0;
     const results = [];
     view.innerHTML = '<section class="page narrow"><div id="num-game"></div></section>';
@@ -114,7 +133,7 @@
             '<div class="row gap center"><button class="btn primary" type="submit">Check <kbd>Enter</kbd></button>' +
             '<button class="btn ghost" type="button" data-act="show">Show answer</button></div></form>') +
         '<div class="feedback" aria-live="polite"></div></div>';
-      el.querySelector('[data-act=exit]').onclick = () => { stop(); location.hash = '#/numbers'; };
+      el.querySelector('[data-act=exit]').onclick = () => { stop(); location.hash = cfg.hash; };
       const fb = el.querySelector('.feedback');
 
       const reveal = (ok, close, typed) => {
@@ -123,13 +142,14 @@
         el.querySelector('#num-context').innerHTML = contextHtml(ex, ex.digits ? null : ex.answer) || '';
         fb.innerHTML = (ok ? '<span class="good">' + (close ? 'Almost perfect ✓' : 'Oikein! ✓') + '</span>' : '<span class="bad">Not quite.</span>') +
           '<div class="expected" lang="fi">' + esc(ex.digits ? ex.answer + ' (' + ex.accept[0] + ')' : ex.answer) + ' ' +
-          speakButton(ex.digits ? ex.shown.replace(/[“”]/g, '') : ex.answer, 'fi') + '</div>' +
+          speakButton(sayIt(ex), 'fi') + '</div>' +
+          (ex.en ? '<p class="muted small">' + esc(ex.en) + '</p>' : '') +
           (ex.accept.length && !ex.digits ? '<p class="muted small">Also correct: ' + ex.accept.slice(0, 2).map((a) => '<span lang="fi">' + esc(a) + '</span>').join(' · ') + '</p>' : '') +
           '<p class="muted small">' + esc(ex.note) + '</p>' +
           '<button class="btn" data-act="next">Continue <kbd>Enter</kbd></button>';
         fb.querySelector('[data-act=next]').onclick = next;
         fb.querySelector('[data-act=next]').focus();
-        speak(ex.digits ? ex.shown.replace(/[“”]/g, '') : ex.answer, 'fi');
+        speak(sayIt(ex), 'fi');
       };
 
       if (m === 'choose') {
@@ -153,7 +173,7 @@
         form.onsubmit = (e) => {
           e.preventDefault();
           if (answered || !input.value.trim()) return;
-          const res = N.checkNumberAnswer(input.value, ex);
+          const res = cfg.check(input.value, ex);
           input.readOnly = true;
           input.classList.add(res.correct ? 'right' : 'wrong');
           form.querySelectorAll('button').forEach((b) => { b.disabled = true; });
@@ -172,23 +192,24 @@
     function finish() {
       stop();
       const right = results.filter((r) => r.ok).length;
-      const prev = best(set);
-      if (prev == null || right > prev) Store.update((s) => { s.settings.numBest = Object.assign({}, s.settings.numBest, { [set]: right }); });
+      const prev = best(cfg, set);
+      if (prev == null || right > prev) Store.update((s) => { s.settings[cfg.bestKey] = Object.assign({}, s.settings[cfg.bestKey], { [set]: right }); });
       const missed = results.filter((r) => !r.ok);
       el.innerHTML = '<div class="results card-pad">' +
         '<h2>' + (right === ROUND ? 'Mahtavaa! 🎉' : right >= 7 ? 'Hienoa!' : 'Hyvä yritys!') + '</h2>' +
         '<div class="score-ring" style="--pct:' + Math.round((right / ROUND) * 100) + '"><span>' + right + '/' + ROUND + '</span></div>' +
         (prev != null && right > prev ? '<p>New best!</p>' : '') +
         (missed.length ? '<h3>To review</h3><ul class="missed">' + missed.map((r) =>
-          '<li><strong>' + esc(r.ex.shown) + '</strong> → <span lang="fi">' + esc(r.ex.answer) + '</span> ' + speakButton(r.ex.digits ? r.ex.shown.replace(/[“”]/g, '') : r.ex.answer, 'fi') +
+          '<li><strong>' + esc(r.ex.shown) + '</strong> → <span lang="fi">' + esc(cfg.sentence && r.ex.context ? r.ex.context.replace('___', r.ex.answer) : r.ex.answer) + '</span> ' + speakButton(sayIt(r.ex), 'fi') +
           (r.typed ? '<br><span class="muted small">You wrote: ' + esc(r.typed) + '</span>' : '') + '</li>').join('') + '</ul>' : '') +
         '<div class="row gap center"><button class="btn primary" data-act="again">New round</button>' +
-        '<a class="btn ghost" href="#/numbers">Done</a></div></div>';
-      el.querySelector('[data-act=again]').onclick = () => play(view, set);
+        '<a class="btn ghost" href="' + cfg.hash + '">Done</a></div></div>';
+      el.querySelector('[data-act=again]').onclick = () => play(view, set, cfg);
     }
 
     render();
   }
 
-  root.NumbersGame = { renderList, play, stop };
+  root.NumbersGame = { renderList: (view) => renderList(view, NUMBERS), play: (view, set) => play(view, set, NUMBERS), stop };
+  root.CasesGame = { renderList: (view) => renderList(view, CASES), play: (view, set) => play(view, set, CASES), stop };
 })(window);
