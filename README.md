@@ -55,6 +55,11 @@ with Quizlet-style mini games.
   analogue clock face), **Time spans** (*kahden tunnin päästä*, *kolme päivää sitten*,
   *puoli tuntia*) and **Years & decades** (*vuodesta 2018*, *vuoteen 2030 mennessä*,
   *yhdeksänkymmentäluvulla*, *tuhatkahdeksansataaluvulla*). Logic in `js/numbers.js`.
+- **📆 Daily review**: a few minutes a day with spaced repetition. Each day you get the words that are due, plus new
+  ones to fill the round (10, 20 or 30; from all words or one category, up to a level you choose). A word you get right
+  comes back later and later (1, 2, 4, 7, 14, 30, 60 days); one you miss comes back once at the end and again tomorrow.
+  Questions get harder as you learn a word: first pick the meaning, then pick the Finnish word, then write it. A streak
+  counts the days in a row. Scheduling in `js/review.js`.
 - **Which case?**: a sentence with a gap and a word in its basic form; put the word in the form the sentence
   needs. Three sets: **Verbs & their cases** (*Pidän suklaasta*, *Luotan sinuun*, *Kysy opettajalta*, *Vesi muuttuu
   jääksi*), **Minua, minulla, minun** (*Minua pelottaa*, *Minulla on kylmä*, *Minun täytyy lähteä*) and **Numbers,
@@ -124,6 +129,8 @@ npm test        # unit tests for answer checking, search, Wiktionary parsing, im
 | `js/numbers.js` | Finnish number words and the number exercises |
 | `js/numbersgame.js` | The drill screens used by Number practice and Which case? |
 | `js/cases.js` | The Which case? exercises |
+| `js/review.js` | Daily review scheduling (spaced repetition, streak) |
+| `js/daily.js` | The Daily review screens |
 | `js/topics.js` | Topics and keywords used for category suggestions |
 | `js/starter.js` | Starter vocabulary |
 

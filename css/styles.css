@@ -464,3 +464,9 @@ select { max-width: 100%; text-overflow: ellipsis; }
 .clock-face .hour { stroke: var(--text); }
 .clock-face .minute { stroke: var(--primary); }
 .clock-face .pin { fill: var(--primary); }
+
+/* Daily review */
+.daily-banner { border-color: var(--warn); background: var(--warn-soft); }
+.streak { font-weight: 700; color: var(--warn); white-space: nowrap; }
+.review-today { margin: 1rem 0; }
+.review-today p { margin: 0 0 .5rem; }

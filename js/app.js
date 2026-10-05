@@ -27,9 +27,10 @@
     Games.stop();
     root.Roleplay.stop();
     root.NumbersGame.stop();
+    root.DailyReview.stop();
     closeModal();
     const { parts, params } = parseHash();
-    const tab = { word: 'words', play: 'games', roleplay: 'games', numbers: 'games', cases: 'games' }[parts[0]] || parts[0];
+    const tab = { word: 'words', play: 'games', roleplay: 'games', numbers: 'games', cases: 'games', review: 'games' }[parts[0]] || parts[0];
     document.querySelectorAll('.tabs a').forEach((a) => a.classList.toggle('active', a.dataset.tab === tab));
     switch (parts[0]) {
       case 'word': return renderWordDetail(parts[1]);
@@ -43,6 +44,8 @@
       case 'numbers':
         if (parts[1]) return root.NumbersGame.play(view, parts[1]);
         return root.NumbersGame.renderList(view);
+      case 'review':
+        return root.DailyReview.renderStart(view);
       case 'cases':
         if (parts[1]) return root.CasesGame.play(view, parts[1]);
         return root.CasesGame.renderList(view);
@@ -573,6 +576,16 @@
     return Games.DIRECTIONS[dir];
   }
 
+  /** The Daily review banner: what's due today and the streak. */
+  function dailyBanner() {
+    const d = root.DailyReview.summary();
+    const line = d.done ? 'Done for today ✓' + (d.due ? ' · ' + d.due + ' more due' : '')
+      : d.due ? d.due + ' word' + (d.due === 1 ? '' : 's') + ' due today' : 'New words to learn today';
+    return '<a class="rp-banner daily-banner" href="#/review"><span class="rp-icon">📆</span><span><strong>Daily review</strong>' +
+      '<span class="muted small">' + esc(line) + (d.streak ? ' · 🔥 ' + d.streak + (d.streak === 1 ? ' day' : ' days') : '') + '</span></span>' +
+      '<span class="btn primary small">' + (d.done ? 'Open' : 'Start') + '</span></a>';
+  }
+
   function renderGames(params) {
     const s = Store.get();
     const presetCat = params.cat || '';
@@ -580,6 +593,7 @@
       '<section class="page">' +
       '<div class="page-head"><h1>Games</h1>' +
       '<button class="btn primary" data-act="create">+ Create a game</button></div>' +
+      dailyBanner() +
       '<a class="rp-banner" href="#/roleplay"><span class="rp-icon">🎭</span><span><strong>Role play</strong>' +
       '<span class="muted small">Practise real conversations: at the shop, the library, the health centre, the café, on the phone…</span></span>' +
       '<span class="btn primary small">Start</span></a>' +
