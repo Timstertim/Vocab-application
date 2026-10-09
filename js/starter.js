@@ -97,7 +97,7 @@
     C('Finnish customs', '#b8862a'),
     C('Streets & place names', '#55606e'),
   ];
-  const VERSION = 12;
+  const VERSION = 13;
   const id = (n) => 'cat-' + slug(n);
 
   // [finnish, english, part of speech, definition, [[example fi, example en]...], category]
@@ -2342,8 +2342,46 @@
     'hirvi': ['Streets & place names'], 'ruskea': ['Streets & place names'], 'musta': ['Streets & place names'], 'iso': ['Streets & place names'], 'vanha': ['Streets & place names'], 'uusi': ['Streets & place names'], 'pitkä': ['Streets & place names'],
   };
 
+  // Added in version 13: words and phrases from the daycare notes.
+  const v13 = [
+    ['yksisarvinen', 'unicorn', 'noun', 'Stem: yksisarvisen, yksisarvista. Literally "one-horned".', [['Piirsin yksisarvisen.', 'I drew a unicorn.']], 'Daycare: games & stories'],
+    ['Hämähäkkimies', 'Spider-Man', 'noun', 'hämähäkki = spider, mies = man. Stem: Hämähäkkimiehen.', [['Hämähäkkimies kiipeää seinällä.', 'Spider-Man is climbing up the wall.']], 'Daycare: games & stories'],
+    ['hirviö', 'monster', 'noun', 'Stem: hirviön, hirviötä.', [['Sängyn alla ei ole hirviöitä.', 'There are no monsters under the bed.']], 'Daycare: games & stories'],
+    ['mustekala', 'octopus', 'noun', 'Literally "ink fish". Stem: mustekalan.', [['Mustekalalla on kahdeksan jalkaa.', 'An octopus has eight legs.']], 'Daycare: games & stories'],
+    ['lonkero', 'tentacle', 'noun', 'Stem: lonkeron. Also the Finnish gin long drink (spoken).', [['Meduusan lonkerot polttavat.', 'A jellyfish\'s tentacles sting.']], 'Daycare: games & stories'],
+    ['kilpikonna', 'tortoise, turtle', 'noun', 'Literally "shield toad". Stem: kilpikonnan.', [['Kilpikonna kävelee hitaasti.', 'The tortoise walks slowly.']], 'Daycare: games & stories'],
+    ['valas', 'whale', 'noun', 'Stem: valaan, valasta.', [['Valas on valtavan iso.', 'A whale is enormous.']], 'Daycare: games & stories'],
+    ['maalivahti', 'goalkeeper', 'noun', 'maali = goal, vahti = guard. Stem: maalivahdin.', [['Kuka on maalivahtina?', 'Who\'s in goal?']], 'Daycare: play'],
+    ['piiloutua', 'to hide (yourself)', 'verb', 'Type 1 · minä piiloudun · hän piiloutui (past). piilottaa = to hide something.', [['Piiloudu sängyn alle!', 'Hide under the bed!']], 'Daycare: play'],
+    ['rengas', 'tyre; ring', 'noun', 'Stem: renkaan, rengasta. rengaskeinu = tyre swing.', [['Lapset keinuvat renkaassa.', 'The children are swinging on the tyre.']], 'Daycare: outdoors'],
+    ['liivi', 'vest, waistcoat', 'noun', 'Stem: liivin. heijastinliivi = hi-vis vest.', [['Laita liivi päälle.', 'Put your vest on.']], 'Daycare: outdoors'],
+    ['askel', 'step', 'noun', 'Stem: askeleen, askelta.', [['Ota kolme isoa askelta.', 'Take three big steps.']], 'Daycare: instructions'],
+    ['rohkeus', 'courage, bravery', 'noun', 'Stem: rohkeuden, rohkeutta. rohkea = brave.', [['Siihen tarvitaan rohkeutta.', 'That takes courage.']], 'Daycare: praise'],
+    ['into', 'enthusiasm, eagerness', 'noun', 'Stem: innon, intoa. innoissaan = excited.', [['Hänellä on kova into oppia.', 'They\'re really keen to learn.']], 'Daycare: praise'],
+    ['älykäs', 'clever, smart', 'adjective', 'Stem: älykkään, älykästä.', [['Olet tosi älykäs!', 'You\'re really clever!']], 'Daycare: praise'],
+    ['kiukku', 'anger, temper; tantrum', 'noun', 'Stem: kiukun. kiukutella = to throw a tantrum. kiukkuinen = grumpy.', [['Kiukku menee kyllä ohi.', 'The tantrum will pass.']], 'Daycare: friends & conflicts'],
+    ['muskari', 'music playgroup', 'noun', 'Short for musiikkileikkikoulu: music sessions for small children. Stem: muskarin.', [['Torstaina on muskari.', 'On Thursday there\'s music group.']], 'Daycare: songs & circle time'],
+    ['kylpylä', 'spa, water park', 'noun', 'Stem: kylpylän. Popular family outing with pools and slides.', [['Lauantaina mennään kylpylään.', 'On Saturday we\'re going to the spa.']], 'Daycare'],
+    ['mulle', 'to me (spoken)', 'pronoun', 'Standard: minulle. Also: sulle = sinulle.', [['Anna se mulle.', 'Give it to me.']], ['Spoken Finnish', 'Daycare']],
+    ['mut', 'me (spoken); but (spoken)', 'pronoun', 'Standard: minut (me, as an object): Äiti hakee mut = Mum picks me up. Also short for mutta (but).', [['Äiti hakee mut kolmelta.', 'Mum is picking me up at three.']], ['Spoken Finnish', 'Daycare']],
+    ['ei enää', 'no more, not any more', 'phrase', 'Ei enää karkkia = no more sweets.', [['Ei enää karkkia tänään.', 'No more sweets today.']], 'Daycare: instructions'],
+    ['taputa päätä', 'pat your head', 'phrase', 'taputtaa = to pat, to clap. taputa käsiä = clap your hands.', [['Taputa päätä, taputa vatsaa!', 'Pat your head, pat your tummy!']], 'Daycare: instructions'],
+    ['saanko', 'may I…?, can I have…?', 'phrase', 'From saada. Saanko mennä? = May I go? Saanko lisää? = Can I have more?', [['Saanko lisää maitoa?', 'Can I have more milk?']], 'Daycare: instructions'],
+    ['näytä', 'show (me)!', 'phrase', 'Imperative of näyttää. Näytä kansi = show the cover (or the lid). Näytä minulle = show me.', [['Näytä kirjan kansi.', 'Show the cover of the book.']], 'Daycare: instructions'],
+    ['kokeile itse', 'try it yourself', 'phrase', 'kokeilla = to try. Encourages the child to have a go first.', [['Kokeile itse ensin.', 'Try it yourself first.']], 'Daycare: instructions'],
+    ['odota sun vuoroo', 'wait your turn (spoken)', 'phrase', 'Spoken Finnish. Standard: odota vuoroasi.', [['Odota sun vuoroo, Leo.', 'Wait your turn, Leo.']], ['Daycare: instructions', 'Spoken Finnish']],
+    ['riisu vaatteesi', 'take your clothes off', 'phrase', 'riisua = to undress. Riisu ulkovaatteet = take off your outdoor clothes.', [['Riisu vaatteesi ja mene lepäämään.', 'Take your clothes off and go and rest.']], 'Daycare: instructions'],
+    ['istu kunnolla', 'sit properly', 'phrase', 'kunnolla = properly. Istu kunnolla tuolilla = sit properly on the chair.', [['Istu kunnolla tuolilla.', 'Sit properly on the chair.']], 'Daycare: instructions'],
+    ['käänny ympäri', 'turn around', 'phrase', 'kääntyä = to turn: minä käännyn.', [['Käänny ympäri, niin katson selän.', 'Turn around so I can look at your back.']], 'Daycare: instructions'],
+    ['paa tää päälle', 'put this on (spoken)', 'phrase', 'Spoken Finnish. Standard: pane tämä päälle. paa = pane, tää = tämä.', [['Paa tää päälle, ulkona on kylmä.', 'Put this on, it\'s cold outside.']], ['Daycare: instructions', 'Spoken Finnish']],
+  ];
+  // Starter words that also belong to the daycare set (version 13).
+  const ALSO_IN_V13 = {
+    'ruuhka': ['Daycare pick-up', 'Daycare'], 'mun': ['Daycare'], 'sun': ['Daycare'], 'tää': ['Daycare'],
+  };
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12).map((r) => {
+  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13).map((r) => {
     let cats = [].concat(r[5]);
     if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$|^Planning & documentation$|^Support & inclusion$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$|^Slang$/.test(cats[0])) cats.push('Verbs');
@@ -2353,7 +2391,7 @@
   const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
   // The version each tagged word was added in (v4 onwards).
-  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12].flatMap((list, n) => list.map(() => n + 4));
+  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13].flatMap((list, n) => list.map(() => n + 4));
   const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(since[i])));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
@@ -2362,7 +2400,7 @@
     partOfSpeech: r[2],
     definition: r[3],
     examples: r[4].map(([fi, en]) => ({ fi, en })),
-    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || []).map(id))),
+    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || []).map(id))),
     level: L ? L.levelFor(r[0], [].concat(r[5])[0]) : '',
     notes: '',
     stats: { correct: 0, wrong: 0 },
@@ -2384,7 +2422,7 @@
    * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 4;
+  const FIXES = 5;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -2406,6 +2444,7 @@
     { v: 4, finnish: 'selkä', english: 'back', definition: 'Stem: selän, selkää.' },
     { v: 4, finnish: 'kangas', english: 'fabric, cloth', definition: 'Stem: kankaan, kangasta.' },
     ...Object.entries(ALSO_IN_V12).map(([finnish, cats]) => ({ v: 4, finnish, addCategories: cats.map(id) })),
+    ...Object.entries(ALSO_IN_V13).map(([finnish, cats]) => ({ v: 5, finnish, addCategories: cats.map(id) })),
   ].map((f) => Object.assign({ v: 1 }, f));
 
   root.VocabStarter = { VERSION, categories, words, newerThan, FIXES, fixes };

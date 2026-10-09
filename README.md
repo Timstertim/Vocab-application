@@ -72,7 +72,7 @@ with Quizlet-style mini games.
 - **Pronunciation**: 🔊 buttons read words aloud using your device's text-to-speech
   (install a Finnish voice for the best result).
 - **Backup**: export and import everything as JSON from Settings.
-- Starts with 1933 starter words in 88 categories, including **Feelings**, **Shapes**,
+- Starts with 1963 starter words in 88 categories, including **Feelings**, **Shapes**,
   **A2.2 verbs**, a set for daycare teachers (**Daycare**, **Daycare: play**, **Daycare: safety**,
   **Talking to parents**, **ECEC terms**), everyday life (**Time & calendar**, **Weather & seasons**,
   **Body & health**, **Clothes**, **Shopping & money**, **Getting around**, **Services & offices**,
