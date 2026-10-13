@@ -98,7 +98,7 @@
     C('Streets & place names', '#55606e'),
     C('Words learnt during internship', '#c0602a'),
   ];
-  const VERSION = 14;
+  const VERSION = 15;
   const id = (n) => 'cat-' + slug(n);
 
   // [finnish, english, part of speech, definition, [[example fi, example en]...], category]
@@ -2472,8 +2472,16 @@
     'maalivahti': ['Words learnt during internship'],
   };
 
+  // Added in version 15: more from the internship notebook.
+  const v15 = [
+    ['herkkupeppu', 'a sweet treat, like a pulla', 'noun', 'A word heard at the daycare for something sweet, such as a pulla bun. Stem: herkkupepun. herkku = treat.', [['Saisinko herkkupepun?', 'Could I have a sweet treat?']], 'Words learnt during internship'],
+    ['herkku', 'treat, delicacy', 'noun', 'Stem: herkun, herkkua. herkullinen = delicious. herkkusuu = someone with a sweet tooth.', [['Pulla on minun lempiherkkuni.', 'Pulla is my favourite treat.']], 'Words learnt during internship'],
+    ['kalke', 'clatter, rattling noise', 'noun', 'The noise of things knocking together (dishes, toys, metal). Stem: kalkkeen, kalketta.', [['Keittiöstä kuuluu kovaa kalketta.', 'There\'s a lot of clattering from the kitchen.']], 'Words learnt during internship'],
+  ];
+  const ALSO_IN_V15 = { 'nostaa': ['Words learnt during internship'] };
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14).map((r) => {
+  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15).map((r) => {
     let cats = [].concat(r[5]);
     if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$|^Planning & documentation$|^Support & inclusion$|^Words learnt during internship$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$|^Slang$/.test(cats[0])) cats.push('Verbs');
@@ -2483,7 +2491,7 @@
   const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
   // The version each tagged word was added in (v4 onwards).
-  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14].flatMap((list, n) => list.map(() => n + 4));
+  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15].flatMap((list, n) => list.map(() => n + 4));
   const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(since[i])));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
@@ -2492,7 +2500,7 @@
     partOfSpeech: r[2],
     definition: r[3],
     examples: r[4].map(([fi, en]) => ({ fi, en })),
-    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || []).map(id))),
+    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || []).map(id))),
     level: L ? L.levelFor(r[0], [].concat(r[5])[0]) : '',
     notes: '',
     stats: { correct: 0, wrong: 0 },
@@ -2514,7 +2522,7 @@
    * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 6;
+  const FIXES = 7;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -2538,6 +2546,7 @@
     ...Object.entries(ALSO_IN_V12).map(([finnish, cats]) => ({ v: 4, finnish, addCategories: cats.map(id) })),
     ...Object.entries(ALSO_IN_V13).map(([finnish, cats]) => ({ v: 5, finnish, addCategories: cats.map(id) })),
     ...Object.entries(ALSO_IN_V14).map(([finnish, cats]) => ({ v: 6, finnish, addCategories: cats.map(id) })),
+    ...Object.entries(ALSO_IN_V15).map(([finnish, cats]) => ({ v: 7, finnish, addCategories: cats.map(id) })),
   ].map((f) => Object.assign({ v: 1 }, f));
 
   root.VocabStarter = { VERSION, categories, words, newerThan, FIXES, fixes };
