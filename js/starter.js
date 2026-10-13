@@ -96,8 +96,9 @@
     C('Slang', '#d24545'),
     C('Finnish customs', '#b8862a'),
     C('Streets & place names', '#55606e'),
+    C('Words learnt during internship', '#c0602a'),
   ];
-  const VERSION = 13;
+  const VERSION = 14;
   const id = (n) => 'cat-' + slug(n);
 
   // [finnish, english, part of speech, definition, [[example fi, example en]...], category]
@@ -2380,10 +2381,101 @@
     'ruuhka': ['Daycare pick-up', 'Daycare'], 'mun': ['Daycare'], 'sun': ['Daycare'], 'tää': ['Daycare'],
   };
 
+  // Added in version 14: words from the internship notebook.
+  const v14 = [
+    ['tossut', 'indoor slippers, soft shoes', 'noun', 'Plural; one: tossu. Children wear them indoors at daycare.', [['Laita tossut jalkaan.', 'Put your slippers on.']], 'Words learnt during internship'],
+    ['käsineet', 'gloves', 'noun', 'Plural; one: käsine. Spoken: hanskat. lapaset = mittens.', [['Laita käsineet käteen.', 'Put your gloves on.']], 'Words learnt during internship'],
+    ['hanskat', 'gloves (spoken)', 'noun', 'Spoken word for käsineet. One: hanska.', [['Missä sun hanskat on?', 'Where are your gloves?']], 'Words learnt during internship'],
+    ['peppu', 'bottom, bum (child word)', 'noun', 'Stem: pepun. Peppu tuolilla = (keep your) bottom on the chair.', [['Peppu tuolilla, kiitos.', 'Bottom on the chair, please.']], 'Words learnt during internship'],
+    ['tikka', 'woodpecker', 'noun', 'Stem: tikan. Also darts: tikanheitto.', [['Tikka koputtaa puuta.', 'The woodpecker is knocking on the tree.']], 'Words learnt during internship'],
+    ['naurulokki', 'black-headed gull', 'noun', 'Literally "laughing gull", from its call. lokki = gull.', [['Naurulokki kirkuu rannalla.', 'A black-headed gull is screeching on the beach.']], 'Words learnt during internship'],
+    ['päästä', 'to get (to), to be able to go; to be let out', 'verb', 'Type 3 · minä pääsen · hän pääsi (past). Pääsenkö ulos? = Can I go out?', [['Pääsenkö ulos?', 'Can I go out?']], 'Words learnt during internship'],
+    ['mielenkiintoinen', 'interesting', 'adjective', 'Stem: mielenkiintoisen. Todella mielenkiintoista! = Really interesting!', [['Kirja on mielenkiintoinen.', 'The book is interesting.']], 'Words learnt during internship'],
+    ['todella mielenkiintoista', 'really interesting', 'phrase', 'todella = really. The partitive (-ista) is used when you talk about "it" in general.', [['Tämä on todella mielenkiintoista!', 'This is really interesting!']], 'Words learnt during internship'],
+    ['innokas', 'enthusiastic, eager', 'adjective', 'Stem: innokkaan, innokasta. From into = enthusiasm.', [['Lapset ovat tosi innokkaita.', 'The children are really eager.']], 'Words learnt during internship'],
+    ['ylös', 'up', 'adverb', 'Movement upwards. Opposite: alas. ylhäällä = up there.', [['Nouse ylös.', 'Get up.']], 'Words learnt during internship'],
+    ['alas', 'down', 'adverb', 'Movement downwards. Opposite: ylös. alhaalla = down there.', [['Tule alas puusta.', 'Come down from the tree.']], 'Words learnt during internship'],
+    ['lisää', 'more', 'adverb', 'Haluatko lisää? = Do you want more? Opposite: ei enää = no more.', [['Haluatko lisää?', 'Do you want more?']], 'Words learnt during internship'],
+    ['lopetetaan', 'let\'s stop', 'phrase', 'From lopettaa. Lopetetaan leikki = let\'s stop playing.', [['Lopetetaan leikki nyt.', 'Let\'s stop playing now.']], 'Words learnt during internship'],
+    ['saako', 'may I…?, is it allowed…?', 'phrase', 'From saada, without a person: Saako tässä istua? = Can you sit here? Saanko? = May I?', [['Saako nostaa sun pipoa?', 'May I lift your hat?']], 'Words learnt during internship'],
+    ['haluatko jäädä', 'do you want to stay?', 'phrase', 'jäädä = to stay. Haluatko jäädä sisälle? = Do you want to stay inside?', [['Haluatko jäädä sisälle?', 'Do you want to stay inside?']], 'Words learnt during internship'],
+    ['jäänkö tähän', 'shall I stay here?', 'phrase', 'In "or" questions use vai, not tai: Jäänkö tähän vai tulenko mukaan?', [['Jäänkö tähän vai tulenko mukaan?', 'Shall I stay here or come with you?']], 'Words learnt during internship'],
+    ['jakakaa keskenänne', 'share between yourselves', 'phrase', 'jakaa = to share. keskenänne = among yourselves.', [['Jakakaa keskenänne palikat.', 'Share the blocks between yourselves.']], 'Words learnt during internship'],
+    ['paljonko kello on', 'what time is it?', 'phrase', 'Also: Mitä kello on?', [['Paljonko kello on nyt?', 'What time is it now?']], 'Words learnt during internship'],
+    ['huoli', 'worry', 'noun', 'Stem: huolen, huolta. Ei huolta! = No worries! huolehtia = to take care of.', [['Ei mitään huolta.', 'No worries at all.']], 'Words learnt during internship'],
+    ['kadottaa', 'to lose (something)', 'verb', 'Type 1 · minä kadotan · hän kadotti (past). kadottanut = has lost.', [['Kadotin avaimet.', 'I lost the keys.']], 'Words learnt during internship'],
+    ['kadota', 'to disappear, to go missing', 'verb', 'Type 4 · se katoaa · se katosi (past). kadonnut = lost, missing.', [['Minne lelu on kadonnut?', 'Where has the toy gone?']], 'Words learnt during internship'],
+    ['kuin', 'like, as; than', 'conjunction', 'yhtä iso kuin = as big as; isompi kuin = bigger than; kuin karhu = like a bear.', [['Hän on yhtä pitkä kuin minä.', 'They\'re as tall as me.']], 'Words learnt during internship'],
+    ['hoitaa', 'to look after; to handle', 'verb', 'Type 1 · minä hoidan · hän hoiti (past). Minä hoidan tämän = I\'ll handle this.', [['Minä hoidan tämän.', 'I\'ll handle this.']], 'Words learnt during internship'],
+    ['räpyttää', 'to blink', 'verb', 'Type 1 · minä räpytän · hän räpytti (past). räpyttää silmiä = to blink your eyes.', [['Räpytä silmiä!', 'Blink your eyes!']], 'Words learnt during internship'],
+    ['puhu vähän hiljempaa', 'speak a bit more quietly', 'phrase', 'hiljempaa = more quietly (from hiljaa).', [['Puhu vähän hiljempaa, kiitos.', 'Speak a bit more quietly, please.']], 'Words learnt during internship'],
+    ['ota pois', 'take it off, take it away', 'phrase', 'Also: riisu pois (clothes). Ota pois märät sukat = take off the wet socks.', [['Ota pois märät sukat.', 'Take off the wet socks.']], 'Words learnt during internship'],
+    ['nosta se', 'pick it up', 'phrase', 'nostaa = to lift. Nosta se lattialta = pick it up off the floor.', [['Nosta se lattialta.', 'Pick it up off the floor.']], 'Words learnt during internship'],
+    ['yritä itse', 'try it yourself', 'phrase', 'yrittää = to try. Same as kokeile itse.', [['Yritä itse ensin.', 'Try it yourself first.']], 'Words learnt during internship'],
+    ['maali', 'goal; paint', 'noun', 'Stem: maalin. Football: maali = goal, maalivahti = goalkeeper. Also paint.', [['Pallo meni maaliin!', 'The ball went in the goal!']], 'Words learnt during internship'],
+    ['syötä', 'pass (the ball)!', 'phrase', 'From syöttää (to pass; also to feed). Pass to someone: -lle: Syötä Leolle!', [['Syötä Leolle!', 'Pass to Leo!']], 'Words learnt during internship'],
+    ['hyvä maali', 'good goal', 'phrase', 'Hyvä maali! = Nice goal!', [['Hyvä maali, Aino!', 'Nice goal, Aino!']], 'Words learnt during internship'],
+    ['hieno torjunta', 'great save', 'phrase', 'torjunta = save (by the goalkeeper), from torjua = to block.', [['Hieno torjunta!', 'Great save!']], 'Words learnt during internship'],
+  ];
+  // Starter words that also belong to Words learnt during internship (version 14).
+  const ALSO_IN_V14 = {
+    'muskari': ['Words learnt during internship'],
+    'näytä': ['Words learnt during internship'],
+    'piiloutua': ['Words learnt during internship'],
+    'Hämähäkkimies': ['Words learnt during internship'],
+    'sattua': ['Words learnt during internship'],
+    'yksisarvinen': ['Words learnt during internship'],
+    'rohkeus': ['Words learnt during internship'],
+    'kiukku': ['Words learnt during internship'],
+    'into': ['Words learnt during internship'],
+    'kilpikonna': ['Words learnt during internship'],
+    'ruuhka': ['Words learnt during internship'],
+    'rengas': ['Words learnt during internship'],
+    'ei enää': ['Words learnt during internship'],
+    'haalari': ['Words learnt during internship'],
+    'lapaset': ['Words learnt during internship'],
+    'hiekkalaatikko': ['Words learnt during internship'],
+    'keinu': ['Words learnt during internship'],
+    'keinua': ['Words learnt during internship'],
+    'hyvin tehty': ['Words learnt during internship'],
+    'hyvä yritys': ['Words learnt during internship'],
+    'hyvää ruokahalua': ['Words learnt during internship'],
+    'istu alas': ['Words learnt during internship'],
+    'jakaa': ['Words learnt during internship'],
+    'kiitos avusta': ['Words learnt during internship'],
+    'kuunnella toista': ['Words learnt during internship'],
+    'askel': ['Words learnt during internship'],
+    'unohtaa': ['Words learnt during internship'],
+    'saada': ['Words learnt during internship'],
+    'mulle': ['Words learnt during internship'],
+    'mun': ['Words learnt during internship'],
+    'sun': ['Words learnt during internship'],
+    'hirviö': ['Words learnt during internship'],
+    'kylpylä': ['Words learnt during internship'],
+    'liivi': ['Words learnt during internship'],
+    'älykäs': ['Words learnt during internship'],
+    'taputa päätä': ['Words learnt during internship'],
+    'mustekala': ['Words learnt during internship'],
+    'lonkero': ['Words learnt during internship'],
+    'ei huudeta': ['Words learnt during internship'],
+    'käänny ympäri': ['Words learnt during internship'],
+    'paa tää päälle': ['Words learnt during internship'],
+    'kuuntele': ['Words learnt during internship'],
+    'tule tänne': ['Words learnt during internship'],
+    'vuorotellaan': ['Words learnt during internship'],
+    'odota sun vuoroo': ['Words learnt during internship'],
+    'istu kunnolla': ['Words learnt during internship'],
+    'varovasti': ['Words learnt during internship'],
+    'ei hätää': ['Words learnt during internship'],
+    'kokeile itse': ['Words learnt during internship'],
+    'askarrella': ['Words learnt during internship'],
+    'maalivahti': ['Words learnt during internship'],
+  };
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13).map((r) => {
+  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14).map((r) => {
     let cats = [].concat(r[5]);
-    if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$|^Planning & documentation$|^Support & inclusion$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
+    if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$|^Planning & documentation$|^Support & inclusion$|^Words learnt during internship$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$|^Slang$/.test(cats[0])) cats.push('Verbs');
     return r.slice(0, 5).concat([Array.from(new Set(cats))]);
   });
@@ -2391,7 +2483,7 @@
   const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
   // The version each tagged word was added in (v4 onwards).
-  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13].flatMap((list, n) => list.map(() => n + 4));
+  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14].flatMap((list, n) => list.map(() => n + 4));
   const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(since[i])));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
@@ -2400,7 +2492,7 @@
     partOfSpeech: r[2],
     definition: r[3],
     examples: r[4].map(([fi, en]) => ({ fi, en })),
-    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || []).map(id))),
+    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || []).map(id))),
     level: L ? L.levelFor(r[0], [].concat(r[5])[0]) : '',
     notes: '',
     stats: { correct: 0, wrong: 0 },
@@ -2422,7 +2514,7 @@
    * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 5;
+  const FIXES = 6;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -2445,6 +2537,7 @@
     { v: 4, finnish: 'kangas', english: 'fabric, cloth', definition: 'Stem: kankaan, kangasta.' },
     ...Object.entries(ALSO_IN_V12).map(([finnish, cats]) => ({ v: 4, finnish, addCategories: cats.map(id) })),
     ...Object.entries(ALSO_IN_V13).map(([finnish, cats]) => ({ v: 5, finnish, addCategories: cats.map(id) })),
+    ...Object.entries(ALSO_IN_V14).map(([finnish, cats]) => ({ v: 6, finnish, addCategories: cats.map(id) })),
   ].map((f) => Object.assign({ v: 1 }, f));
 
   root.VocabStarter = { VERSION, categories, words, newerThan, FIXES, fixes };

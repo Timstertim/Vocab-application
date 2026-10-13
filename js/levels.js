@@ -34,7 +34,7 @@
     'Support & inclusion': 'B1.2', 'Cooking & kitchen': 'A2.1', 'Banking & bills': 'B1.1', 'Kela, taxes & forms': 'B1.1',
     'Car & driving': 'A2.2', 'Doctor & pharmacy': 'A2.2', 'Feeling verbs': 'A2.2', 'Opinions & discussion': 'B1.1',
     'Polite requests': 'A2.2', 'Abbreviations': 'A2.2', 'Confusing words': 'A2.1', 'Slang': 'A2.2', 'Finnish customs': 'A2.2',
-    'Streets & place names': 'A2.1',
+    'Streets & place names': 'A2.1', 'Words learnt during internship': 'A2.1',
   };
 
   // Words that are easier or harder than their category.
@@ -131,6 +131,11 @@
   // Version 13 additions.
     groups['A1.3'] = groups['A1.3'].concat(['ei enää', 'saanko']);
     groups['A2.1'] = groups['A2.1'].concat(['kylpylä']);
+  // Version 14 additions.
+    groups['A1.2'] = groups['A1.2'].concat(['ylös', 'alas', 'lisää', 'paljonko kello on']);
+    groups['A1.3'] = groups['A1.3'].concat(['kuin', 'yritä itse', 'maali']);
+    groups['A2.2'] = groups['A2.2'].concat(['mielenkiintoinen', 'todella mielenkiintoista', 'innokas', 'kadottaa', 'kadota', 'hoitaa', 'jakakaa keskenänne', 'jäänkö tähän']);
+    groups['B1.1'] = groups['B1.1'].concat(['naurulokki', 'hieno torjunta', 'räpyttää']);
   const WORD = {};
   for (const [level, words] of Object.entries(groups)) for (const w of words) WORD[w] = level;
 
