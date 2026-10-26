@@ -97,8 +97,9 @@
     C('Finnish customs', '#b8862a'),
     C('Streets & place names', '#55606e'),
     C('Words learnt during internship', '#c0602a'),
+    C('Module 2 Final Test', '#c43b3b'),
   ];
-  const VERSION = 15;
+  const VERSION = 16;
   const id = (n) => 'cat-' + slug(n);
 
   // [finnish, english, part of speech, definition, [[example fi, example en]...], category]
@@ -2480,8 +2481,81 @@
   ];
   const ALSO_IN_V15 = { 'nostaa': ['Words learnt during internship'] };
 
+  // Added in version 16: Module 2 final test – the dentist, basic doctor words and news words.
+  const v16 = [
+    ['suun terveys', 'oral health', 'phrase', 'suu = mouth, terveys = health. Suun terveydestä = about oral health.', [['Suun terveys on tärkeää.', 'Oral health is important.']], 'Module 2 Final Test'],
+    ['pitää hampaista huolta', 'to take care of your teeth', 'phrase', 'pitää huolta + -sta. Pidän hampaista huolta = I take care of my teeth.', [['Muista pitää hampaista huolta.', 'Remember to take care of your teeth.']], 'Module 2 Final Test'],
+    ['hammastarkastus', 'dental check-up', 'noun', 'Stem: hammastarkastuksen. vuosittainen hammastarkastus = annual check-up.', [['Minulla on aika hammastarkastukseen huomenna.', 'I have a dental check-up appointment tomorrow.']], 'Module 2 Final Test'],
+    ['tarkastaa', 'to check, to examine', 'verb', 'Type 1 · minä tarkastan · hän tarkasti (past). tarkastus = check-up.', [['Hammaslääkäri tarkastaa kaikki hampaat.', 'The dentist checks all the teeth.']], 'Module 2 Final Test'],
+    ['hammastahna', 'toothpaste', 'noun', 'Stem: hammastahnan.', [['Laita vähän hammastahnaa harjaan.', 'Put a little toothpaste on the brush.']], 'Module 2 Final Test'],
+    ['hammaslanka', 'dental floss', 'noun', 'Stem: hammaslangan, hammaslankaa.', [['Käytä hammaslankaa joka ilta.', 'Use dental floss every evening.']], 'Module 2 Final Test'],
+    ['suuvesi', 'mouthwash', 'noun', 'Stem: suuveden, suuvettä.', [['Käytätkö koskaan suuvettä?', 'Do you ever use mouthwash?']], 'Module 2 Final Test'],
+    ['ksylitoli', 'xylitol', 'noun', 'A sweetener that protects teeth. Finns chew xylitol gum after eating.', [['Ruokailun jälkeen kannattaa syödä ksylitolia.', 'After a meal it\'s a good idea to have xylitol.']], 'Module 2 Final Test'],
+    ['reikä', 'hole; cavity', 'noun', 'Stem: reiän, reikää. Hampaassa on reikä = there\'s a cavity in the tooth.', [['Hampaassa on reikä.', 'There\'s a cavity in the tooth.']], 'Module 2 Final Test'],
+    ['vihloa', 'to be sensitive, to give a sharp pain', 'verb', 'Type 1 · vihloo · vihloi (past). Hammasta vihloo = the tooth is sensitive (e.g. to cold).', [['Kylmä vesi vihloo hampaita.', 'Cold water makes my teeth sensitive.']], 'Module 2 Final Test'],
+    ['porata', 'to drill', 'verb', 'Type 4 · minä poraan · hän porasi (past). Onko sinua porattu? = Have you had a tooth drilled?', [['Hammaslääkäri poraa hampaan.', 'The dentist drills the tooth.']], 'Module 2 Final Test'],
+    ['paikata', 'to fill (a tooth); to patch', 'verb', 'Type 4 · minä paikkaan · hän paikkasi (past). paikkaaminen = filling.', [['Ensin hammaslääkäri poraa ja sitten paikkaa hampaan.', 'First the dentist drills and then fills the tooth.']], 'Module 2 Final Test'],
+    ['hammaskivi', 'tartar', 'noun', 'Stem: hammaskiven. The hygienist removes it.', [['Hammaskivi poistetaan tarkastuksessa.', 'The tartar is removed at the check-up.']], 'Module 2 Final Test'],
+    ['juurihoito', 'root canal treatment', 'noun', 'Stem: juurihoidon, juurihoitoa.', [['Oletko saanut juurihoitoa?', 'Have you had root canal treatment?']], 'Module 2 Final Test'],
+    ['viisaudenhammas', 'wisdom tooth', 'noun', 'Stem: viisaudenhampaan. Plural: viisaudenhampaat.', [['Viisaudenhammas poistettiin viime viikolla.', 'The wisdom tooth was removed last week.']], 'Module 2 Final Test'],
+    ['poisto', 'removal, extraction', 'noun', 'Stem: poiston. hampaan poisto = tooth extraction. poistaa = to remove.', [['Minulle tehtiin viisaudenhampaan poisto.', 'I had a wisdom tooth extraction.']], 'Module 2 Final Test'],
+    ['hammasraudat', 'braces', 'noun', 'Plural. oikoa hampaita = to straighten teeth.', [['Minulla oli lapsena hammasraudat.', 'I had braces as a child.']], 'Module 2 Final Test'],
+    ['tekohampaat', 'dentures, false teeth', 'noun', 'Plural. teko- = artificial.', [['Isoisällä on tekohampaat.', 'Grandad has dentures.']], 'Module 2 Final Test'],
+    ['valkaisu', 'whitening', 'noun', 'Stem: valkaisun. hampaiden valkaisu = tooth whitening.', [['Hampaiden valkaisu on kallista.', 'Tooth whitening is expensive.']], 'Module 2 Final Test'],
+    ['maitohammas', 'milk tooth, baby tooth', 'noun', 'Stem: maitohampaan. Maitohammas irtosi = a baby tooth came out.', [['Lapselta irtosi maitohammas.', 'The child lost a baby tooth.']], 'Module 2 Final Test'],
+    ['toimenpide', 'procedure, operation', 'noun', 'Stem: toimenpiteen, toimenpidettä. toimenpiteen jälkeen = after the procedure.', [['Toimenpiteen jälkeen poskeni turposi.', 'After the procedure my cheek swelled up.']], 'Module 2 Final Test'],
+    ['puudutus', 'local anaesthetic, numbing', 'noun', 'Stem: puudutuksen. puuduttaa = to numb. Puudutus häviää = the numbness wears off.', [['Puudutus häviää parin tunnin päästä.', 'The numbness wears off in a couple of hours.']], 'Module 2 Final Test'],
+    ['leikkaus', 'operation, surgery', 'noun', 'Stem: leikkauksen. Leikkauksen jälkeen = after the operation (genitive + jälkeen).', [['Leikkauksen jälkeen en voi syödä kovaa ruokaa.', 'After the operation I can\'t eat hard food.']], 'Module 2 Final Test'],
+    ['sideharso', 'gauze', 'noun', 'Also just harso. sideharsotaitos = gauze pad.', [['Pure sideharsoa kevyesti tunnin ajan.', 'Bite gently on the gauze for an hour.']], 'Module 2 Final Test'],
+    ['purra', 'to bite', 'verb', 'Type 3 · minä puren · hän puri (past). Pure! = Bite!', [['Pure kevyesti.', 'Bite gently.']], 'Module 2 Final Test'],
+    ['verenvuoto', 'bleeding', 'noun', 'Stem: verenvuodon, verenvuotoa. vuoto = bleeding, leak.', [['Minulla oli hieman verenvuotoa.', 'I had a little bleeding.']], 'Module 2 Final Test'],
+    ['turvotus', 'swelling', 'noun', 'Stem: turvotuksen, turvotusta. turvota = to swell.', [['Turvotus häviää noin viikossa.', 'The swelling goes down in about a week.']], 'Module 2 Final Test'],
+    ['kylmähaude', 'cold compress', 'noun', 'Stem: kylmähauteen, kylmähaudetta. Keep it on the cheek against swelling.', [['Pidä kylmähaudetta poskella.', 'Keep a cold compress on your cheek.']], 'Module 2 Final Test'],
+    ['ompeleet', 'stitches', 'noun', 'Plural. Stitches in the mouth often dissolve by themselves (sulavat itsestään).', [['Ompeleet sulavat itsestään.', 'The stitches dissolve by themselves.']], 'Module 2 Final Test'],
+    ['huuhtoa', 'to rinse', 'verb', 'Type 1 · minä huuhdon · hän huuhtoi (past). Älä huuhdo suuta = don\'t rinse your mouth.', [['Älä huuhdo suuta kahteen tuntiin.', 'Don\'t rinse your mouth for two hours.']], 'Module 2 Final Test'],
+    ['hammaspäivystys', 'emergency dental clinic', 'noun', 'Stem: hammaspäivystyksen. For acute toothache in the evening or at weekends.', [['Hammaspäivystys on auki iltaisin.', 'The emergency dental clinic is open in the evenings.']], 'Module 2 Final Test'],
+    ['potilas', 'patient', 'noun', 'Stem: potilaan, potilasta.', [['Potilas odottaa vastaanotolla.', 'The patient is waiting at the surgery.']], 'Module 2 Final Test'],
+    ['mikä teitä vaivaa', 'what seems to be the problem?', 'phrase', 'What the doctor asks. Informal: Mikä sinua vaivaa?', [['Mikä teitä vaivaa?', 'What seems to be the problem?']], 'Module 2 Final Test'],
+    ['vointi', 'how you feel, condition', 'noun', 'Stem: voinnin. Miten vointi? = How are you feeling?', [['Miten vointi tänään?', 'How are you feeling today?']], 'Module 2 Final Test'],
+    ['hoito', 'treatment, care', 'noun', 'Stem: hoidon, hoitoa. hoitaa = to treat, to look after.', [['Hoito kestää viikon.', 'The treatment lasts a week.']], 'Module 2 Final Test'],
+    ['määrätä', 'to prescribe; to order', 'verb', 'Type 4 · minä määrään · hän määräsi (past). määrätä lääkettä = to prescribe medicine.', [['Lääkäri määräsi minulle antibiootin.', 'The doctor prescribed me an antibiotic.']], 'Module 2 Final Test'],
+    ['tulehdus', 'infection, inflammation', 'noun', 'Stem: tulehduksen, tulehdusta. korvatulehdus = ear infection.', [['Antibiootti on tulehduksen hoitoon.', 'The antibiotic is for treating the infection.']], 'Module 2 Final Test'],
+    ['sairaus', 'illness, disease', 'noun', 'Stem: sairauden, sairautta. sairas = ill.', [['Sairaus parani nopeasti.', 'The illness got better quickly.']], 'Module 2 Final Test'],
+    ['uutinen', 'news item', 'noun', 'Stem: uutisen, uutista. uutiset = the news. selkouutiset = news in easy Finnish.', [['Kuulin uutisen radiosta.', 'I heard the news on the radio.']], 'Module 2 Final Test'],
+    ['kasvaa', 'to grow, to increase', 'verb', 'Type 1 · se kasvaa · se kasvoi (past).', [['Työttömyys kasvoi viime vuonna.', 'Unemployment grew last year.']], 'Module 2 Final Test'],
+    ['lisääntyä', 'to increase', 'verb', 'Type 1 · se lisääntyy · se lisääntyi (past).', [['Sähköautot lisääntyvät nopeasti.', 'Electric cars are increasing quickly.']], 'Module 2 Final Test'],
+    ['lisätä', 'to add, to increase', 'verb', 'Type 4 · minä lisään · hän lisäsi (past). Someone increases something.', [['Kaupunki lisää päiväkotipaikkoja.', 'The city is adding daycare places.']], 'Module 2 Final Test'],
+    ['vähentyä', 'to decrease', 'verb', 'Type 1 · se vähentyy · se vähentyi (past). Also: vähetä (vähenee).', [['Työttömyys vähentyi keväällä.', 'Unemployment decreased in the spring.']], 'Module 2 Final Test'],
+    ['vähentää', 'to reduce, to cut', 'verb', 'Type 1 · minä vähennän · he vähentävät · hän vähensi (past). Someone reduces something.', [['Yritykset vähentävät työntekijöitä.', 'Companies are cutting staff.']], 'Module 2 Final Test'],
+    ['kallistua', 'to get more expensive', 'verb', 'Type 1 · se kallistuu · se kallistui (past). Opposite: halventua.', [['Ruoka kallistui viime vuonna.', 'Food got more expensive last year.']], 'Module 2 Final Test'],
+    ['halventua', 'to get cheaper', 'verb', 'Type 1 · se halventuu · se halventui (past). Also: halveta (halpenee).', [['Sähkö halventui keväällä.', 'Electricity got cheaper in the spring.']], 'Module 2 Final Test'],
+    ['prosentti', 'per cent', 'noun', 'Stem: prosentin, prosenttia. viisi prosenttia = five per cent.', [['Hinnat nousivat viisi prosenttia.', 'Prices rose by five per cent.']], 'Module 2 Final Test'],
+    ['keskimäärin', 'on average', 'adverb', 'Common in news about statistics.', [['Suomalainen juo keskimäärin kolme kuppia kahvia päivässä.', 'A Finn drinks three cups of coffee a day on average.']], 'Module 2 Final Test'],
+    ['yhä useampi', 'more and more (people)', 'phrase', 'Yhä useampi + singular verb: Yhä useampi tekee etätöitä.', [['Yhä useampi tekee etätöitä.', 'More and more people work remotely.']], 'Module 2 Final Test'],
+    ['puolet', 'half (of)', 'noun', 'puolet + elative plural: puolet suomalaisista = half of Finns.', [['Puolet lapsista tuli kouluun pyörällä.', 'Half of the children came to school by bike.']], 'Module 2 Final Test'],
+    ['tutkimus', 'study, research', 'noun', 'Stem: tutkimuksen, tutkimusta.', [['Uusi tutkimus julkaistiin tänään.', 'A new study was published today.']], 'Module 2 Final Test'],
+    ['tutkimuksen mukaan', 'according to a study', 'phrase', 'genitive + mukaan = according to: asiantuntijan mukaan, poliisin mukaan.', [['Tutkimuksen mukaan suomalaiset nukkuvat liian vähän.', 'According to a study, Finns sleep too little.']], 'Module 2 Final Test'],
+    ['aiheuttaa', 'to cause', 'verb', 'Type 1 · se aiheuttaa · se aiheutti (past).', [['Myrsky aiheutti sähkökatkoja.', 'The storm caused power cuts.']], 'Module 2 Final Test'],
+    ['muutos', 'change', 'noun', 'Stem: muutoksen, muutosta. tulla voimaan = to come into force.', [['Muutos tulee voimaan tammikuussa.', 'The change comes into force in January.']], 'Module 2 Final Test'],
+    ['hallitus', 'government', 'noun', 'Stem: hallituksen. pääministeri = prime minister.', [['Hallitus päätti uudesta laista.', 'The government decided on a new law.']], 'Module 2 Final Test'],
+    ['päättää', 'to decide', 'verb', 'Type 1 · minä päätän · hän päätti (past). päättää + -sta = to decide on.', [['Kunta päättää asiasta syksyllä.', 'The municipality will decide on the matter in the autumn.']], 'Module 2 Final Test'],
+    ['eduskunta', 'parliament (of Finland)', 'noun', 'Stem: eduskunnan. kansanedustaja = member of parliament.', [['Eduskunta hyväksyi lain.', 'Parliament approved the law.']], 'Module 2 Final Test'],
+    ['työttömyys', 'unemployment', 'noun', 'Stem: työttömyyden. työtön = unemployed.', [['Työttömyys on kasvanut.', 'Unemployment has grown.']], 'Module 2 Final Test'],
+  ];
+  const M2 = 'Module 2 Final Test';
+  // Starter words that also belong to Module 2 Final Test.
+  const ALSO_IN_V16 = {
+    'hammaslääkäri': [M2], 'hammas': [M2], 'suu': [M2], 'harjata': [M2], 'hammasharja': [M2], 'särkeä': [M2],
+    'haava': [M2], 'turvota': [M2], 'särkylääke': [M2], 'kipulääke': [M2], 'antibiootti': [M2], 'sairausloma': [M2],
+    'lääkärintodistus': [M2], 'lääkäri': [M2], 'sairaanhoitaja': [M2], 'terveyskeskus': [M2], 'sairaala': [M2],
+    'ajanvaraus': [M2], 'vastaanotto': [M2], 'päivystys': [M2], 'oire': [M2], 'kipu': [M2], 'kipeä': [M2],
+    'kuume': [M2], 'yskä': [M2], 'flunssa': [M2], 'sairas': [M2], 'lääke': [M2], 'resepti': [M2], 'apteekki': [M2],
+    'tutkia': [M2], 'verikoe': [M2], 'lähete': [M2], 'rokote': [M2], 'parantua': [M2], 'sattua': [M2], 'nousta': [M2],
+    'laskea': [M2], 'hinta': [M2],
+  };
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15).map((r) => {
+  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16).map((r) => {
     let cats = [].concat(r[5]);
     if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$|^Planning & documentation$|^Support & inclusion$|^Words learnt during internship$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$|^Slang$/.test(cats[0])) cats.push('Verbs');
@@ -2491,7 +2565,7 @@
   const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
   // The version each tagged word was added in (v4 onwards).
-  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15].flatMap((list, n) => list.map(() => n + 4));
+  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16].flatMap((list, n) => list.map(() => n + 4));
   const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(since[i])));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
@@ -2500,7 +2574,7 @@
     partOfSpeech: r[2],
     definition: r[3],
     examples: r[4].map(([fi, en]) => ({ fi, en })),
-    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || []).map(id))),
+    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || [], ALSO_IN_V16[r[0]] || []).map(id))),
     level: L ? L.levelFor(r[0], [].concat(r[5])[0]) : '',
     notes: '',
     stats: { correct: 0, wrong: 0 },
@@ -2522,7 +2596,7 @@
    * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 7;
+  const FIXES = 8;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -2547,6 +2621,7 @@
     ...Object.entries(ALSO_IN_V13).map(([finnish, cats]) => ({ v: 5, finnish, addCategories: cats.map(id) })),
     ...Object.entries(ALSO_IN_V14).map(([finnish, cats]) => ({ v: 6, finnish, addCategories: cats.map(id) })),
     ...Object.entries(ALSO_IN_V15).map(([finnish, cats]) => ({ v: 7, finnish, addCategories: cats.map(id) })),
+    ...Object.entries(ALSO_IN_V16).map(([finnish, cats]) => ({ v: 8, finnish, addCategories: cats.map(id) })),
   ].map((f) => Object.assign({ v: 1 }, f));
 
   root.VocabStarter = { VERSION, categories, words, newerThan, FIXES, fixes };
