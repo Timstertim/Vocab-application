@@ -470,3 +470,10 @@ select { max-width: 100%; text-overflow: ellipsis; }
 .streak { font-weight: 700; color: var(--warn); white-space: nowrap; }
 .review-today { margin: 1rem 0; }
 .review-today p { margin: 0 0 .5rem; }
+
+/* What a wrong answer means */
+.wrong-meaning, .right-meaning { margin: .4rem 0; }
+.wrong-meaning strong { color: var(--bad); }
+.right-meaning strong { color: var(--ok); }
+.match-note { min-height: 1.4em; margin-top: .6rem; text-align: center; font-size: .95rem; }
+.match-note span { white-space: nowrap; }

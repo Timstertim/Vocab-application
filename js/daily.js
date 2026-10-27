@@ -4,7 +4,7 @@
   const R = root.VocabReview;
   const Core = root.VocabCore;
   const Store = root.Store;
-  const { esc, speak, speakButton, letterBar } = root.UI;
+  const { esc, speak, speakButton, letterBar, wrongMeaning } = root.UI;
   const SIZES = [10, 20, 30];
 
   let keyHandler = null;
@@ -127,7 +127,7 @@
       el.querySelector('[data-act=exit]').onclick = () => { stop(); renderStart(view); };
       const fb = el.querySelector('.feedback');
 
-      const conclude = (ok, note) => {
+      const conclude = (ok, note, given, givenLang) => {
         answered = true;
         if (!retry) {
           results.set(w.id, ok);
@@ -136,8 +136,9 @@
           if (!ok) queue.push(q);
         }
         const next = w.srs ? w.srs.due : '';
-        fb.innerHTML = (ok ? '<span class="good">Oikein! ✓</span>' : '<span class="bad">' + (note || 'Not quite.') + '</span>') +
-          '<div class="expected"><span lang="fi">' + esc(w.finnish) + '</span> = ' + esc(w.english) + ' ' + speakButton(w.finnish, 'fi') + '</div>' +
+        fb.innerHTML = (ok ? '<span class="good">Oikein! ✓</span>' : '<span class="bad">' + (note || 'Not quite.') + '</span>' +
+          (given ? wrongMeaning(given, givenLang, givenLang === 'any' ? 'That word means:' : 'Your answer:') : '')) +
+          '<div class="expected">' + (ok ? '' : '<span class="muted">Right answer:</span> ') + '<span lang="fi">' + esc(w.finnish) + '</span> = ' + esc(w.english) + ' ' + speakButton(w.finnish, 'fi') + '</div>' +
           example(w) +
           (!retry && next ? '<p class="muted small">' + (ok ? 'Next time: ' + when(next, day) : 'It will come back once more now, and again tomorrow.') + '</p>' : '') +
           '<button class="btn" data-act="next">Continue <kbd>Enter</kbd></button>';
@@ -157,7 +158,7 @@
           const res = Core.checkAnswer(input.value, w.finnish, { lenient: settings().lenient });
           lock();
           input.classList.add(res.correct ? 'right' : res.close ? 'close' : 'wrong');
-          conclude(res.correct, res.close ? 'Almost! Check the spelling.' : 'Not quite.');
+          conclude(res.correct, res.close ? 'Almost! Check the spelling.' : 'Not quite.', res.close ? '' : input.value, 'any');
         };
         form.querySelector('[data-act=dontknow]').onclick = () => { if (!answered) { lock(); conclude(false, 'The answer is:'); } };
       } else {
@@ -170,7 +171,7 @@
             if (opts[k] === right) b.classList.add('right');
             else if (k === n) b.classList.add('wrong');
           });
-          conclude(opts[n] === right);
+          conclude(opts[n] === right, '', opts[n], q.type === 'choose-fi' ? 'en' : 'fi');
         };
         buttons.forEach((b, n) => { b.onclick = () => choose(n); });
         onKey((e) => { if (/^[1-4]$/.test(e.key)) choose(Number(e.key) - 1); });

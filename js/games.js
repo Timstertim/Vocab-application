@@ -2,7 +2,7 @@
 (function (root) {
   'use strict';
   const Core = root.VocabCore;
-  const { esc, speak, speakButton, letterBar } = root.UI;
+  const { esc, speak, speakButton, letterBar, wrongMeaning } = root.UI;
 
   const TYPES = {
     flashcards: { name: 'Flashcards', icon: '🃏', blurb: 'Flip cards and sort them into "know it" and "still learning".' },
@@ -268,7 +268,9 @@
           if (c.answerLang === 'fi') speak(c.answer, 'fi');
           later(next, 900);
         } else {
-          fb.innerHTML = '<span class="bad">Not quite.</span> ' + detailBlock(c.word) +
+          fb.innerHTML = '<span class="bad">Not quite.</span> ' + wrongMeaning(choices[n], c.answerLang) +
+            '<p class="right-meaning"><span class="muted">Right answer:</span> <strong lang="fi">' + esc(c.word.finnish) + '</strong> = ' + esc(c.word.english) + '</p>' +
+            detailBlock(c.word) +
             '<button class="btn" data-act="next">Continue <kbd>Enter</kbd></button>';
           fb.querySelector('[data-act=next]').onclick = next;
           fb.querySelector('[data-act=next]').focus();
@@ -346,7 +348,7 @@
             ? '<p class="muted small">Also accepted here: ' + others.map((a) => '<strong lang="fi">' + esc(a) + '</strong>').join(', ') + '</p>'
             : '';
         const fb = session.el.querySelector('.feedback');
-        fb.innerHTML = (ok ? '<span class="good">Oikein! ✓</span>' : '<span class="bad">Not quite.</span>') + formNote + alsoNote +
+        fb.innerHTML = (ok ? '<span class="good">Oikein! ✓</span>' : '<span class="bad">Not quite.</span>' + wrongMeaning(picked, 'fi')) + formNote + alsoNote +
           '<div class="row gap center">' +
           '<button class="btn" data-act="next">Continue <kbd>Enter</kbd></button>' +
           (!ok ? '<button class="btn ghost" data-act="alsofits">✓ <span lang="fi">' + esc(picked) + '</span> also fits</button>' : '') +
@@ -424,7 +426,7 @@
           : '<span class="bad">' + (typed ? 'Not quite.' : 'The answer is:') + '</span> ') +
           '<div class="expected"><span lang="' + c.answerLang + '">' + esc(c.answer) + '</span> ' +
           speakButton(c.word.finnish, 'fi') + '</div>' +
-          (typed ? '<div class="muted small">You wrote: ' + esc(typed) + '</div>' : '') +
+          (typed ? '<div class="muted small">You wrote: ' + esc(typed) + '</div>' + (result && result.close ? '' : wrongMeaning(typed, 'any', 'That word means:')) : '') +
           detailBlock(c.word) +
           '<div class="row gap">' +
           '<button class="btn" type="button" data-act="next">Continue <kbd>Enter</kbd></button>' +
@@ -511,7 +513,7 @@
         (chunks.length > 1 ? ' Board ' + (board + 1) + ' of ' + chunks.length + '.' : '') + '</p>' +
         '<div class="match-grid">' +
         tiles.map((t, n) => '<button class="tile" data-n="' + n + '" lang="' + t.lang + '">' + esc(t.text) + '</button>').join('') +
-        '</div>';
+        '</div><div class="match-note" aria-live="polite"></div>';
       bindExit(session);
       const timerEl = session.el.querySelector('.timer');
       const iv = setInterval(() => { if (timerEl.isConnected) timerEl.textContent = elapsed().toFixed(1) + 's'; }, 100);
@@ -536,6 +538,11 @@
             penalty += 1;
             mistakes.add(a.id);
             mistakes.add(t.id);
+            // Say what the two tiles really mean.
+            const byId = (id) => cards.find((c) => c.word.id === id).word;
+            const note = session.el.querySelector('.match-note');
+            if (note) note.innerHTML = [a, t].map((x) => { const w = byId(x.id); return '<span><strong lang="fi">' + esc(w.finnish) + '</strong> = ' + esc(w.english) + '</span>'; })
+              .filter((v, k, arr) => arr.indexOf(v) === k).join(' · ');
             [ab, b].forEach((x) => x.classList.add('bad'));
             later(() => [ab, b].forEach((x) => x.classList.remove('bad')), 450);
           }

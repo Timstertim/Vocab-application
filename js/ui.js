@@ -79,5 +79,21 @@
     return '<span class="chip" style="--chip:' + esc(cat.color) + '">' + esc(cat.name) + '</span>';
   }
 
-  root.UI = { esc, toast, speak, speakButton, letterBar, catChip };
+  /**
+   * After a wrong answer: what the answer you gave means, if it's a word in your list.
+   * lang = the language of the answer ('fi' or 'en'); 'any' tries Finnish, then English.
+   */
+  function wrongMeaning(text, lang, label) {
+    const Core = root.VocabCore;
+    const key = Core.normalize(text);
+    if (!key) return '';
+    const words = root.Store.get().words;
+    const find = (field) => words.find((w) => Core.normalize(w[field]) === key);
+    const w = lang === 'en' ? find('english') : lang === 'fi' ? find('finnish') : find('finnish') || find('english');
+    if (!w) return '';
+    return '<p class="wrong-meaning"><span class="muted">' + esc(label || 'Your answer:') + '</span> <strong lang="fi">' + esc(w.finnish) +
+      '</strong> ' + speakButton(w.finnish, 'fi') + ' = ' + esc(w.english) + '</p>';
+  }
+
+  root.UI = { esc, toast, speak, speakButton, letterBar, catChip, wrongMeaning };
 })(window);
