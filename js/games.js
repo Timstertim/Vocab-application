@@ -1,4 +1,4 @@
-/* Quizlet-style practice games: flashcards, multiple choice, fill the gap, write and match. */
+/* Quizlet-style practice games: flashcards, multiple choice, fill the gap, write and match, or a mix of them. */
 (function (root) {
   'use strict';
   const Core = root.VocabCore;
@@ -42,9 +42,16 @@
 
   function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
 
+  /** The game types a game uses: several in a mixed game, otherwise just its type. */
+  function typesOf(opts) {
+    const list = (opts.types || []).filter((t) => TYPES[t]);
+    return list.length ? Array.from(new Set(list)) : [TYPES[opts.type] ? opts.type : 'flashcards'];
+  }
+
   /**
    * Start a game.
-   * opts: { type, words, pool, direction, count, title, onExit, gameId }
+   * opts: { type, types, words, pool, direction, count, title, onExit, gameId }
+   * With more than one type in opts.types, each question is one of them (see mix()).
    */
   function start(el, opts) {
     stop();
@@ -54,6 +61,9 @@
       el.querySelector('[data-act=exit]').onclick = opts.onExit;
       return;
     }
+    const types = typesOf(opts);
+    if (types.length > 1) return mix(el, Object.assign({}, opts, { type: 'mix', types }));
+    opts = Object.assign({}, opts, { type: types[0] });
     if (opts.type === 'quiz' && (opts.pool || opts.words).length < 2) {
       el.innerHTML = '<div class="empty card-pad"><p>Multiple choice needs at least 2 words.</p>' +
         '<button class="btn" data-act="exit">Back</button></div>';
@@ -81,11 +91,54 @@
     ({ flashcards, quiz, gap, write, match })[opts.type](session);
   }
 
+  /* ---------- Mix: each step is one of the chosen game types ---------- */
+  function mix(el, opts) {
+    const pool = opts.pool || opts.words;
+    let types = opts.types.slice();
+    if (pool.length < 2) types = types.filter((t) => t !== 'quiz' && t !== 'gap');   // no wrong options to offer
+    if (!types.length) types = ['flashcards'];
+    const cards = Core.pickRound(opts.words, opts.count).map((w) => Core.makeCard(w, opts.direction || 'fi-en'));
+    const parent = { opts, cards, results: [], el, startedAt: Date.now(), done: 0 };
+    // Plan the round: one word per step, a small board of 3–5 words for Match. The same type is
+    // avoided twice in a row when there's a choice, and Fill the gap only gets words with a usable sentence.
+    const steps = [];
+    let last = null;
+    for (let k = 0; k < cards.length;) {
+      let options = types.filter((t) => (t !== 'gap' || Core.sentenceFor(cards[k].word)) && (t !== 'match' || cards.length - k >= 3));
+      if (!options.length) options = [pool.length >= 2 ? 'quiz' : 'flashcards'];
+      const fresh = options.filter((t) => t !== last);
+      const type = Core.shuffle(fresh.length ? fresh : options)[0];
+      const n = type === 'match' ? Math.min(cards.length - k, 3 + Math.floor(Math.random() * 3)) : 1;
+      steps.push({ type, cards: cards.slice(k, k + n) });
+      k += n;
+      last = type;
+    }
+    let s = 0;
+    const next = () => {
+      if (s >= steps.length) return finish(parent);
+      const step = steps[s];
+      const sub = { opts: Object.assign({}, opts, { type: step.type, pool }), cards: step.cards, results: [], el, startedAt: Date.now(), parent, offset: parent.done };
+      sub.onDone = () => {
+        parent.results.push(...sub.results);
+        parent.done += step.cards.length;
+        s++;
+        next();
+      };
+      ({ flashcards, quiz, gap, write, match })[step.type](sub);
+    };
+    next();
+  }
+
   function header(session, index, total, extra) {
+    // In a mix, show the progress through the whole round and which game this step is.
+    const P = session.parent;
+    if (P) { index = session.offset + Math.min(index, session.cards.length); total = P.cards.length; }
     const pct = total ? Math.round((index / total) * 100) : 0;
+    const title = P ? (P.opts.title || 'Mix') + ' · ' + TYPES[session.opts.type].icon + ' ' + TYPES[session.opts.type].name
+      : session.opts.title || TYPES[session.opts.type].name;
     return '<div class="game-head">' +
       '<button class="btn ghost small" data-act="exit">✕ Exit</button>' +
-      '<div class="game-title">' + esc(session.opts.title || TYPES[session.opts.type].name) + '</div>' +
+      '<div class="game-title">' + esc(title) + '</div>' +
       '<div class="game-count">' + (extra || (Math.min(index + 1, total) + ' / ' + total)) + '</div>' +
       '</div><div class="progress"><span style="width:' + pct + '%"></span></div>';
   }
@@ -362,7 +415,7 @@
       const conclude = (ok) => {
         if (!retry) record(session, c, ok);
         else if (ok) firstTry.add(c);
-        if (!ok && !retry) queue.push(c);
+        if (!ok && !retry && !session.parent) queue.push(c);   // in a mix the round just moves on
       };
       const showWrong = (result, typed) => {
         fb.innerHTML = (result && result.close
@@ -495,6 +548,7 @@
   function finish(session) {
     stop();
     if (session.finishHook) session.finishHook();
+    if (session.onDone) return session.onDone();   // one step of a mix is done
     const total = session.results.length;
     const right = session.results.filter((r) => r.correct).length;
     const missed = session.results.filter((r) => !r.correct).map((r) => r.card.word);
@@ -517,7 +571,7 @@
       '<div class="results card-pad">' +
       '<h2>' + esc(praise) + '</h2>' + best +
       '<div class="score-ring" style="--pct:' + pct + '"><span>' + pct + '%</span></div>' +
-      '<p>' + right + ' of ' + total + ' ' + (session.opts.type === 'flashcards' ? 'marked as known' :
+      '<p>' + right + ' of ' + total + ' ' + (session.opts.type === 'mix' ? 'right' : session.opts.type === 'flashcards' ? 'marked as known' :
         session.opts.type === 'match' ? 'matched without a mistake' : 'correct on the first try') + '</p>' +
       (missed.length ? '<h3>Words to review</h3><ul class="missed">' + missed.map((w) =>
         '<li><span lang="fi"><strong>' + esc(w.finnish) + '</strong></span> ' + speakButton(w.finnish, 'fi') +
@@ -537,5 +591,5 @@
     }
   }
 
-  root.Games = { start, stop, TYPES, DIRECTIONS };
+  root.Games = { start, stop, TYPES, DIRECTIONS, typesOf };
 })(window);

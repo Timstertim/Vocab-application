@@ -561,11 +561,21 @@
     return Core.filterWords(Store.get().words, { categoryIds: catIds || [], levelMin, levelMax });
   }
 
+  /** A game's types as the player sees them: "✅ Multiple choice", or "🎲 Mix: ✅ ✍️ 🧩" for several. */
+  function typeLabel(g) {
+    const types = Games.typesOf(g);
+    if (types.length === 1) return { icon: Games.TYPES[types[0]].icon, name: Games.TYPES[types[0]].name };
+    return { icon: '🎲', name: 'Mix: ' + types.map((t) => Games.TYPES[t].icon + ' ' + Games.TYPES[t].name).join(', ') };
+  }
+  /** The type whose direction wording applies: Write only when Write is the only type. */
+  const directionType = (g) => { const t = Games.typesOf(g); return t.length === 1 ? t[0] : 'mix'; };
+  const noDirection = (g) => Games.typesOf(g).every((t) => Games.TYPES[t].noDirection);
+
   function gameSummary(g) {
     const cats = (g.categoryIds || []).map((id) => Store.category(id)).filter(Boolean);
     const n = wordsForCategories(g.categoryIds, g.levelMin, g.levelMax).length;
     const lt = levelText(g.levelMin, g.levelMax);
-    return (Games.TYPES[g.type].noDirection ? '' : directionLabel(g.type, g.direction) + ' · ') + (cats.length ? cats.map((c) => c.name).join(', ') : 'All words') +
+    return (noDirection(g) ? '' : directionLabel(directionType(g), g.direction) + ' · ') + (cats.length ? cats.map((c) => c.name).join(', ') : 'All words') +
       (lt ? ' · ' + lt : '') +
       ' · ' + (g.count ? Math.min(g.count, n) + ' of ' : '') + n + ' words';
   }
@@ -612,11 +622,13 @@
       '<div class="type-grid">' + Object.entries(Games.TYPES).map(([k, t]) =>
         '<button class="type-card" data-quick="' + k + '"><span class="type-icon">' + t.icon + '</span>' +
         '<strong>' + t.name + '</strong><span class="muted small">' + t.blurb + '</span></button>').join('') +
+        '<button class="type-card" data-quick="mix"><span class="type-icon">🎲</span><strong>Mix</strong>' +
+        '<span class="muted small">A bit of everything: multiple choice, fill the gap, write and match in one round.</span></button>' +
       '</div>' +
       '<h2 class="section-title">My games</h2>' +
       (s.games.length ? '<ul class="game-list">' + s.games.map((g) => {
-        const t = Games.TYPES[g.type];
-        const best = g.type === 'match' && s.settings.bestTimes && s.settings.bestTimes[g.id];
+        const t = typeLabel(g);
+        const best = directionType(g) === 'match' && s.settings.bestTimes && s.settings.bestTimes[g.id];
         return '<li class="game-item"><span class="type-icon">' + t.icon + '</span>' +
           '<div class="gi-body"><strong>' + esc(g.name) + '</strong><span class="muted small">' + t.name + ' · ' + esc(gameSummary(g)) +
           (best ? ' · best ' + best.toFixed(1) + 's' : '') + '</span></div>' +
@@ -687,10 +699,11 @@
       '<div class="modal-head"><h2>' + (isNew ? 'Create a game' : 'Edit game') + '</h2>' +
       '<button type="button" class="icon-btn" data-act="close" aria-label="Close">✕</button></div>' +
       '<label>Name<input name="name" required value="' + esc(g.name) + '" placeholder="e.g. Food quiz"></label>' +
-      '<fieldset><legend>Game type</legend><div class="type-picks">' +
-      Object.entries(Games.TYPES).map(([k, t]) => '<label class="type-pick"><input type="radio" name="type" value="' + k + '"' +
-        (k === g.type ? ' checked' : '') + '><span class="type-icon">' + t.icon + '</span><strong>' + t.name + '</strong>' +
-        '<span class="muted small">' + t.blurb + '</span></label>').join('') + '</div></fieldset>' +
+      '<fieldset><legend>Game type <span class="muted small">(pick one, or several to mix them)</span></legend><div class="type-picks">' +
+      Object.entries(Games.TYPES).map(([k, t]) => '<label class="type-pick"><input type="checkbox" name="type" value="' + k + '"' +
+        (Games.typesOf(g).includes(k) ? ' checked' : '') + '><span class="type-icon">' + t.icon + '</span><strong>' + t.name + '</strong>' +
+        '<span class="muted small">' + t.blurb + '</span></label>').join('') + '</div>' +
+      '<p class="muted small" id="g-types-note"></p></fieldset>' +
       '<fieldset><legend>Words from <span class="muted small">(none selected = all words)</span></legend><div class="cat-picks">' +
       (cats.length ? cats.map((c) => '<label class="cat-pick"><input type="checkbox" name="cat" value="' + esc(c.id) + '"' +
         (g.categoryIds.includes(c.id) ? ' checked' : '') + '>' + catChip(c) + ' <span class="muted small">' + countIn(c.id) + '</span></label>').join('')
@@ -713,7 +726,9 @@
         const summary = modal.querySelector('#g-summary');
         const read = () => {
           g.name = form.name.value.trim();
-          g.type = form.querySelector('input[name=type]:checked').value;
+          const picked = Array.from(form.querySelectorAll('input[name=type]:checked')).map((c) => c.value);
+          g.types = picked;
+          g.type = picked[0] || '';
           g.direction = form.direction.value;
           g.count = Number(form.count.value);
           g.categoryIds = Array.from(form.querySelectorAll('input[name=cat]:checked')).map((c) => c.value);
@@ -726,37 +741,50 @@
         };
         // For Write, say plainly which language is typed.
         const labelDirections = () => {
-          dirLabel.firstChild.textContent = g.type === 'write' ? 'You type in' : 'Direction';
+          const writeOnly = directionType(g) === 'write';
+          dirLabel.firstChild.textContent = writeOnly ? 'You type in' : 'Direction';
           Array.from(form.direction.options).forEach((o) => {
-            o.textContent = g.type === 'write' ? { 'fi-en': 'English (Finnish shown)', 'en-fi': 'Finnish (English shown)', mixed: 'Both, mixed' }[o.value] : Games.DIRECTIONS[o.value];
+            o.textContent = writeOnly ? { 'fi-en': 'English (Finnish shown)', 'en-fi': 'Finnish (English shown)', mixed: 'Both, mixed' }[o.value] : Games.DIRECTIONS[o.value];
           });
         };
         const dirLabel = modal.querySelector('#g-dir');
+        const typesNote = modal.querySelector('#g-types-note');
+        const showTypes = () => {
+          const n = g.types.length;
+          typesNote.textContent = !n ? 'Pick at least one game type.'
+            : n > 1 ? 'Mixed: each question is one of these, at random. Match comes as a quick board of 3–5 words.' : '';
+          typesNote.classList.toggle('warn-text', !n);
+          dirLabel.hidden = !n || noDirection(g);
+          labelDirections();
+        };
         const update = () => {
           read();
-          dirLabel.hidden = !!Games.TYPES[g.type].noDirection;
-          labelDirections();
+          showTypes();
+          const gapOnly = directionType(g) === 'gap';
           let words = wordsForCategories(g.categoryIds, g.levelMin, g.levelMax);
-          if (g.type === 'gap') words = words.filter((w) => Core.sentenceFor(w));
+          if (gapOnly) words = words.filter((w) => Core.sentenceFor(w));
           const n = words.length;
           summary.textContent = n ? 'This game will use ' + (g.count ? Math.min(g.count, n) + ' of ' : 'all ') + n + ' matching words per round.' +
-            (g.type === 'gap' ? ' (Only words with an example sentence that contains the word.)' : '')
-            : g.type === 'gap' ? 'No words here have an example sentence that contains the word yet.' : 'No words match these categories and levels yet.';
-          if (!form.name.value.trim() || form.name.dataset.auto) {
+            (gapOnly ? ' (Only words with an example sentence that contains the word.)' : '')
+            : gapOnly ? 'No words here have an example sentence that contains the word yet.' : 'No words match these categories and levels yet.';
+          if (g.types.length && (!form.name.value.trim() || form.name.dataset.auto)) {
             const cs = g.categoryIds.map((id) => Store.category(id).name);
-            form.name.value = (cs.length ? cs.join(' + ') : 'All words') + ' – ' + Games.TYPES[g.type].name;
+            const t = typeLabel(g);
+            form.name.value = (cs.length ? cs.join(' + ') : 'All words') + ' – ' + (g.types.length > 1 ? 'Mix' : t.name);
             form.name.dataset.auto = '1';
           }
         };
         form.name.oninput = () => { delete form.name.dataset.auto; };
         form.addEventListener('change', update);
-        if (isNew) update(); else { read(); dirLabel.hidden = !!Games.TYPES[g.type].noDirection; labelDirections(); summary.textContent = gameSummary(g); }
+        if (isNew) update(); else { read(); showTypes(); summary.textContent = gameSummary(g); }
         let then = 'save';
         form.querySelectorAll('[data-then]').forEach((b) => { b.onclick = () => { then = b.dataset.then; }; });
         form.onsubmit = (e) => {
           e.preventDefault();
           read();
           if (!g.name) return;
+          if (!g.types.length) { showTypes(); typesNote.scrollIntoView({ block: 'center' }); return; }
+          if (g.types.length === 1) delete g.types;   // a single type is stored the way it always was
           Store.upsertGame(g);
           closeModal();
           toast('Game saved');
@@ -771,21 +799,23 @@
     let opts;
     if (id === 'quick') {
       const cat = params.cat ? Store.category(params.cat) : null;
-      const type = Games.TYPES[params.type] ? params.type : 'flashcards';
+      const isMix = params.type === 'mix';
+      const type = isMix ? 'mix' : Games.TYPES[params.type] ? params.type : 'flashcards';
       opts = {
         type,
+        types: isMix ? ['quiz', 'gap', 'write', 'match'] : undefined,
         direction: Games.DIRECTIONS[params.dir] ? params.dir : 'fi-en',
-        count: type === 'flashcards' ? 0 : type === 'match' ? 6 : 10,
+        count: type === 'flashcards' ? 0 : type === 'match' ? 6 : isMix ? 12 : 10,
         categoryIds: cat ? [cat.id] : [],
         levelMin: Core.levelIndex(params.lmin) >= 0 ? params.lmin : '',
         levelMax: Core.levelIndex(params.lmax) >= 0 ? params.lmax : '',
       };
       const lt = levelText(opts.levelMin, opts.levelMax);
-      opts.title = (cat ? cat.name : 'All words') + (lt ? ' (' + lt + ')' : '') + ' · ' + Games.TYPES[type].name;
+      opts.title = (cat ? cat.name : 'All words') + (lt ? ' (' + lt + ')' : '') + ' · ' + (isMix ? 'Mix' : Games.TYPES[type].name);
     } else {
       const g = Store.game(id);
       if (!g) { view.innerHTML = '<section class="page"><p>Game not found.</p><a href="#/games">Back to games</a></section>'; return; }
-      opts = { type: g.type, direction: g.direction, count: g.count, categoryIds: g.categoryIds, levelMin: g.levelMin, levelMax: g.levelMax, title: g.name, gameId: g.id };
+      opts = { type: g.type, types: g.types, direction: g.direction, count: g.count, categoryIds: g.categoryIds, levelMin: g.levelMin, levelMax: g.levelMax, title: g.name, gameId: g.id };
     }
     view.innerHTML = '<section class="page narrow"><div id="game"></div></section>';
     const words = wordsForCategories(opts.categoryIds, opts.levelMin, opts.levelMax);

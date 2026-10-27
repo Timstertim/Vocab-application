@@ -65,8 +65,9 @@ with Quizlet-style mini games.
   jääksi*), **Minua, minulla, minun** (*Minua pelottaa*, *Minulla on kylmä*, *Minun täytyy lähteä*) and **Numbers,
   amounts & "not"** (*kaksi kissaa*, *lasi maitoa*, *Minulla ei ole autoa*), plus Mixed. Choose from four forms of
   the same word or type it; each answer shows the full sentence, its translation and the rule. Exercises in `js/cases.js`.
-- **Your own mini games**: save a game type, its categories, direction and round size
-  under a name, then replay it from the Games page.
+- **Your own mini games**: save one or more game types, the categories, direction and round size
+  under a name, then replay it from the Games page. Tick several game types to mix them: each question
+  is one of them at random (Match comes as a quick board of 3–5 words). Quick play has a 🎲 **Mix** too.
 - **Progress**: every answer is recorded per word. Games pick weak words more often, and
   the results screen lets you practise the words you missed.
 - **Pronunciation**: 🔊 buttons read words aloud using your device's text-to-speech
