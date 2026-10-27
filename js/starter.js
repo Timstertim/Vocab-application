@@ -105,6 +105,7 @@
     C('Finnish culture', '#b8862a'),
     C('Nature & weather', '#5b8f2a'),
     C('Home & housing', '#2e9a6b'),
+    C('Small & linking words', '#6f6f8f'),
   ];
   const VERSION = 17;
   // Since version 17 the daycare categories are one category, Daycare. The word lists below still name
@@ -129,8 +130,13 @@
     'Technology': ['Computer problems'],
     'Working life': ['Jobs', 'Work emails'],
   };
+  // And a few more, later (FIXES 12).
+  const MERGES_2 = {
+    'Small & linking words': ['Small words', 'Linking words'],
+    'Verbs': ['A2.2 verbs'],
+  };
   const mergeMap = new Map();
-  for (const [into, from] of Object.entries(MERGES)) for (const n of from) mergeMap.set('cat-' + slug(n), 'cat-' + slug(into));
+  for (const [into, from] of Object.entries(MERGES).concat(Object.entries(MERGES_2))) for (const n of from) mergeMap.set('cat-' + slug(n), 'cat-' + slug(into));
   const id = (n) => { const cid = 'cat-' + slug(n); return mergeMap.get(cid) || cid; };
 
   // [finnish, english, part of speech, definition, [[example fi, example en]...], category]
@@ -2640,7 +2646,7 @@
    * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 11;
+  const FIXES = 12;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -2678,6 +2684,7 @@
     // Similar categories become one.
     ...Object.entries(MERGES).filter(([into]) => into !== 'Daycare')
       .map(([into, from]) => ({ v: 11, mergeCategories: from.map((n) => 'cat-' + slug(n)), into: 'cat-' + slug(into) })),
+    ...Object.entries(MERGES_2).map(([into, from]) => ({ v: 12, mergeCategories: from.map((n) => 'cat-' + slug(n)), into: 'cat-' + slug(into) })),
   ].map((f) => Object.assign({ v: 1 }, f));
 
   root.VocabStarter = { VERSION, categories: categories.filter((c) => !mergeMap.has(c.id)), words, newerThan, FIXES, fixes };

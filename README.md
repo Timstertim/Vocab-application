@@ -73,7 +73,7 @@ with Quizlet-style mini games.
 - **Pronunciation**: 🔊 buttons read words aloud using your device's text-to-speech
   (install a Finnish voice for the best result).
 - **Backup**: export and import everything as JSON from Settings.
-- Starts with 2065 starter words in 54 categories, among them one big **Daycare** category for daycare teachers
+- Starts with 2065 starter words in 52 categories, among them one big **Daycare** category for daycare teachers
   (routines, instructions, praise, play, songs, meals, outdoors, safety, talking to parents, ECEC terms, child
   development, planning, support and inclusion), **Words learnt during internship** and **Module 2 Final Test**;
   everyday life (**Health & doctor**, **Food & cooking**, **Home & housing**, **Nature & weather**, **Getting around**,
@@ -81,8 +81,8 @@ with Quizlet-style mini games.
   **Working life**, **Technology**, **Hobbies & sport**, **Animals**, **Family**, **Neuvola & school**, **Studying & writing**,
   **Streets & place names**), the basics (**Greetings**, **Survival phrases**, **Numbers**, **Colours**, **Shapes**, **Pronouns**,
   **Question words**, **Where things are**, **Countries & languages**, **Verbs**, **Everyday actions**, **Describing things**,
-  **Opposites**, **Feelings**, **Personality**), language (**Small words**, **Linking words**, **Must, may & can**,
-  **Verbs with cases**, **A2.2 verbs**, **Opinions & discussion**, **Polite requests**, **Abbreviations**, **Confusing words**,
+  **Opposites**, **Feelings**, **Personality**), language (**Small & linking words**, **Must, may & can**,
+  **Verbs with cases**, **Opinions & discussion**, **Polite requests**, **Abbreviations**, **Confusing words**,
   **Sayings**, **Spoken Finnish & slang**), **Finnish culture** and one category per role-play place that has no
   bigger topic (**At the shop**, **At the library**, **On the phone**, **At the office**, **Emergency call**). Each verb shows its verb type, "minä" form, past form and, where it
   matters, which case it takes. You can delete starter words, or add them back from Settings.
