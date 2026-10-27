@@ -139,6 +139,8 @@
   // Version 16 additions.
     groups['A2.1'] = groups['A2.1'].concat(['hammastahna', 'hammaslanka', 'reikä', 'potilas', 'uutinen', 'kasvaa', 'prosentti', 'puolet', 'hoito', 'vointi', 'maitohammas']);
     groups['B1.1'] = groups['B1.1'].concat(['toimenpide', 'puudutus', 'juurihoito', 'hammaskivi', 'vihloa', 'sideharso', 'turvotus', 'kylmähaude', 'ompeleet', 'tulehdus', 'määrätä', 'kallistua', 'halventua', 'keskimäärin', 'tutkimuksen mukaan', 'aiheuttaa', 'hallitus', 'eduskunta', 'työttömyys']);
+  // Version 17 additions.
+    groups['B1.1'] = groups['B1.1'].concat(['maastopalo', 'puuduttaa', 'enintään', 'korkeintaan']);
   const WORD = {};
   for (const [level, words] of Object.entries(groups)) for (const w of words) WORD[w] = level;
 

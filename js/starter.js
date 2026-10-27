@@ -99,7 +99,7 @@
     C('Words learnt during internship', '#c0602a'),
     C('Module 2 Final Test', '#c43b3b'),
   ];
-  const VERSION = 16;
+  const VERSION = 17;
   const id = (n) => 'cat-' + slug(n);
 
   // [finnish, english, part of speech, definition, [[example fi, example en]...], category]
@@ -130,8 +130,8 @@
     ['ikkuna', 'window', 'noun', 'An opening in a wall fitted with glass.', [['Avaa ikkuna, täällä on kuuma.', 'Open the window, it\'s hot in here.']], 'Home'],
     ['ovi', 'door', 'noun', 'A movable barrier at the entrance of a room or building.', [['Sulje ovi, kiitos.', 'Close the door, please.']], 'Home'],
 
-    ['yksi', 'one', 'numeral', 'The number 1.', [['Minulla on yksi koira.', 'I have one dog.']], 'Numbers'],
-    ['kaksi', 'two', 'numeral', 'The number 2.', [['Kaksi kahvia, kiitos.', 'Two coffees, please.']], 'Numbers'],
+    ['yksi', 'one', 'numeral', 'The number 1. Stem: yhden, yhtä. yhtä paljon = as much; yhtä iso kuin = as big as.', [['Minulla on yksi koira.', 'I have one dog.']], 'Numbers'],
+    ['kaksi', 'two', 'numeral', 'The number 2. Stem: kahden, kahta. kahdet = two (with plural-only words): kahdet housut = two pairs of trousers.', [['Kaksi kahvia, kiitos.', 'Two coffees, please.']], 'Numbers'],
     ['kolme', 'three', 'numeral', 'The number 3.', [['Odotin kolme tuntia.', 'I waited three hours.']], 'Numbers'],
     ['kymmenen', 'ten', 'numeral', 'The number 10.', [['Bussi tulee kymmenen minuutin päästä.', 'The bus comes in ten minutes.']], 'Numbers'],
 
@@ -945,7 +945,7 @@
     ['liite', 'attachment, enclosure', 'noun', 'A document added to an application. Stem: liitteen, liitettä.', [['Lisää hakemukseen liitteet.', 'Add the attachments to the application.']], 'At the office'],
     ['vuokrasopimus', 'rental agreement, lease', 'noun', 'Stem: vuokrasopimuksen.', [['Vuokrasopimus on voimassa toistaiseksi.', 'The lease is valid until further notice.']], 'At the office'],
     ['palkkatodistus', 'pay slip, salary certificate', 'noun', 'Stem: palkkatodistuksen.', [['Tarvitsen palkkatodistuksen.', 'I need a pay slip.']], 'At the office'],
-    ['tulot', 'income', 'noun', 'Always plural.', [['Ilmoita kaikki tulot.', 'Report all income.']], 'At the office'],
+    ['tulot', 'income', 'noun', 'Always plural. palkka (salary) is one kind of tulot. pienituloinen = on a low income.', [['Ilmoita kaikki tulot.', 'Report all income.']], 'At the office'],
     ['täyttää', 'to fill in; to fill', 'verb', 'Type 1 · minä täytän · hän täytti (past). täyttää lomake = to fill in a form.', [['Täytä lomake huolellisesti.', 'Fill in the form carefully.']], 'At the office'],
     ['henkilöllisyystodistus', 'proof of identity, ID', 'noun', 'A passport, ID card or driving licence.', [['Ota henkilöllisyystodistus mukaan.', 'Bring proof of identity.']], 'At the office'],
     ['ajokortti', 'driving licence', 'noun', 'Stem: ajokortin.', [['Ajokortti käy henkilöllisyystodistuksesta.', 'A driving licence counts as ID.']], 'At the office'],
@@ -1033,8 +1033,8 @@
     // Numbers
     ['nolla', 'zero', 'numeral', 'The number 0.', [['Ulkona on nolla astetta.', 'It\'s zero degrees outside.']], 'Numbers'],
     ['neljä', 'four', 'numeral', 'The number 4. Stem: neljän.', [['Minulla on neljä lasta.', 'I have four children.']], 'Numbers'],
-    ['viisi', 'five', 'numeral', 'The number 5. Stem: viiden, viittä.', [['Odota viisi minuuttia.', 'Wait five minutes.']], 'Numbers'],
-    ['kuusi', 'six; spruce', 'numeral', 'The number 6. Also the spruce tree. Stem: kuuden.', [['Ryhmässä on kuusi poikaa.', 'There are six boys in the group.']], 'Numbers'],
+    ['viisi', 'five', 'numeral', 'The number 5. Stem: viiden, viittä. viiden minuutin päästä = in five minutes.', [['Odota viisi minuuttia.', 'Wait five minutes.']], 'Numbers'],
+    ['kuusi', 'six; spruce', 'numeral', 'The number 6: kuuden, kuutta. Also the spruce tree, with other forms: kuusen, kuusta.', [['Ryhmässä on kuusi poikaa.', 'There are six boys in the group.']], 'Numbers'],
     ['seitsemän', 'seven', 'numeral', 'The number 7.', [['Herään kello seitsemän.', 'I wake up at seven.']], 'Numbers'],
     ['kahdeksan', 'eight', 'numeral', 'The number 8. kahdeksalta = at eight.', [['Päiväkoti aukeaa kahdeksalta.', 'The daycare opens at eight.']], 'Numbers'],
     ['yhdeksän', 'nine', 'numeral', 'The number 9.', [['Yhdeksän lasta on ulkona.', 'Nine children are outside.']], 'Numbers'],
@@ -2554,8 +2554,21 @@
     'laskea': [M2], 'hinta': [M2],
   };
 
+  // Added in version 17: more words for the Module 2 final test.
+  const v17 = [
+    ['tulva', 'flood', 'noun', 'Stem: tulvan, tulvaa. kevättulva = spring flood. Common in the news in spring.', [['Tulva katkaisi tien.', 'The flood cut off the road.']], 'Module 2 Final Test'],
+    ['maastopalo', 'wildfire', 'noun', 'Stem: maastopalon. maasto = terrain; metsäpalo = forest fire. maastopalovaroitus = wildfire warning.', [['Kuivuus lisää maastopalon vaaraa.', 'Drought increases the risk of wildfire.']], 'Module 2 Final Test'],
+    ['puuduttaa', 'to numb (with a local anaesthetic)', 'verb', 'Type 1 · minä puudutan · hän puudutti (past). Puuduta! = Numb it! puudutus = local anaesthetic.', [['Hammaslääkäri puuduttaa hampaan ennen porausta.', 'The dentist numbs the tooth before drilling.']], 'Module 2 Final Test'],
+    ['käsidesi', 'hand sanitiser', 'noun', 'Stem: käsidesin, käsidesiä. desinfioida = to disinfect.', [['Käytä käsidesiä ovella.', 'Use hand sanitiser at the door.']], 'Module 2 Final Test'],
+    ['julkkis', 'celebrity (spoken)', 'noun', 'Stem: julkkiksen, julkkista. Standard: julkisuuden henkilö.', [['Julkkis vieraili koulussa.', 'A celebrity visited the school.']], 'Module 2 Final Test'],
+    ['korkeintaan', 'at most', 'adverb', 'Same as enintään. Opposite: vähintään = at least.', [['Matka kestää korkeintaan tunnin.', 'The trip takes an hour at most.']], 'Module 2 Final Test'],
+    ['enintään', 'at most, maximum', 'adverb', 'Common in rules and news: enintään 30 henkeä = 30 people at most. Opposite: vähintään = at least.', [['Tilaan mahtuu enintään 30 henkeä.', 'The room holds 30 people at most.']], 'Module 2 Final Test'],
+    ['markka', 'markka (Finland\'s old currency)', 'noun', 'Stem: markan, markkaa. Used until 2002, when the euro came. sata markkaa = a hundred marks.', [['Ennen Suomessa maksettiin markoilla.', 'Finland used to pay in marks.']], 'Module 2 Final Test'],
+  ];
+  const ALSO_IN_V17 = { 'tulot': ['Module 2 Final Test'], 'palkka': ['Module 2 Final Test'], 'yksi': ['Module 2 Final Test'], 'kaksi': ['Module 2 Final Test'], 'viisi': ['Module 2 Final Test'], 'kuusi': ['Module 2 Final Test'] };
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16).map((r) => {
+  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17).map((r) => {
     let cats = [].concat(r[5]);
     if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$|^Planning & documentation$|^Support & inclusion$|^Words learnt during internship$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$|^Slang$/.test(cats[0])) cats.push('Verbs');
@@ -2565,7 +2578,7 @@
   const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
   // The version each tagged word was added in (v4 onwards).
-  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16].flatMap((list, n) => list.map(() => n + 4));
+  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17].flatMap((list, n) => list.map(() => n + 4));
   const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(since[i])));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
@@ -2574,7 +2587,7 @@
     partOfSpeech: r[2],
     definition: r[3],
     examples: r[4].map(([fi, en]) => ({ fi, en })),
-    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || [], ALSO_IN_V16[r[0]] || []).map(id))),
+    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || [], ALSO_IN_V16[r[0]] || [], ALSO_IN_V17[r[0]] || []).map(id))),
     level: L ? L.levelFor(r[0], [].concat(r[5])[0]) : '',
     notes: '',
     stats: { correct: 0, wrong: 0 },
@@ -2596,7 +2609,7 @@
    * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 8;
+  const FIXES = 9;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -2622,6 +2635,13 @@
     ...Object.entries(ALSO_IN_V14).map(([finnish, cats]) => ({ v: 6, finnish, addCategories: cats.map(id) })),
     ...Object.entries(ALSO_IN_V15).map(([finnish, cats]) => ({ v: 7, finnish, addCategories: cats.map(id) })),
     ...Object.entries(ALSO_IN_V16).map(([finnish, cats]) => ({ v: 8, finnish, addCategories: cats.map(id) })),
+    // Version 17: the forms of the number words, and tulot.
+    { v: 9, finnish: 'yksi', definition: 'The number 1.' },
+    { v: 9, finnish: 'kaksi', definition: 'The number 2.' },
+    { v: 9, finnish: 'viisi', definition: 'The number 5. Stem: viiden, viittä.' },
+    { v: 9, finnish: 'kuusi', definition: 'The number 6. Also the spruce tree. Stem: kuuden.' },
+    { v: 9, finnish: 'tulot', definition: 'Always plural.' },
+    ...Object.entries(ALSO_IN_V17).map(([finnish, cats]) => ({ v: 9, finnish, addCategories: cats.map(id) })),
   ].map((f) => Object.assign({ v: 1 }, f));
 
   root.VocabStarter = { VERSION, categories, words, newerThan, FIXES, fixes };
