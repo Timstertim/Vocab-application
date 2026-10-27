@@ -689,7 +689,7 @@
   function openGameForm(game, presetCat) {
     const isNew = !game;
     const g = game ? JSON.parse(JSON.stringify(game)) : {
-      id: Core.uid(), name: '', type: 'quiz', direction: 'fi-en', count: 10,
+      id: Core.uid(), name: '', type: '', types: [], direction: 'fi-en', count: 10,   // you tick the game type(s)
       categoryIds: presetCat ? [presetCat] : [],
       levelMin: Store.get().settings.qpLevelMin || '', levelMax: Store.get().settings.qpLevelMax || '',
     };

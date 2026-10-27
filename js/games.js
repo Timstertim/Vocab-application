@@ -45,7 +45,8 @@
   /** The game types a game uses: several in a mixed game, otherwise just its type. */
   function typesOf(opts) {
     const list = (opts.types || []).filter((t) => TYPES[t]);
-    return list.length ? Array.from(new Set(list)) : [TYPES[opts.type] ? opts.type : 'flashcards'];
+    if (list.length) return Array.from(new Set(list));
+    return TYPES[opts.type] ? [opts.type] : opts.types ? [] : ['flashcards'];   // a new game starts with none ticked
   }
 
   /**
