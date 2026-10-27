@@ -44,13 +44,29 @@
     return changed;
   }
 
+  /** Fold some categories into one: words, saved games and settings move with them. */
+  function mergeCategories(s, fromIds, into) {
+    const from = new Set(fromIds);
+    if (!s.categories.some((c) => c.id === into)) {
+      const target = Starter.categories.find((c) => c.id === into);
+      if (target) s.categories.push(Object.assign({}, target));
+    }
+    const fold = (ids) => Array.from(new Set((ids || []).map((c) => (from.has(c) ? into : c))));
+    for (const w of s.words) if ((w.categoryIds || []).some((c) => from.has(c))) w.categoryIds = fold(w.categoryIds);
+    for (const g of s.games || []) if ((g.categoryIds || []).some((c) => from.has(c))) g.categoryIds = fold(g.categoryIds);
+    if (s.settings && from.has(s.settings.dailyCat)) s.settings.dailyCat = into;
+    s.categories = s.categories.filter((c) => !from.has(c.id));
+  }
+
   /** Apply corrections to starter words, once. Fields the user has changed are left alone. */
   function applyFixes(s) {
     const done = s.starterFixes || 0;
     if (done >= (Starter.FIXES || 0)) return false;
     const norm = root.VocabCore.normalize;
     const current = new Map(Starter.words.map((w) => [norm(w.finnish), w]));
-    for (const fix of (Starter.fixes || []).filter((f) => f.v > done)) {
+    const todo = (Starter.fixes || []).filter((f) => f.v > done);
+    for (const fix of todo) if (fix.mergeCategories) mergeCategories(s, fix.mergeCategories, fix.into);
+    for (const fix of todo.filter((f) => f.finnish)) {
       const now = current.get(norm(fix.finnish));
       if (!now) continue;
       for (const w of s.words) {
@@ -60,7 +76,7 @@
           if (field === 'addCategories') {
             for (const cid of fix.addCategories) {
               const starterCat = Starter.categories.find((c) => c.id === cid);
-              const cat = s.categories.find((c) => c.id === cid || c.name.toLowerCase() === starterCat.name.toLowerCase());
+              const cat = s.categories.find((c) => c.id === cid || (starterCat && c.name.toLowerCase() === starterCat.name.toLowerCase()));
               if (cat && !w.categoryIds.includes(cat.id)) w.categoryIds.push(cat.id);
             }
             continue;

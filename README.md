@@ -73,22 +73,19 @@ with Quizlet-style mini games.
 - **Pronunciation**: 🔊 buttons read words aloud using your device's text-to-speech
   (install a Finnish voice for the best result).
 - **Backup**: export and import everything as JSON from Settings.
-- Starts with 2065 starter words in 90 categories (including **Words learnt during internship** and **Module 2 Final Test**), including **Feelings**, **Shapes**,
-  **A2.2 verbs**, a set for daycare teachers (**Daycare**, **Daycare: play**, **Daycare: safety**,
-  **Talking to parents**, **ECEC terms**), everyday life (**Time & calendar**, **Weather & seasons**,
+- Starts with 2065 starter words in 73 categories (including **Words learnt during internship** and **Module 2 Final Test**), including **Feelings**, **Shapes**,
+  **A2.2 verbs**, one big **Daycare** category for daycare teachers (routines, instructions, praise, play, songs, meals,
+  outdoors, safety, talking to parents, ECEC terms, child development, planning, support and inclusion), everyday life (**Time & calendar**, **Weather & seasons**,
   **Body & health**, **Clothes**, **Shopping & money**, **Getting around**, **Services & offices**,
   **Animals**, **Working life**), language building blocks (**Question words**, **Opposites**,
   **Small words**, **Survival phrases**, **Spoken Finnish**) and culture (**Holidays & traditions**,
   **Finnish food**), the basics (**Pronouns**, **Where things are**, more **Numbers**, **Verbs**,
-  **Colours**, **Family**, **Food & drink**, **Home**), more for daycare (**Daycare: instructions**,
-  **Daycare: praise**, **Daycare: songs & circle time**, **Child development**, **Neuvola & school**),
+  **Colours**, **Family**, **Food & drink**, **Home**), **Neuvola & school**,
   life in Finland (**Housing**, **Recycling**, **Sauna & nature**, **Hobbies & sport**, **Jobs**,
   **Countries & languages**, **Technology**, **Personality**), towards B1 (**Time expressions**,
   **Must, may & can**, **Verbs with cases**, **Linking words**, **Work emails**, **Sayings**),
   **Illnesses**, **Everyday actions**, **Describing things**, **Computer problems**,
-  **Studying & writing** and an expanded **Feelings**; daycare routines (**Daycare: meals**, **Daycare: rest & hygiene**,
-  **Daycare: outdoors**, **Daycare: arts & crafts**, **Daycare: friends & conflicts**, **Daycare: games & stories**,
-  **Planning & documentation**, **Support & inclusion**), everyday admin (**Cooking & kitchen**, **Banking & bills**,
+  **Studying & writing** and an expanded **Feelings**; everyday admin (**Cooking & kitchen**, **Banking & bills**,
   **Kela, taxes & forms**, **Car & driving**, **Doctor & pharmacy**), language (**Feeling verbs**, **Opinions & discussion**,
   **Polite requests**, **Abbreviations**, **Confusing words**, **Slang**), **Finnish customs** and **Streets & place names**
   (*kuja*, *tie*, *lahti*, *niemi*, *harju*, *haka*, *salo*, *leppä*, *ylä-*: the words that street and place names are built from, each with real names), plus one category per role-play place (**At the shop**, **At the library**, **Emergency call**…). Each verb shows its verb type, "minä" form, past form and, where it

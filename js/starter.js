@@ -100,7 +100,14 @@
     C('Module 2 Final Test', '#c43b3b'),
   ];
   const VERSION = 17;
-  const id = (n) => 'cat-' + slug(n);
+  // Since version 17 the daycare categories are one category, Daycare. The word lists below still name
+  // the old ones; their words simply end up in Daycare.
+  const MERGED_INTO_DAYCARE = ['Daycare: play', 'Daycare: safety', 'Daycare: instructions', 'Daycare: praise',
+    'Daycare: songs & circle time', 'Daycare pick-up', 'Daycare: meals', 'Daycare: rest & hygiene', 'Daycare: outdoors',
+    'Daycare: arts & crafts', 'Daycare: friends & conflicts', 'Daycare: games & stories', 'Talking to parents', 'ECEC terms',
+    'Child development', 'Planning & documentation', 'Support & inclusion'];
+  const mergedIds = new Set(MERGED_INTO_DAYCARE.map((n) => 'cat-' + slug(n)));
+  const id = (n) => { const cid = 'cat-' + slug(n); return mergedIds.has(cid) ? 'cat-daycare' : cid; };
 
   // [finnish, english, part of speech, definition, [[example fi, example en]...], category]
   const raw = [
@@ -2609,7 +2616,7 @@
    * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 9;
+  const FIXES = 10;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -2642,7 +2649,9 @@
     { v: 9, finnish: 'kuusi', definition: 'The number 6. Also the spruce tree. Stem: kuuden.' },
     { v: 9, finnish: 'tulot', definition: 'Always plural.' },
     ...Object.entries(ALSO_IN_V17).map(([finnish, cats]) => ({ v: 9, finnish, addCategories: cats.map(id) })),
+    // The daycare categories become one.
+    { v: 10, mergeCategories: Array.from(mergedIds), into: 'cat-daycare' },
   ].map((f) => Object.assign({ v: 1 }, f));
 
-  root.VocabStarter = { VERSION, categories, words, newerThan, FIXES, fixes };
+  root.VocabStarter = { VERSION, categories: categories.filter((c) => !mergedIds.has(c.id)), words, newerThan, FIXES, fixes };
 })(typeof self !== 'undefined' ? self : this);

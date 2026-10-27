@@ -566,7 +566,7 @@
     },
 
     {
-      id: 'pickup', level: 'B1.1', icon: '🧒', name: 'Daycare pick-up', fi: 'Päiväkodin hakutilanne', category: 'Daycare pick-up',
+      id: 'pickup', level: 'B1.1', icon: '🧒', name: 'Daycare pick-up', fi: 'Päiväkodin hakutilanne', category: 'Daycare',
       situations: [
         {
           title: 'Telling a parent about the day',
@@ -1072,7 +1072,7 @@
       ],
     },
     {
-      id: 'kids', level: 'A2.1', icon: '🧸', name: 'Talking with children', fi: 'Lasten kanssa', category: 'Daycare: instructions',
+      id: 'kids', level: 'A2.1', icon: '🧸', name: 'Talking with children', fi: 'Lasten kanssa', category: 'Daycare',
       intro: 'You\'re the teacher. The children speak everyday spoken Finnish (mä, sä, haluun…). You answer in clear, kind Finnish: name the feeling, give a simple instruction, and praise when it goes well.',
       situations: [
         {
