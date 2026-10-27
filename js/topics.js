@@ -19,7 +19,7 @@
         'how are you', 'see you', 'pardon', 'apologise', 'apologize'],
     },
     {
-      name: 'Food & drink', aliases: ['food', 'drink', 'food & drink', 'food and drink', 'eating', 'cooking', 'kitchen', 'meal', 'restaurant'],
+      name: 'Food & drink', aliases: ['food', 'drink', 'food & drink', 'food and drink', 'eating', 'cooking', 'kitchen', 'meal', 'restaurant', 'food & cooking'],
       keywords: ['food', 'drink', 'eat', 'meal', 'breakfast', 'lunch', 'dinner', 'supper', 'snack', 'bread', 'butter', 'milk',
         'cheese', 'egg', 'meat', 'fish', 'chicken', 'pork', 'beef', 'sausage', 'ham', 'fruit', 'apple', 'banana', 'orange',
         'berry', 'strawberry', 'blueberry', 'lingonberry', 'vegetable', 'potato', 'carrot', 'tomato', 'onion', 'cucumber',
@@ -36,7 +36,7 @@
         'marry', 'married', 'wedding', 'man', 'woman', 'boy', 'girl', 'person', 'people', 'neighbour', 'neighbor'],
     },
     {
-      name: 'Home', aliases: ['home', 'house', 'household', 'furniture', 'home & house', 'housing'],
+      name: 'Home', aliases: ['home', 'house', 'household', 'furniture', 'home & house', 'housing', 'home & housing'],
       keywords: ['house', 'home', 'apartment', 'flat', 'room', 'kitchen', 'bedroom', 'bathroom', 'living room', 'toilet',
         'shower', 'door', 'window', 'wall', 'floor', 'ceiling', 'roof', 'stair', 'balcony', 'garden', 'yard', 'garage',
         'sauna', 'furniture', 'table', 'chair', 'sofa', 'couch', 'bed', 'lamp', 'shelf', 'cupboard', 'wardrobe', 'closet',
@@ -70,14 +70,14 @@
         'round', 'straight', 'curved', 'flat', 'pointed', 'geometry'],
     },
     {
-      name: 'Nature', aliases: ['nature', 'outdoors', 'environment', 'landscape', 'plant'],
+      name: 'Nature', aliases: ['nature', 'outdoors', 'environment', 'landscape', 'plant', 'nature & weather'],
       keywords: ['nature', 'forest', 'wood', 'tree', 'flower', 'plant', 'grass', 'leaf', 'lake', 'sea', 'ocean', 'river',
         'stream', 'island', 'shore', 'beach', 'mountain', 'hill', 'fell', 'valley', 'field', 'meadow', 'swamp', 'bog',
         'rock', 'stone', 'sand', 'earth', 'ground', 'sky', 'sun', 'moon', 'star', 'birch', 'pine', 'spruce', 'mushroom',
         'berry', 'landscape', 'environment', 'wilderness', 'national park', 'northern lights', 'aurora'],
     },
     {
-      name: 'Weather', aliases: ['weather', 'climate', 'season'],
+      name: 'Weather', aliases: ['weather', 'climate', 'season', 'nature & weather'],
       keywords: ['weather', 'rain', 'snow', 'sleet', 'hail', 'wind', 'storm', 'thunder', 'lightning', 'cloud', 'cloudy',
         'sunny', 'fog', 'mist', 'frost', 'ice', 'cold', 'hot', 'warm', 'cool', 'freeze', 'temperature', 'degree', 'climate',
         'forecast', 'umbrella', 'rainbow', 'drizzle', 'blizzard', 'humid', 'spring', 'summer', 'autumn', 'fall', 'winter'],
@@ -91,7 +91,7 @@
         'seal', 'whale', 'lion', 'tiger', 'elephant', 'monkey', 'mammal', 'wildlife'],
     },
     {
-      name: 'Body & health', aliases: ['body', 'health', 'body & health', 'medicine', 'doctor', 'hospital', 'illness', 'illnesses', 'sickness'],
+      name: 'Body & health', aliases: ['body', 'health', 'body & health', 'medicine', 'doctor', 'hospital', 'illness', 'illnesses', 'sickness', 'health & doctor'],
       keywords: ['body', 'head', 'hair', 'face', 'eye', 'ear', 'nose', 'mouth', 'tooth', 'teeth', 'tongue', 'lip', 'neck',
         'shoulder', 'arm', 'hand', 'finger', 'leg', 'knee', 'foot', 'feet', 'toe', 'back', 'stomach', 'belly', 'heart',
         'blood', 'bone', 'skin', 'health', 'healthy', 'ill', 'sick', 'illness', 'disease', 'pain', 'ache', 'headache',
@@ -173,7 +173,7 @@
     { name: 'Verbs', aliases: ['verb', 'action', 'verbs & actions'], pos: ['verb'], keywords: [] },
     { name: 'Adjectives', aliases: ['adjective', 'describing words', 'description', 'describing', 'opposite'], pos: ['adjective'], keywords: [] },
     {
-      name: 'Holidays & traditions', aliases: ['holiday', 'tradition', 'festival', 'celebration', 'holidays & traditions', 'culture'],
+      name: 'Holidays & traditions', aliases: ['holiday', 'tradition', 'festival', 'celebration', 'holidays & traditions', 'culture', 'finnish culture'],
       keywords: ['christmas', 'easter', 'midsummer', 'may day', 'new year', 'birthday', 'name day', 'present', 'gift',
         'party', 'celebration', 'celebrate', 'tradition', 'festival', 'candle', 'bonfire', 'elf', 'santa',
         'father christmas', 'advent', 'independence day', 'congratulation', 'cottage'],

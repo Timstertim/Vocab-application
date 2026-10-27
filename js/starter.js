@@ -98,6 +98,13 @@
     C('Streets & place names', '#55606e'),
     C('Words learnt during internship', '#c0602a'),
     C('Module 2 Final Test', '#c43b3b'),
+    // Made by merging (version 17).
+    C('Health & doctor', '#c2417e'),
+    C('Food & cooking', '#e07a2e'),
+    C('Spoken Finnish & slang', '#d24545'),
+    C('Finnish culture', '#b8862a'),
+    C('Nature & weather', '#5b8f2a'),
+    C('Home & housing', '#2e9a6b'),
   ];
   const VERSION = 17;
   // Since version 17 the daycare categories are one category, Daycare. The word lists below still name
@@ -107,7 +114,24 @@
     'Daycare: arts & crafts', 'Daycare: friends & conflicts', 'Daycare: games & stories', 'Talking to parents', 'ECEC terms',
     'Child development', 'Planning & documentation', 'Support & inclusion'];
   const mergedIds = new Set(MERGED_INTO_DAYCARE.map((n) => 'cat-' + slug(n)));
-  const id = (n) => { const cid = 'cat-' + slug(n); return mergedIds.has(cid) ? 'cat-daycare' : cid; };
+  // More categories folded together: the new category, and the ones it replaces.
+  const MERGES = {
+    'Daycare': MERGED_INTO_DAYCARE,
+    'Health & doctor': ['Body & health', 'Illnesses', 'Doctor & pharmacy', 'At the health centre'],
+    'Food & cooking': ['Food & drink', 'Finnish food', 'Cooking & kitchen', 'At the café'],
+    'Getting around': ['Bus & train', 'Car & driving'],
+    'Time & calendar': ['Time expressions'],
+    'Feelings': ['Feeling verbs'],
+    'Spoken Finnish & slang': ['Spoken Finnish', 'Slang'],
+    'Finnish culture': ['Holidays & traditions', 'Finnish customs'],
+    'Nature & weather': ['Nature', 'Weather & seasons', 'Sauna & nature'],
+    'Home & housing': ['Home', 'Housing', 'Recycling'],
+    'Technology': ['Computer problems'],
+    'Working life': ['Jobs', 'Work emails'],
+  };
+  const mergeMap = new Map();
+  for (const [into, from] of Object.entries(MERGES)) for (const n of from) mergeMap.set('cat-' + slug(n), 'cat-' + slug(into));
+  const id = (n) => { const cid = 'cat-' + slug(n); return mergeMap.get(cid) || cid; };
 
   // [finnish, english, part of speech, definition, [[example fi, example en]...], category]
   const raw = [
@@ -2616,7 +2640,7 @@
    * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 10;
+  const FIXES = 11;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -2651,7 +2675,10 @@
     ...Object.entries(ALSO_IN_V17).map(([finnish, cats]) => ({ v: 9, finnish, addCategories: cats.map(id) })),
     // The daycare categories become one.
     { v: 10, mergeCategories: Array.from(mergedIds), into: 'cat-daycare' },
+    // Similar categories become one.
+    ...Object.entries(MERGES).filter(([into]) => into !== 'Daycare')
+      .map(([into, from]) => ({ v: 11, mergeCategories: from.map((n) => 'cat-' + slug(n)), into: 'cat-' + slug(into) })),
   ].map((f) => Object.assign({ v: 1 }, f));
 
-  root.VocabStarter = { VERSION, categories: categories.filter((c) => !mergedIds.has(c.id)), words, newerThan, FIXES, fixes };
+  root.VocabStarter = { VERSION, categories: categories.filter((c) => !mergeMap.has(c.id)), words, newerThan, FIXES, fixes };
 })(typeof self !== 'undefined' ? self : this);

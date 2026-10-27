@@ -242,7 +242,7 @@
     },
 
     {
-      id: 'health', level: 'A2.2', icon: '🩺', name: 'At the health centre', fi: 'Terveyskeskuksessa', category: 'At the health centre',
+      id: 'health', level: 'A2.2', icon: '🩺', name: 'At the health centre', fi: 'Terveyskeskuksessa', category: 'Health & doctor',
       situations: [
         {
           title: 'Booking an appointment',
@@ -356,7 +356,7 @@
     },
 
     {
-      id: 'cafe', level: 'A2.1', icon: '☕', name: 'At the café', fi: 'Kahvilassa', category: 'At the café',
+      id: 'cafe', level: 'A2.1', icon: '☕', name: 'At the café', fi: 'Kahvilassa', category: 'Food & cooking',
       situations: [
         {
           title: 'Ordering',
@@ -461,7 +461,7 @@
     },
 
     {
-      id: 'transport', level: 'A2.1', icon: '🚌', name: 'Bus & train', fi: 'Bussissa ja junassa', category: 'Bus & train',
+      id: 'transport', level: 'A2.1', icon: '🚌', name: 'Bus & train', fi: 'Bussissa ja junassa', category: 'Getting around',
       situations: [
         {
           title: 'A train ticket',
