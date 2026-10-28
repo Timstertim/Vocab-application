@@ -107,7 +107,7 @@
     C('Home & housing', '#2e9a6b'),
     C('Small & linking words', '#6f6f8f'),
   ];
-  const VERSION = 17;
+  const VERSION = 18;
   // Since version 17 the daycare categories are one category, Daycare. The word lists below still name
   // the old ones; their words simply end up in Daycare.
   const MERGED_INTO_DAYCARE = ['Daycare: play', 'Daycare: safety', 'Daycare: instructions', 'Daycare: praise',
@@ -2604,8 +2604,62 @@
   ];
   const ALSO_IN_V17 = { 'tulot': ['Module 2 Final Test'], 'palkka': ['Module 2 Final Test'], 'yksi': ['Module 2 Final Test'], 'kaksi': ['Module 2 Final Test'], 'viisi': ['Module 2 Final Test'], 'kuusi': ['Module 2 Final Test'] };
 
+  // Added in version 18: professions and careers for A2.2.
+  const v18 = [
+    ['työ', 'work, job', 'noun', 'Stem: työn, työtä. töissä = at work, töihin = to work. työt = (one\'s) work.', [['Työ alkaa kahdeksalta.', 'Work starts at eight.']], 'Working life'],
+    ['mitä teet työksesi', 'what do you do (for a living)?', 'phrase', 'Answer: Olen sairaanhoitaja. / Olen töissä kaupassa.', [['Mitä teet työksesi?', 'What do you do for a living?']], 'Working life'],
+    ['olla töissä', 'to work (somewhere), to be at work', 'phrase', 'olla töissä + -ssa: Olen töissä päiväkodissa.', [['Haluaisin olla töissä päiväkodissa.', 'I\'d like to work in a daycare.']], 'Working life'],
+    ['työskennellä', 'to work', 'verb', 'Type 3 · minä työskentelen · hän työskenteli (past). + -ssa (where) or -na (as): työskentelen opettajana.', [['Työskentelen päiväkodissa.', 'I work in a daycare.']], 'Working life'],
+    ['työpaikka', 'workplace; job, job opening', 'noun', 'Stem: työpaikan, työpaikkaa.', [['Sain uuden työpaikan.', 'I got a new job.']], 'Working life'],
+    ['toimisto', 'office', 'noun', 'Stem: toimiston.', [['Toimisto on kolmannessa kerroksessa.', 'The office is on the third floor.']], 'Working life'],
+    ['osa-aikainen', 'part-time', 'adjective', 'Stem: osa-aikaisen. osa-aikatyö = part-time job.', [['Teen osa-aikaista työtä.', 'I work part-time.']], 'Working life'],
+    ['kokoaikainen', 'full-time', 'adjective', 'Stem: kokoaikaisen. Also: täysipäiväinen.', [['Haen kokoaikaista työtä.', 'I\'m looking for a full-time job.']], 'Working life'],
+    ['vuorotyö', 'shift work', 'noun', 'aamuvuoro = morning shift, iltavuoro = evening shift, yövuoro = night shift.', [['Teen vuorotyötä sairaalassa.', 'I do shift work at the hospital.']], 'Working life'],
+    ['kesätyö', 'summer job', 'noun', 'Stem: kesätyön. Many young people have one.', [['Sain kesätyön kaupasta.', 'I got a summer job at a shop.']], 'Working life'],
+    ['etätyö', 'remote work', 'noun', 'etätöissä = working remotely. lähityö = working at the workplace.', [['Teen etätöitä kotona.', 'I work remotely from home.']], 'Working life'],
+    ['työmatka', 'commute; business trip', 'noun', 'Stem: työmatkan.', [['Työmatka kestää puoli tuntia.', 'The commute takes half an hour.']], 'Working life'],
+    ['vuosiloma', 'annual leave', 'noun', 'Stem: vuosiloman. Most Finns take most of it in the summer.', [['Vuosiloma alkaa heinäkuussa.', 'My annual leave starts in July.']], 'Working life'],
+    ['eläke', 'pension', 'noun', 'Stem: eläkkeen, eläkettä. eläkeläinen = pensioner.', [['Hän saa eläkettä.', 'They get a pension.']], 'Working life'],
+    ['jäädä eläkkeelle', 'to retire', 'phrase', 'jäädä: minä jään · hän jäi (past). eläkkeellä = retired.', [['Hän aikoo jäädä eläkkeelle ensi vuonna.', 'They\'re going to retire next year.']], 'Working life'],
+    ['hakea töitä', 'to look for work, to apply for jobs', 'phrase', 'hakea = to apply (for); also to fetch. hakea työpaikkaa = to apply for a job.', [['Aloin hakea töitä keväällä.', 'I started looking for work in the spring.']], 'Working life'],
+    ['työpaikkailmoitus', 'job advert', 'noun', 'Stem: työpaikkailmoituksen.', [['Luin työpaikkailmoituksen netistä.', 'I read the job advert online.']], 'Working life'],
+    ['työkokemus', 'work experience', 'noun', 'Stem: työkokemuksen, työkokemusta.', [['Minulla on kolmen vuoden työkokemus.', 'I have three years\' work experience.']], 'Working life'],
+    ['koulutus', 'education; training', 'noun', 'Stem: koulutuksen. ammatillinen koulutus = vocational training.', [['Mikä koulutus sinulla on?', 'What education do you have?']], 'Working life'],
+    ['tutkinto', 'degree, qualification', 'noun', 'Stem: tutkinnon, tutkintoa. suorittaa tutkinto = to complete a degree.', [['Suoritin tutkinnon kotimaassani.', 'I completed my degree in my home country.']], 'Working life'],
+    ['ammattikoulu', 'vocational school', 'noun', 'Stem: ammattikoulun. ammattikorkeakoulu (AMK) = university of applied sciences.', [['Opiskelen ammattikoulussa.', 'I study at a vocational school.']], 'Working life'],
+    ['taito', 'skill', 'noun', 'Stem: taidon, taitoa. kielitaito = language skills.', [['Kielitaito on tärkeä taito.', 'Language skills are an important skill.']], 'Working life'],
+    ['osaaminen', 'know-how, skills', 'noun', 'Stem: osaamisen. osata = to know how.', [['Osaamisesi on arvokasta.', 'Your skills are valuable.']], 'Working life'],
+    ['työharjoittelu', 'work placement, internship', 'noun', 'Stem: työharjoittelun. olla työharjoittelussa = to be on a work placement.', [['Olen työharjoittelussa päiväkodissa.', 'I\'m on a work placement at a daycare.']], 'Working life'],
+    ['harjoittelija', 'trainee, intern', 'noun', 'Stem: harjoittelijan.', [['Meillä on uusi harjoittelija.', 'We have a new trainee.']], 'Working life'],
+    ['työtodistus', 'certificate of employment, reference', 'noun', 'The employer writes it when the job ends. Stem: työtodistuksen.', [['Pyydä työtodistus esihenkilöltä.', 'Ask your manager for a certificate of employment.']], 'Working life'],
+    ['työllisyyspalvelut', 'employment services', 'noun', 'Plural. Since 2025 run by the municipalities (before: TE-toimisto).', [['Ilmoittaudu työllisyyspalveluihin.', 'Register with the employment services.']], 'Working life'],
+    ['irtisanoutua', 'to resign, to hand in your notice', 'verb', 'Type 1 · minä irtisanoudun · hän irtisanoutui (past).', [['Hän irtisanoutui työstään.', 'They resigned from their job.']], 'Working life'],
+    ['irtisanoa', 'to dismiss, to lay off; to cancel (a contract)', 'verb', 'Type 1 · minä irtisanon · hän irtisanoi (past).', [['Yritys irtisanoi kymmenen työntekijää.', 'The company laid off ten employees.']], 'Working life'],
+    ['lomauttaa', 'to lay off temporarily', 'verb', 'Type 1 · minä lomautan · hän lomautti (past). lomautus = temporary lay-off. Common in the news.', [['Tehdas lomauttaa työntekijöitä.', 'The factory is temporarily laying off workers.']], 'Working life'],
+    ['asiakaspalvelija', 'customer service worker', 'noun', 'Stem: asiakaspalvelijan. asiakaspalvelu = customer service.', [['Asiakaspalvelija auttoi minua.', 'The customer service worker helped me.']], 'Working life'],
+    ['varastotyöntekijä', 'warehouse worker', 'noun', 'varasto = warehouse, storeroom.', [['Varastotyöntekijä pakkaa tilauksia.', 'The warehouse worker packs orders.']], 'Working life'],
+    ['vartija', 'security guard', 'noun', 'Stem: vartijan.', [['Vartija seisoo kaupan ovella.', 'The security guard stands at the shop door.']], 'Working life'],
+    ['farmaseutti', 'pharmacist', 'noun', 'Stem: farmaseutin. Works at the pharmacy (apteekki).', [['Farmaseutti neuvoi lääkkeen käytössä.', 'The pharmacist gave advice on using the medicine.']], 'Working life'],
+    ['sähköasentaja', 'electrician', 'noun', 'Stem: sähköasentajan. Spoken: sähkömies.', [['Sähköasentaja korjasi valot.', 'The electrician fixed the lights.']], 'Working life'],
+    ['rakennustyöntekijä', 'construction worker', 'noun', 'rakennus = building, rakentaa = to build.', [['Rakennustyöntekijällä on kypärä.', 'The construction worker wears a helmet.']], 'Working life'],
+  ];
+  // Starter words that also belong to Working life (version 18).
+  const ALSO_IN_V18 = {
+    'lääkäri': ['Working life'],
+    'poliisi': ['Working life'],
+    'myyjä': ['Working life'],
+    'kuljettaja': ['Working life'],
+    'lastenhoitaja': ['Working life'],
+    'varhaiskasvatuksen opettaja': ['Working life'],
+    'työvuoro': ['Working life'],
+    'työttömyys': ['Working life'],
+    'palkkatodistus': ['Working life'],
+    'palaveri': ['Working life'],
+    'töissä': ['Working life'],
+  };
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17).map((r) => {
+  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18).map((r) => {
     let cats = [].concat(r[5]);
     if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$|^Planning & documentation$|^Support & inclusion$|^Words learnt during internship$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$|^Slang$/.test(cats[0])) cats.push('Verbs');
@@ -2615,7 +2669,7 @@
   const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
   // The version each tagged word was added in (v4 onwards).
-  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17].flatMap((list, n) => list.map(() => n + 4));
+  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18].flatMap((list, n) => list.map(() => n + 4));
   const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(since[i])));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
@@ -2624,7 +2678,7 @@
     partOfSpeech: r[2],
     definition: r[3],
     examples: r[4].map(([fi, en]) => ({ fi, en })),
-    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || [], ALSO_IN_V16[r[0]] || [], ALSO_IN_V17[r[0]] || []).map(id))),
+    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || [], ALSO_IN_V16[r[0]] || [], ALSO_IN_V17[r[0]] || [], ALSO_IN_V18[r[0]] || []).map(id))),
     level: L ? L.levelFor(r[0], [].concat(r[5])[0]) : '',
     notes: '',
     stats: { correct: 0, wrong: 0 },
@@ -2646,7 +2700,7 @@
    * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 12;
+  const FIXES = 13;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -2685,6 +2739,7 @@
     ...Object.entries(MERGES).filter(([into]) => into !== 'Daycare')
       .map(([into, from]) => ({ v: 11, mergeCategories: from.map((n) => 'cat-' + slug(n)), into: 'cat-' + slug(into) })),
     ...Object.entries(MERGES_2).map(([into, from]) => ({ v: 12, mergeCategories: from.map((n) => 'cat-' + slug(n)), into: 'cat-' + slug(into) })),
+    ...Object.entries(ALSO_IN_V18).map(([finnish, cats]) => ({ v: 13, finnish, addCategories: cats.map(id) })),
   ].map((f) => Object.assign({ v: 1 }, f));
 
   root.VocabStarter = { VERSION, categories: categories.filter((c) => !mergeMap.has(c.id)), words, newerThan, FIXES, fixes };

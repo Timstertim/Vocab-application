@@ -73,7 +73,7 @@ with Quizlet-style mini games.
 - **Pronunciation**: 🔊 buttons read words aloud using your device's text-to-speech
   (install a Finnish voice for the best result).
 - **Backup**: export and import everything as JSON from Settings.
-- Starts with 2065 starter words in 52 categories, among them one big **Daycare** category for daycare teachers
+- Starts with 2101 starter words in 52 categories, among them one big **Daycare** category for daycare teachers
   (routines, instructions, praise, play, songs, meals, outdoors, safety, talking to parents, ECEC terms, child
   development, planning, support and inclusion), **Words learnt during internship** and **Module 2 Final Test**;
   everyday life (**Health & doctor**, **Food & cooking**, **Home & housing**, **Nature & weather**, **Getting around**,

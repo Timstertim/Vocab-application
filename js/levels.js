@@ -141,6 +141,11 @@
     groups['B1.1'] = groups['B1.1'].concat(['toimenpide', 'puudutus', 'juurihoito', 'hammaskivi', 'vihloa', 'sideharso', 'turvotus', 'kylmähaude', 'ompeleet', 'tulehdus', 'määrätä', 'kallistua', 'halventua', 'keskimäärin', 'tutkimuksen mukaan', 'aiheuttaa', 'hallitus', 'eduskunta', 'työttömyys']);
   // Version 17 additions.
     groups['B1.1'] = groups['B1.1'].concat(['maastopalo', 'puuduttaa', 'enintään', 'korkeintaan']);
+  // Version 18 additions.
+    groups['A1.3'] = groups['A1.3'].concat(['työ']);
+    groups['A2.1'] = groups['A2.1'].concat(['mitä teet työksesi', 'olla töissä', 'työpaikka', 'toimisto']);
+    groups['A2.2'] = groups['A2.2'].concat(['työskennellä', 'osa-aikainen', 'kokoaikainen', 'vuorotyö', 'kesätyö', 'etätyö', 'työmatka', 'vuosiloma', 'eläke', 'jäädä eläkkeelle', 'hakea töitä', 'työkokemus', 'koulutus', 'ammattikoulu', 'taito', 'työharjoittelu', 'harjoittelija', 'asiakaspalvelija', 'varastotyöntekijä', 'vartija', 'rakennustyöntekijä']);
+    groups['B1.1'] = groups['B1.1'].concat(['työpaikkailmoitus', 'tutkinto', 'osaaminen', 'työtodistus', 'työllisyyspalvelut', 'irtisanoutua', 'irtisanoa', 'lomauttaa', 'farmaseutti', 'sähköasentaja']);
   const WORD = {};
   for (const [level, words] of Object.entries(groups)) for (const w of words) WORD[w] = level;
 
