@@ -38,3 +38,10 @@ test('which case: typing is forgiving but never accepts another case', () => {
   const who = K.exercises('person').find((e) => e.context === '___ pelottaa.');
   assert.equal(K.check('minua', who).correct, true);       // capital letters don't matter
 });
+
+test('which case: plurals are asked as plurals', () => {
+  const ex = K.exercises('plurals');
+  assert.ok(ex.length >= 30);
+  for (const e of ex) { assert.match(e.shown, /\(plural\)$/); assert.equal(e.task, 'Put the word in the plural'); }
+  assert.equal(K.exercises('verbs')[0].task, 'Put the word in the right form');
+});

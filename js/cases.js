@@ -14,6 +14,7 @@
     verbs: { name: 'Verbs & their cases', icon: '🔗', blurb: 'Pidän suklaasta · Luotan sinuun · Kysy opettajalta' },
     person: { name: 'Minua, minulla, minun', icon: '🙋', blurb: 'Minua pelottaa · Minulla on kylmä · Minun täytyy lähteä' },
     amounts: { name: 'Numbers, amounts & "not"', icon: '🧮', blurb: 'kaksi kissaa · paljon vettä · Minulla ei ole autoa' },
+    plurals: { name: 'Plurals in all forms', icon: '👥', blurb: 'kissat · omenoita · lasten · laatikoissa · kauppoihin · pöydillä', task: 'Put the word in the plural' },
   };
 
   // Rules shown after each answer.
@@ -118,6 +119,56 @@
     ['amounts', 'En näe ___.', 'sinä', 'sinua', ['sinut', 'sinä', 'sinulla'], 'Negative verb + object: partitive. En näe sinua.', 'I can\'t see you.'],
     ['amounts', 'En löydä ___.', 'kenkä', 'kenkää', ['kengän', 'kenkä', 'kengät'], 'Negative verb + object: partitive. kenkä → kenkää.', 'I can\'t find the shoe.'],
     ['amounts', 'Juna lähtee kahden ___ päästä.', 'minuutti', 'minuutin', ['minuuttia', 'minuutti', 'minuutit'], 'kahden … päästä: the number and the noun are both genitive.', 'The train leaves in two minutes.'],
+    // Plurals: every case, and words whose stem changes. The wrong options are the singular or another plural case.
+    // Nominative plural -t: the subject, or "all of them" as the object.
+    ['plurals', '___ nukkuvat sohvalla.', 'kissa', 'Kissat', ['Kissa', 'Kissoja', 'Kissojen'], 'Nominative plural -t: the subject. kissa → kissat.', 'The cats are sleeping on the sofa.'],
+    ['plurals', '___ leikkivät pihalla.', 'lapsi', 'Lapset', ['Lapsi', 'Lapsia', 'Lasten'], 'Nominative plural. lapsi → lapset (stem lapse-).', 'The children are playing in the yard.'],
+    ['plurals', '___ juttelevat kahvilassa.', 'nainen', 'Naiset', ['Nainen', 'Naisia', 'Naisten'], 'Nominative plural. -nen words: nainen → naiset (stem naise-).', 'The women are chatting in the café.'],
+    ['plurals', 'Missä ___ ovat?', 'kenkä', 'kengät', ['kenkä', 'kenkiä', 'kenkien'], 'Nominative plural. Consonant gradation: kenkä → kengät (nk → ng).', 'Where are the shoes?'],
+    ['plurals', 'Missä ___ ovat?', 'avain', 'avaimet', ['avain', 'avaimia', 'avainten'], 'Nominative plural. -in words: avain → avaimet (n → m).', 'Where are the keys?'],
+    ['plurals', 'Muista harjata ___.', 'hammas', 'hampaat', ['hammasta', 'hampaita', 'hampaiden'], 'All of them as the object: nominative plural. hammas → hampaat (mm → mp).', 'Remember to brush your teeth.'],
+    ['plurals', 'Pese ___.', 'käsi', 'kädet', ['kättä', 'käsiä', 'käsien'], 'All of them as the object: nominative plural. käsi → kädet.', 'Wash your hands.'],
+    ['plurals', 'Laittakaa ___ pois.', 'puhelin', 'puhelimet', ['puhelinta', 'puhelimia', 'puhelimien'], 'All of them as the object: nominative plural. puhelin → puhelimet.', 'Put your phones away.'],
+    // Partitive plural -ia / -ita / -ja: some, many, not any.
+    ['plurals', 'Ostin ___.', 'omena', 'omenoita', ['omenat', 'omenaa', 'omenoiden'], 'Some (not all, not a number): partitive plural. omena → omenoita.', 'I bought some apples.'],
+    ['plurals', 'Rakastan ___.', 'kirja', 'kirjoja', ['kirjat', 'kirjaa', 'kirjojen'], 'Things in general: partitive plural. kirja → kirjoja.', 'I love books.'],
+    ['plurals', 'Kaupassa on paljon ___.', 'ihminen', 'ihmisiä', ['ihmiset', 'ihmistä', 'ihmisten'], 'paljon + partitive plural for things you can count. -nen → -siä.', 'There are a lot of people in the shop.'],
+    ['plurals', 'Syön ___.', 'mansikka', 'mansikoita', ['mansikat', 'mansikkaa', 'mansikoiden'], 'Partitive plural. Gradation kk → k: mansikoita.', 'I\'m eating strawberries.'],
+    ['plurals', 'Meillä ei ole ___.', 'tuoli', 'tuoleja', ['tuolit', 'tuolia', 'tuolien'], 'Negative sentence: partitive plural. tuoli → tuoleja.', 'We don\'t have any chairs.'],
+    ['plurals', 'Ryhmässä on pieniä ___.', 'lapsi', 'lapsia', ['lapset', 'lasta', 'lasten'], 'Partitive plural; the adjective agrees: pieniä lapsia.', 'There are small children in the group.'],
+    ['plurals', 'Puistossa on ___ kukkia.', 'kaunis', 'kauniita', ['kauniit', 'kaunista', 'kauniiden'], 'The adjective agrees with kukkia: partitive plural. kaunis → kauniita.', 'There are beautiful flowers in the park.'],
+    ['plurals', 'Rannalla on paljon ___.', 'vene', 'veneitä', ['veneet', 'venettä', 'veneiden'], 'paljon + partitive plural. -e words: vene → veneitä.', 'There are lots of boats on the beach.'],
+    // Genitive plural -en / -den / -jen / -ten: whose, and before postpositions.
+    ['plurals', '___ huone on toisessa kerroksessa.', 'lapsi', 'Lasten', ['Lapset', 'Lapsia', 'Lapsen'], 'Whose (many): genitive plural. lapsi → lasten.', 'The children\'s room is on the second floor.'],
+    ['plurals', '___ määrä kasvaa.', 'auto', 'Autojen', ['Autot', 'Autoja', 'Auton'], 'Genitive plural. auto → autojen.', 'The number of cars is growing.'],
+    ['plurals', '___ nimet ovat ovessa.', 'opettaja', 'Opettajien', ['Opettajat', 'Opettajia', 'Opettajan'], 'Genitive plural. opettaja → opettajien.', 'The teachers\' names are on the door.'],
+    ['plurals', 'Asumme ___ lähellä.', 'järvi', 'järvien', ['järvet', 'järviä', 'järven'], 'lähellä takes the genitive: järvien lähellä.', 'We live near the lakes.'],
+    // Inessive -issa: in.
+    ['plurals', 'Kirjat ovat ___.', 'laatikko', 'laatikoissa', ['laatikossa', 'laatikoihin', 'laatikoista'], 'In (many): plural inessive -issa. Gradation kk → k.', 'The books are in the boxes.'],
+    ['plurals', 'Lapset leikkivät ___.', 'huone', 'huoneissa', ['huoneessa', 'huoneisiin', 'huoneista'], 'Plural inessive -issa. huone → huoneissa.', 'The children are playing in the rooms.'],
+    ['plurals', 'Monissa ___ on sauna.', 'koti', 'kodeissa', ['kodissa', 'koteihin', 'kodeista'], 'Plural inessive. koti → kodeissa (t → d, i → e).', 'Many homes have a sauna.'],
+    // Elative -ista: from, about.
+    ['plurals', 'Pidän ___.', 'koira', 'koirista', ['koirasta', 'koiria', 'koiriin'], 'pitää + -sta; things in general are plural: koirista.', 'I like dogs.'],
+    ['plurals', 'Kerro ___.', 'lapsi', 'lapsista', ['lapsesta', 'lapsia', 'lapsiin'], 'kertoa + -sta: plural elative -ista.', 'Tell me about the children.'],
+    ['plurals', 'Puolet ___ tuli pyörällä.', 'oppilas', 'oppilaista', ['oppilaasta', 'oppilaita', 'oppilaisiin'], 'puolet + plural elative. oppilas → oppilaista.', 'Half of the pupils came by bike.'],
+    // Illative -ihin / -isiin: into.
+    ['plurals', 'Laita lelut ___.', 'laatikko', 'laatikoihin', ['laatikkoon', 'laatikoissa', 'laatikoista'], 'Into (many): plural illative -ihin.', 'Put the toys in the boxes.'],
+    ['plurals', 'Menemme ___.', 'kauppa', 'kauppoihin', ['kauppaan', 'kaupoissa', 'kaupoista'], 'Plural illative -ihin keeps the strong grade: kauppoihin (but kaupoissa).', 'We\'re going to the shops.'],
+    ['plurals', 'Vie astiat ___.', 'kaappi', 'kaappeihin', ['kaappiin', 'kaapeissa', 'kaapeista'], 'Plural illative. kaappi → kaappeihin (but kaapeissa).', 'Take the dishes to the cupboards.'],
+    ['plurals', 'Vastaa ___.', 'kysymys', 'kysymyksiin', ['kysymykseen', 'kysymyksiä', 'kysymyksistä'], 'vastata + illative. -us/-ys words: kysymys → kysymyksiin.', 'Answer the questions.'],
+    ['plurals', 'Tutustuin uusiin ___.', 'kollega', 'kollegoihin', ['kollegaan', 'kollegoita', 'kollegoista'], 'tutustua + illative; the adjective agrees: uusiin kollegoihin.', 'I got to know the new colleagues.'],
+    // Adessive -illa: on, at, have, by.
+    ['plurals', 'Lautaset ovat ___.', 'pöytä', 'pöydillä', ['pöydällä', 'pöytiin', 'pöydiltä'], 'On (many): plural adessive -illa. pöytä → pöydillä (t → d).', 'The plates are on the tables.'],
+    ['plurals', '___ on kylmä.', 'lapsi', 'Lapsilla', ['Lapsella', 'Lapsia', 'Lasten'], 'Who has or feels: adessive. Plural: lapsilla.', 'The children are cold.'],
+    // Ablative -ilta: from (a person).
+    ['plurals', 'Kysy ___.', 'opettaja', 'opettajilta', ['opettajalta', 'opettajille', 'opettajista'], 'kysyä + -lta: plural ablative -ilta.', 'Ask the teachers.'],
+    ['plurals', 'Sain lahjoja ___.', 'ystävä', 'ystäviltä', ['ystävältä', 'ystäville', 'ystävistä'], 'From people: plural ablative -iltä.', 'I got presents from friends.'],
+    // Allative -ille: to (a person).
+    ['plurals', 'Annoin kirjat ___.', 'lapsi', 'lapsille', ['lapselle', 'lapsilta', 'lapsiin'], 'To people: plural allative -ille.', 'I gave the books to the children.'],
+    ['plurals', 'Kerro ___.', 'vanhempi', 'vanhemmille', ['vanhemmalle', 'vanhemmilta', 'vanhempiin'], 'vanhemmat = parents. To them: vanhemmille (mp → mm).', 'Tell the parents.'],
+    ['plurals', 'Soitin kaikille ___.', 'asiakas', 'asiakkaille', ['asiakkaalle', 'asiakkailta', 'asiakkaita'], 'Plural allative. -as words: asiakas → asiakkaille (k → kk).', 'I called all the customers.'],
+    // Essive -ina: as.
+    ['plurals', 'Olimme siellä ___.', 'lapsi', 'lapsina', ['lapsena', 'lapsiksi', 'lapsia'], 'As (a state, a role): plural essive -ina.', 'We were there as children.'],
   ];
 
   const pick = (arr, rng) => arr[Math.floor(rng() * arr.length)];
@@ -139,7 +190,8 @@
 
   function toExercise(item) {
     const [set, sentence, base, answer, wrong, note, en] = item;
-    return { kind: set, shown: base, task: 'Put the word in the right form', context: sentence, answer, accept: [], wrong, note, en };
+    const plural = set === 'plurals';
+    return { kind: set, shown: plural ? base + ' (plural)' : base, task: SETS[set].task || 'Put the word in the right form', context: sentence, answer, accept: [], wrong, note, en };
   }
   const exercises = (set) => ITEMS.filter((it) => set === 'mixed' || it[0] === set).map(toExercise);
 
