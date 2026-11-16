@@ -72,6 +72,7 @@
     ['verbs', 'Hän näyttää ___.', 'isä', 'isältä', ['isää', 'isälle', 'isästä'], 'näyttää + ' + R.abl + ' = to look like.', 'They look like their dad.'],
     ['verbs', 'Se kuulostaa ___.', 'hyvä idea', 'hyvältä idealta', ['hyvää ideaa', 'hyvälle idealle', 'hyvästä ideasta'], 'kuulostaa + ' + R.abl + ' = to sound like.', 'That sounds like a good idea.'],
     ['verbs', 'Kangas tuntuu ___.', 'silkki', 'silkiltä', ['silkkiä', 'silkille', 'silkistä'], 'tuntua + ' + R.abl + ' = to feel like.', 'The fabric feels like silk.'],
+    ['verbs', 'Onko ___ sitten jotain hyötyä?', 'tämä', 'tästä', ['tätä', 'tähän', 'tälle'], 'olla hyötyä + ' + R.ela + ': siitä on hyötyä = it is useful.', 'Is this of any use, then?'],
     // Verbs that take -ksi
     ['verbs', 'Vesi muuttuu ___.', 'jää', 'jääksi', ['jäätä', 'jäähän', 'jäästä'], 'muuttua + ' + R.tra + ' = to turn into.', 'Water turns into ice.'],
     ['verbs', 'Valo vaihtui ___.', 'vihreä', 'vihreäksi', ['vihreää', 'vihreään', 'vihreästä'], 'vaihtua + ' + R.tra + ' = to change to.', 'The light changed to green.'],

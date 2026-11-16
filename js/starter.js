@@ -109,7 +109,7 @@
     // The textbook (version 19).
     C('No niin! 2', '#1f8fa3'),
   ];
-  const VERSION = 19;
+  const VERSION = 20;
   // Since version 17 the daycare categories are one category, Daycare. The word lists below still name
   // the old ones; their words simply end up in Daycare.
   const MERGED_INTO_DAYCARE = ['Daycare: play', 'Daycare: safety', 'Daycare: instructions', 'Daycare: praise',
@@ -2892,8 +2892,16 @@
     'soittaa', 'auttaa', 'sattua',
   ].map((w) => [w, ['No niin! 2']]));
 
+  // Added in version 20.
+  const v20 = [
+    ['olla hyötyä', 'to be of use, to be useful', 'phrase', 'The thing that is useful is in -sta: Tästä on hyötyä = This is useful. Onko siitä sitten jotain hyötyä? = Is it of any use, then?', [['Voiko tästä olla hyötyä?', 'Could this be of any use?']], ['Opinions & discussion', 'No niin! 2']],
+    ['hyöty', 'benefit, use', 'noun', 'Stem: hyödyn, hyötyä. hyödyllinen = useful, hyödyntää = to make use of.', [['Siitä on paljon hyötyä.', 'It\'s very useful.']], ['Opinions & discussion', 'No niin! 2']],
+    ['hyödyllinen', 'useful', 'adjective', 'Stem: hyödyllisen. Opposite: hyödytön = useless.', [['Kurssi oli tosi hyödyllinen.', 'The course was really useful.']], ['Describing things', 'No niin! 2']],
+    ['jotain', 'something; any', 'pronoun', 'Partitive of jokin. jotain hyötyä = some use; in questions: any. Also: jotakin.', [['Haluatko jotain juotavaa?', 'Would you like something to drink?']], ['Small & linking words', 'No niin! 2']],
+  ];
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19).map((r) => {
+  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20).map((r) => {
     let cats = [].concat(r[5]);
     if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$|^Planning & documentation$|^Support & inclusion$|^Words learnt during internship$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$|^Slang$/.test(cats[0])) cats.push('Verbs');
@@ -2903,7 +2911,7 @@
   const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
   // The version each tagged word was added in (v4 onwards).
-  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19].flatMap((list, n) => list.map(() => n + 4));
+  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20].flatMap((list, n) => list.map(() => n + 4));
   const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(since[i])));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
