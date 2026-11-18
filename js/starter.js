@@ -110,7 +110,7 @@
     C('No niin! 2', '#1f8fa3'),
     C('Vaikutelmaverbit', '#7a55c7'),
   ];
-  const VERSION = 25;
+  const VERSION = 26;
   // Since version 17 the daycare categories are one category, Daycare. The word lists below still name
   // the old ones; their words simply end up in Daycare.
   const MERGED_INTO_DAYCARE = ['Daycare: play', 'Daycare: safety', 'Daycare: instructions', 'Daycare: praise',
@@ -2761,7 +2761,7 @@
     ['opinnot', 'studies', 'noun', 'Plural word. aloittaa opinnot = to start studying.', [['Aloitin opinnot syksyllä.', 'I started my studies in the autumn.']], ['Studying & writing', 'No niin! 2']],
     ['valmentava', 'preparatory', 'adjective', 'valmentava koulutus = preparatory training (e.g. before vocational studies).', [['Kävin valmentavan kurssin.', 'I did a preparatory course.']], ['Studying & writing', 'No niin! 2']],
     ['ripeä', 'quick, brisk', 'adjective', 'Stem: ripeän. ripeästi = quickly.', [['Hän on ripeä työntekijä.', 'They\'re a quick worker.']], ['Describing things', 'No niin! 2']],
-    ['mahtaa', 'I wonder; can, may', 'verb', 'Type 1 · mahtaa · mahtoi (past). Mahtaako hän tulla? = I wonder if they\'re coming.', [['Mahtaako hän tulla?', 'I wonder if they\'re coming.']], ['Must, may & can', 'No niin! 2']],
+    ['mahtaa', 'I wonder; must (probably); can', 'verb', 'Type 1 · mahtaa · mahtoi (past). Three uses: (1) I wonder: Mahtaako hän tulla? = I wonder if they\'re coming. (2) must be, probably: Siellä mahtaa olla kylmä = It must be cold there. (3) can\'t help it: En mahda sille mitään. Related: mahdollinen = possible, mahdoton = impossible.', [['Mahtaako hän tulla?', 'I wonder if they\'re coming.']], ['Must, may & can', 'No niin! 2']],
     ['pystyä', 'to be able to', 'verb', 'Type 1 · minä pystyn · hän pystyi (past). pystyä + -maan: pystyn tulemaan = I can come.', [['Pystytkö tulemaan huomenna?', 'Are you able to come tomorrow?']], ['Must, may & can', 'No niin! 2']],
     ['hyödyntää', 'to make use of', 'verb', 'Type 1 · minä hyödynnän · hän hyödynsi (past). hyöty = benefit.', [['Voit hyödyntää aikaisempaa työkokemusta.', 'You can make use of your earlier work experience.']], ['Working life', 'No niin! 2']],
     ['aikaisempi', 'earlier, previous', 'adjective', 'Stem: aikaisemman, aikaisempaa. aikaisemmin = earlier.', [['Minulla on aikaisempaa kokemusta.', 'I have previous experience.']], ['Time & calendar', 'No niin! 2']],
@@ -2956,8 +2956,16 @@
   ];
   const ALSO_IN_V25 = { 'välittää': ['No niin! 2'] };
 
+  // Added in version 26: mahtaa and its family.
+  const v26 = [
+    ['en mahda mitään', 'I can\'t help it, I can\'t do anything about it', 'phrase', 'mahtaa + -lle: En mahda sille mitään = I can\'t help it. Hän ei mahda mitään = there\'s nothing they can do.', [['Sille en mahda mitään.', 'I can\'t do anything about that.']], ['Must, may & can', 'No niin! 2']],
+    ['mahdollinen', 'possible', 'adjective', 'Stem: mahdollisen. mahdollisesti = possibly. mahdollisuus = possibility, chance.', [['Onko se mahdollista?', 'Is it possible?']], ['Must, may & can', 'No niin! 2']],
+    ['mahdoton', 'impossible', 'adjective', 'Stem: mahdottoman. -ton = without. Se on mahdotonta = it\'s impossible.', [['Tämä tehtävä on mahdoton.', 'This task is impossible.']], ['Must, may & can', 'No niin! 2']],
+    ['mahtava', 'great, awesome; mighty', 'adjective', 'Stem: mahtavan. Mahtavaa! = Great!', [['Se oli mahtava ilta!', 'It was a great evening!']], ['Daycare', 'No niin! 2']],
+  ];
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25).map((r) => {
+  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26).map((r) => {
     let cats = [].concat(r[5]);
     if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$|^Planning & documentation$|^Support & inclusion$|^Words learnt during internship$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$|^Slang$/.test(cats[0])) cats.push('Verbs');
@@ -2967,7 +2975,7 @@
   const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
   // The version each tagged word was added in (v4 onwards).
-  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25].flatMap((list, n) => list.map(() => n + 4));
+  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26].flatMap((list, n) => list.map(() => n + 4));
   const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(since[i])));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
@@ -2998,7 +3006,7 @@
    * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 18;
+  const FIXES = 19;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -3043,6 +3051,8 @@
     ...Object.entries(ALSO_IN_V23).map(([finnish, cats]) => ({ v: 16, finnish, addCategories: cats.map(id) })),
     ...Object.entries(ALSO_IN_V24).map(([finnish, cats]) => ({ v: 17, finnish, addCategories: cats.map(id) })),
     ...Object.entries(ALSO_IN_V25).map(([finnish, cats]) => ({ v: 18, finnish, addCategories: cats.map(id) })),
+    // Version 26: mahtaa explains all three uses.
+    { v: 19, finnish: 'mahtaa', english: 'I wonder; can, may', definition: 'Type 1 · mahtaa · mahtoi (past). Mahtaako hän tulla? = I wonder if they\'re coming.' },
   ].map((f) => Object.assign({ v: 1 }, f));
 
   root.VocabStarter = { VERSION, categories: categories.filter((c) => !mergeMap.has(c.id)), words, newerThan, FIXES, fixes };
