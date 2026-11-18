@@ -110,7 +110,7 @@
     C('No niin! 2', '#1f8fa3'),
     C('Vaikutelmaverbit', '#7a55c7'),
   ];
-  const VERSION = 26;
+  const VERSION = 27;
   // Since version 17 the daycare categories are one category, Daycare. The word lists below still name
   // the old ones; their words simply end up in Daycare.
   const MERGED_INTO_DAYCARE = ['Daycare: play', 'Daycare: safety', 'Daycare: instructions', 'Daycare: praise',
@@ -2964,8 +2964,16 @@
     ['mahtava', 'great, awesome; mighty', 'adjective', 'Stem: mahtavan. Mahtavaa! = Great!', [['Se oli mahtava ilta!', 'It was a great evening!']], ['Daycare', 'No niin! 2']],
   ];
 
+  // Added in version 27: tuolla, tuonne, tuolta (and the rest of the täällä / tuolla / siellä table).
+  const v27 = [
+    ['tuolla', 'over there', 'adverb', 'Missä? A place you can see and point at. tuolla – tuonne – tuolta = over there – to over there – from over there. Spoken: tuol.', [['Katso, tuolla on orava!', 'Look, there\'s a squirrel over there!']], ['Where things are', 'No niin! 2']],
+    ['tuonne', '(to) over there', 'adverb', 'Mihin? Moving to a place you can see. Spoken: tonne.', [['Laita laukku tuonne nurkkaan.', 'Put the bag over there in the corner.']], ['Where things are', 'No niin! 2']],
+    ['tuolta', 'from over there', 'adverb', 'Mistä? From a place you can see.', [['Bussi tulee tuolta.', 'The bus is coming from over there.']], ['Where things are', 'No niin! 2']],
+  ];
+  const ALSO_IN_V27 = { 'tänne': ['No niin! 2'], 'täällä': ['Where things are', 'No niin! 2'], 'täältä': ['No niin! 2'], 'sinne': ['No niin! 2'], 'siellä': ['No niin! 2'], 'sieltä': ['No niin! 2'] };
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26).map((r) => {
+  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27).map((r) => {
     let cats = [].concat(r[5]);
     if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$|^Planning & documentation$|^Support & inclusion$|^Words learnt during internship$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$|^Slang$/.test(cats[0])) cats.push('Verbs');
@@ -2975,7 +2983,7 @@
   const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
   // The version each tagged word was added in (v4 onwards).
-  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26].flatMap((list, n) => list.map(() => n + 4));
+  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27].flatMap((list, n) => list.map(() => n + 4));
   const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(since[i])));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
@@ -2984,7 +2992,7 @@
     partOfSpeech: r[2],
     definition: r[3],
     examples: r[4].map(([fi, en]) => ({ fi, en })),
-    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || [], ALSO_IN_V16[r[0]] || [], ALSO_IN_V17[r[0]] || [], ALSO_IN_V18[r[0]] || [], ALSO_IN_V19[r[0]] || [], ALSO_IN_V22[r[0]] || [], ALSO_IN_V23[r[0]] || [], ALSO_IN_V24[r[0]] || [], ALSO_IN_V25[r[0]] || []).map(id))),
+    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || [], ALSO_IN_V16[r[0]] || [], ALSO_IN_V17[r[0]] || [], ALSO_IN_V18[r[0]] || [], ALSO_IN_V19[r[0]] || [], ALSO_IN_V22[r[0]] || [], ALSO_IN_V23[r[0]] || [], ALSO_IN_V24[r[0]] || [], ALSO_IN_V25[r[0]] || [], ALSO_IN_V27[r[0]] || []).map(id))),
     level: L ? L.levelFor(r[0], [].concat(r[5])[0]) : '',
     notes: '',
     stats: { correct: 0, wrong: 0 },
@@ -3006,7 +3014,7 @@
    * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 19;
+  const FIXES = 20;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -3052,6 +3060,7 @@
     ...Object.entries(ALSO_IN_V24).map(([finnish, cats]) => ({ v: 17, finnish, addCategories: cats.map(id) })),
     ...Object.entries(ALSO_IN_V25).map(([finnish, cats]) => ({ v: 18, finnish, addCategories: cats.map(id) })),
     // Version 26: mahtaa explains all three uses.
+    ...Object.entries(ALSO_IN_V27).map(([finnish, cats]) => ({ v: 20, finnish, addCategories: cats.map(id) })),
     { v: 19, finnish: 'mahtaa', english: 'I wonder; can, may', definition: 'Type 1 · mahtaa · mahtoi (past). Mahtaako hän tulla? = I wonder if they\'re coming.' },
   ].map((f) => Object.assign({ v: 1 }, f));
 
