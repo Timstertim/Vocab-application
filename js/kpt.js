@@ -114,6 +114,8 @@
     ['verbs', 'Lasi ___ lattialle.', 'pudota', 'putoaa', ['pudoaa', 'putosi'], 'Type 4, inverse: pudota → putoaa (d → t).', 'The glass falls on the floor.'],
     ['verbs', 'Minä ___ mekon.', 'ommella', 'ompelen', ['ommelen', 'ompelee'], 'Type 3, inverse: ommella → ompelen (mm → mp).', 'I\'m sewing a dress.'],
     ['verbs', 'Minä ___ musiikkia.', 'kuunnella', 'kuuntelen', ['kuunnelen', 'kuuntelee'], 'Type 3, inverse: kuunnella → kuuntelen (nn → nt).', 'I\'m listening to music.'],
+    ['verbs', 'Minä ___ hotellissa.', 'yöpyä', 'yövyn', ['yöpyn', 'yöpyy'], 'Type 1, minä: weak. p → v: yöpyä → yövyn.', 'I\'m staying at a hotel.'],
+    ['verbs', 'Minä ___ sohvalla.', 'maata', 'makaan', ['makaa', 'maan'], 'Type 4, inverse: maata → makaan (k comes back). Passive: maataan, maattiin.', 'I\'m lying on the sofa.'],
   ];
 
   // The rules page, shown on the game's start page.
