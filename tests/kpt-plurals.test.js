@@ -38,7 +38,7 @@ test('Plurals: the forms of a word', () => {
 });
 
 test('Plurals: rounds have one right option; alternatives are accepted when typed', () => {
-  for (const set of Object.keys(P.SETS).concat('mixed')) {
+  for (const set of Object.keys(P.SETS).filter((k) => !P.SETS[k].typeOnly).concat('mixed')) {
     const r = P.round(set, 10);
     assert.equal(r.length, 10);
     for (const ex of r) {
@@ -50,4 +50,30 @@ test('Plurals: rounds have one right option; alternatives are accepted when type
   assert.equal(lapsi.answer, 'lasten');
   assert.equal(P.check('lapsien', lapsi).correct, true);
   assert.equal(P.check('lapsia', lapsi).correct, false);
+});
+
+test('Plurals: fill the gap is written, with the form decided by the sentence', () => {
+  assert.equal(P.SETS.gap.typeOnly, true);
+  const all = P.gapExercises();
+  assert.ok(all.length >= 60);
+  for (const ex of all) {
+    assert.equal(ex.context.split('___').length, 2, ex.context);
+    assert.match(ex.shown, /\(plural\)$/);
+    assert.ok(ex.note && ex.en, ex.context);
+    assert.equal(P.check(ex.answer, ex).correct, true, ex.answer);
+    assert.equal(P.check(ex.shown.replace(' (plural)', ''), ex).correct, false, 'the basic form is not the answer: ' + ex.context);
+  }
+  const puu = all.find((e) => e.answer === 'puiden');
+  assert.equal(P.check('puitten', puu).correct, true);
+  assert.equal(P.round('gap', 10).length, 10);
+});
+
+test('Plurals and KPT: no typo is forgiven, so a wrong form never passes as "almost"', () => {
+  const ys = P.gapExercises().find((e) => e.answer === 'ystäviä');
+  assert.equal(P.check('ystävä', ys).correct, false);
+  const kauppa = P.exercise(P.WORDS.find((w) => w[0] === 'kauppa'), 'ine', Math.random);
+  assert.equal(P.check('kauppoissa', kauppa).correct, false);
+  assert.equal(P.check('Kaupoissa ', kauppa).correct, true);   // case and spaces don't matter
+  const k = K.exercises('nouns').find((e) => e.answer === 'kaupassa');
+  assert.equal(K.check('kaupasa', k).correct, false);
 });

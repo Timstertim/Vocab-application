@@ -154,7 +154,7 @@
     return a;
   };
   function toExercise([set, sentence, base, answer, wrong, note, en]) {
-    return { kind: set, shown: base, task: 'Strong or weak? Put the word in the right form', context: sentence, answer, accept: [], wrong, note, en };
+    return { kind: set, shown: base, task: 'Strong or weak? Put the word in the right form', context: sentence, answer, accept: [], wrong, note, en, strict: true };
   }
   const exercises = (set) => ITEMS.filter((it) => set === 'mixed' || it[0] === set).map(toExercise);
   function round(set, n, rng) {

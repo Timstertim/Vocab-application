@@ -66,7 +66,7 @@
     check: (typed, ex) => root.VocabKpt.check(typed, ex),
   };
   const PLURALS = {
-    src: () => root.VocabPlurals, hash: '#/plurals', title: '👥 Plural forms', modeKey: 'plMode', bestKey: 'plBest',
+    src: () => root.VocabPlurals, hash: '#/plurals', title: '👥 Plural forms', modeKey: 'plMode', bestKey: 'plBest', sentence: true,
     intro: 'A word and a plural form to make: the t-plural, partitive, genitive and all the other cases. 30 words, including the tricky ones (lapsi → lasten, kenkä → kengät, rengas → renkaita).',
     check: (typed, ex) => root.VocabPlurals.check(typed, ex),
   };
@@ -106,7 +106,7 @@
     if (set !== 'mixed' && !N.SETS[set]) { view.innerHTML = '<section class="page"><p>Not found.</p><a href="' + cfg.hash + '">Back</a></section>'; return; }
     const info = set === 'mixed' ? { name: 'Mixed', icon: '🎲' } : N.SETS[set];
     const exercises = N.round(set, ROUND);
-    const m = mode(cfg);
+    const m = N.SETS[set] && N.SETS[set].typeOnly ? 'type' : mode(cfg);   // some sets are for writing only
     // What the 🔊 button reads: the whole sentence in Which case?, otherwise the answer.
     const sayIt = (ex) => (ex.digits ? ex.shown.replace(/[“”]/g, '') : cfg.sentence && ex.context ? ex.context.replace('___', ex.answer) : ex.answer);
     let i = 0;

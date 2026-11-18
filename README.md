@@ -74,7 +74,9 @@ with Quizlet-style mini games.
   are the same form with the other grade. Exercises in `js/kpt.js`.
 - **👥 Plural forms**: a word and a plural form to make: t-plural, partitive, genitive, -issa, -ista, -ihin, -illa,
   -ilta, -ille, -ina, -iksi. 30 words including lapsi → lasten, kenkä → kengät, rengas → renkaita, joki → joissa.
-  Generated from a table in `js/plurals.js`.
+  Generated from a table in `js/plurals.js`. **✍️ Fill the gap (write it)**: 72 sentences where the form isn't
+  named: work out which plural form fits and write it (*Lapset leikkivät ___ (puisto)* → *puistoissa*). Always typed,
+  and spelling counts: no typos are forgiven here, in Plural forms or in KPT.
 - **Your own mini games**: save one or more game types, the categories, direction and round size
   under a name, then replay it from the Games page. Tick several game types to mix them: each question
   is one of them at random (Match comes as a quick board of 3–5 words). Quick play has a 🎲 **Mix** too.

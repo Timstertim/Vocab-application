@@ -221,13 +221,14 @@
   }
   const exercises = (set) => ITEMS.filter((it) => set === 'mixed' || it[0] === set).map(toExercise);
 
-  /** { correct, close }: one typo is forgiven in longer answers, but never a known wrong form. */
+  /** { correct, close }: one typo is forgiven in longer answers, but never a known wrong form (none at all if ex.strict). */
   function check(typed, ex) {
     const given = squash(typed);
     if (!given) return { correct: false, close: false };
     const answers = [ex.answer].concat(ex.accept || []).map(squash);
     if (answers.includes(given)) return { correct: true, close: false };
     if ((ex.wrong || []).map(squash).includes(given)) return { correct: false, close: false };
+    if (ex.strict) return { correct: false, close: false };   // spelling is the point: no typos forgiven
     const close = answers.some((a) => a.length >= 7 && lev(a, given) <= 1);
     return { correct: close, close };
   }
