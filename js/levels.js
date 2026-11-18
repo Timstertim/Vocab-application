@@ -170,6 +170,8 @@
     groups['B1.2'] = groups['B1.2'].concat(['huomion keskipisteenä', 'kivetä']);
   // Version 24 additions.
     groups['A2.2'] = groups['A2.2'].concat(['älä valita', 'tahra']);
+  // Version 25 additions.
+    groups['A2.2'] = groups['A2.2'].concat(['älä välitä']);
   const WORD = {};
   for (const [level, words] of Object.entries(groups)) for (const w of words) WORD[w] = level;
 

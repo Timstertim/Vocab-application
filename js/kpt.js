@@ -117,6 +117,7 @@
     ['verbs', 'Minä ___ hotellissa.', 'yöpyä', 'yövyn', ['yöpyn', 'yöpyy'], 'Type 1, minä: weak. p → v: yöpyä → yövyn.', 'I\'m staying at a hotel.'],
     ['verbs', 'Minä ___ sohvalla.', 'maata', 'makaan', ['makaa', 'maan'], 'Type 4, inverse: maata → makaan (k comes back). Passive: maataan, maattiin.', 'I\'m lying on the sofa.'],
     ['verbs', 'Älä ___ koko ajan!', 'valittaa', 'valita', ['valitta', 'valittaa'], 'The negative command (älä + stem): weak. valittaa → älä valita (tt → t).', 'Stop complaining all the time!'],
+    ['verbs', 'Älä ___ siitä!', 'välittää', 'välitä', ['välittä', 'välittää'], 'The negative command (älä + stem): weak. välittää → älä välitä (tt → t). Compare: älä valita (valittaa).', 'Never mind about that!'],
   ];
 
   // The rules page, shown on the game's start page.
