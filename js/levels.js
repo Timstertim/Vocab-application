@@ -158,6 +158,9 @@
     groups['A2.1'] = groups['A2.1'].concat(['jotain']);
     groups['A2.2'] = groups['A2.2'].concat(['hyöty', 'hyödyllinen']);
     groups['B1.1'] = groups['B1.1'].concat(['olla hyötyä']);
+  // Version 21 additions.
+    groups['A2.2'] = groups['A2.2'].concat(['aine', 'pata', 'kiehuva']);
+    groups['B1.1'] = groups['B1.1'].concat(['vilvoitella', 'vihtoa', 'pefletti', 'laudeliina']);
   const WORD = {};
   for (const [level, words] of Object.entries(groups)) for (const w of words) WORD[w] = level;
 

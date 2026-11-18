@@ -60,6 +60,17 @@
     check: (typed, ex) => root.VocabCases.check(typed, ex),
   };
 
+  const KPT = {
+    src: () => root.VocabKpt, hash: '#/kpt', title: '🔀 KPT: strong or weak?', modeKey: 'kptMode', bestKey: 'kptBest', sentence: true, rules: true,
+    intro: 'Consonant gradation (KPT): kauppa → kaupassa but kauppaan, kiuas → kiukaalle, lukea → luen. Put the word in the form the sentence needs, with the right grade. Open the rules first if you like.',
+    check: (typed, ex) => root.VocabKpt.check(typed, ex),
+  };
+  const PLURALS = {
+    src: () => root.VocabPlurals, hash: '#/plurals', title: '👥 Plural forms', modeKey: 'plMode', bestKey: 'plBest',
+    intro: 'A word and a plural form to make: the t-plural, partitive, genitive and all the other cases. 30 words, including the tricky ones (lapsi → lasten, kenkä → kengät, rengas → renkaita).',
+    check: (typed, ex) => root.VocabPlurals.check(typed, ex),
+  };
+
   const mode = (cfg) => (Store.get().settings[cfg.modeKey] === 'type' ? 'type' : 'choose');
   const best = (cfg, set) => (Store.get().settings[cfg.bestKey] || {})[set];
 
@@ -71,6 +82,7 @@
       '<a class="back" href="#/games">← Games</a>' +
       '<div class="page-head"><h1>' + cfg.title + '</h1></div>' +
       '<p class="muted">' + esc(cfg.intro) + '</p>' +
+      (cfg.rules ? '<details class="card-pad rules"><summary>📖 The rules</summary>' + cfg.src().RULES + '</details>' : '') +
       '<h2 class="section-title">How do you answer?</h2>' +
       '<div class="level-picker two">' +
       [['choose', 'Choose', 'Pick the right form out of four'], ['type', 'Type', 'Write it yourself']].map(([k, n, b]) =>
@@ -212,4 +224,6 @@
 
   root.NumbersGame = { renderList: (view) => renderList(view, NUMBERS), play: (view, set) => play(view, set, NUMBERS), stop };
   root.CasesGame = { renderList: (view) => renderList(view, CASES), play: (view, set) => play(view, set, CASES), stop };
+  root.KptGame = { renderList: (view) => renderList(view, KPT), play: (view, set) => play(view, set, KPT), stop };
+  root.PluralsGame = { renderList: (view) => renderList(view, PLURALS), play: (view, set) => play(view, set, PLURALS), stop };
 })(window);

@@ -477,3 +477,11 @@ select { max-width: 100%; text-overflow: ellipsis; }
 .right-meaning strong { color: var(--ok); }
 .match-note { min-height: 1.4em; margin-top: .6rem; text-align: center; font-size: .95rem; }
 .match-note span { white-space: nowrap; }
+
+/* Rules panel (KPT game) */
+.rules { margin: 1rem 0; }
+.rules summary { cursor: pointer; font-weight: 700; }
+.rules h3 { margin: 1rem 0 .3rem; font-size: 1rem; }
+.rules p { margin: .3rem 0; }
+.rules-table { border-collapse: collapse; width: 100%; max-width: 30rem; font-size: .95rem; }
+.rules-table th, .rules-table td { text-align: left; padding: .25rem .5rem; border-bottom: 1px solid var(--border); }

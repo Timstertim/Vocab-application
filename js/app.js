@@ -30,7 +30,7 @@
     root.DailyReview.stop();
     closeModal();
     const { parts, params } = parseHash();
-    const tab = { word: 'words', play: 'games', roleplay: 'games', numbers: 'games', cases: 'games', review: 'games' }[parts[0]] || parts[0];
+    const tab = { word: 'words', play: 'games', roleplay: 'games', numbers: 'games', cases: 'games', review: 'games', kpt: 'games', plurals: 'games' }[parts[0]] || parts[0];
     document.querySelectorAll('.tabs a').forEach((a) => a.classList.toggle('active', a.dataset.tab === tab));
     switch (parts[0]) {
       case 'word': return renderWordDetail(parts[1]);
@@ -49,6 +49,12 @@
       case 'cases':
         if (parts[1]) return root.CasesGame.play(view, parts[1]);
         return root.CasesGame.renderList(view);
+      case 'kpt':
+        if (parts[1]) return root.KptGame.play(view, parts[1]);
+        return root.KptGame.renderList(view);
+      case 'plurals':
+        if (parts[1]) return root.PluralsGame.play(view, parts[1]);
+        return root.PluralsGame.renderList(view);
       case 'settings': return renderSettings();
       default: return renderWords(params);
     }
@@ -612,6 +618,12 @@
       '<span class="btn primary small">Start</span></a>' +
       '<a class="rp-banner" href="#/cases"><span class="rp-icon">🎯</span><span><strong>Which case?</strong>' +
       '<span class="muted small">Put the word in the right form: Pidän suklaasta, Minua pelottaa, kaksi kissaa</span></span>' +
+      '<span class="btn primary small">Start</span></a>' +
+      '<a class="rp-banner" href="#/kpt"><span class="rp-icon">🔀</span><span><strong>KPT: strong or weak?</strong>' +
+      '<span class="muted small">Consonant gradation with the rules: kaupassa / kauppaan, kiuas → kiukaalle, luen / lukee</span></span>' +
+      '<span class="btn primary small">Start</span></a>' +
+      '<a class="rp-banner" href="#/plurals"><span class="rp-icon">👥</span><span><strong>Plural forms</strong>' +
+      '<span class="muted small">Every plural form: kaupat, kauppoja, kauppojen, kaupoissa, kauppoihin, kauppoina…</span></span>' +
       '<span class="btn primary small">Start</span></a>' +
       '<h2 class="section-title">Quick play</h2>' +
       '<div class="toolbar"><label class="inline">Words from <select id="qp-cat">' + categoryOptions(presetCat, 'All words') + '</select></label>' +

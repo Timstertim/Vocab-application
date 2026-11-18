@@ -109,7 +109,7 @@
     // The textbook (version 19).
     C('No niin! 2', '#1f8fa3'),
   ];
-  const VERSION = 20;
+  const VERSION = 21;
   // Since version 17 the daycare categories are one category, Daycare. The word lists below still name
   // the old ones; their words simply end up in Daycare.
   const MERGED_INTO_DAYCARE = ['Daycare: play', 'Daycare: safety', 'Daycare: instructions', 'Daycare: praise',
@@ -2900,8 +2900,19 @@
     ['jotain', 'something; any', 'pronoun', 'Partitive of jokin. jotain hyötyä = some use; in questions: any. Also: jotakin.', [['Haluatko jotain juotavaa?', 'Would you like something to drink?']], ['Small & linking words', 'No niin! 2']],
   ];
 
+  // Added in version 21: sauna and cooking words.
+  const v21 = [
+    ['aine', 'material, substance; (school) subject', 'noun', 'Stem: aineen, ainetta. Mistä aineesta se on tehty? = What is it made of? raaka-aine = ingredient, kouluaine = school subject.', [['Mistä aineesta tämä on tehty?', 'What material is this made of?']], ['Describing things', 'No niin! 2']],
+    ['vilvoitella', 'to cool off (between sauna rounds)', 'verb', 'Type 3 · minä vilvoittelen · hän vilvoitteli (past). Inverse KPT: vilvoitella → vilvoittelen (t → tt).', [['Vilvoittelemme terassilla saunan välissä.', 'We cool off on the terrace between sauna rounds.']], ['Finnish culture', 'No niin! 2']],
+    ['vihtoa', 'to whisk yourself with a vihta', 'verb', 'Type 1 · minä vihdon · hän vihtoi (past). vihta = a bundle of birch twigs (in the east: vasta, vastoa).', [['Saunassa vihdotaan koivuvihdalla.', 'In the sauna people whisk themselves with a birch whisk.']], ['Finnish culture', 'No niin! 2']],
+    ['pefletti', 'sauna seat cover', 'noun', 'A disposable (or cloth) cover to sit on in a public sauna. Stem: pefletin. Also: laudeliina.', [['Ota pefletti mukaan saunaan.', 'Take a seat cover into the sauna.']], ['Finnish culture', 'No niin! 2']],
+    ['laudeliina', 'sauna bench towel', 'noun', 'A small towel or cloth to sit on on the sauna bench (lauteet). Stem: laudeliinan.', [['Istu laudeliinan päälle.', 'Sit on the bench towel.']], ['Finnish culture', 'No niin! 2']],
+    ['pata', 'pot; casserole', 'noun', 'Stem: padan, pataa (t → d). A heavy cooking pot; also a stew: patapaisti, patakeitto. In cards: spades.', [['Laitoin lihat pataan.', 'I put the meat in the pot.']], ['Food & cooking', 'No niin! 2']],
+    ['kiehuva', 'boiling', 'adjective', 'From kiehua = to boil. kiehuva vesi = boiling water; partitive: kiehuvaa vettä.', [['Kaada päälle kiehuvaa vettä.', 'Pour boiling water over it.']], ['Food & cooking', 'No niin! 2']],
+  ];
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20).map((r) => {
+  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21).map((r) => {
     let cats = [].concat(r[5]);
     if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$|^Planning & documentation$|^Support & inclusion$|^Words learnt during internship$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$|^Slang$/.test(cats[0])) cats.push('Verbs');
@@ -2911,7 +2922,7 @@
   const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
   // The version each tagged word was added in (v4 onwards).
-  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20].flatMap((list, n) => list.map(() => n + 4));
+  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21].flatMap((list, n) => list.map(() => n + 4));
   const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(since[i])));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,

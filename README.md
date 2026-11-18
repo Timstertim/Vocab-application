@@ -66,6 +66,15 @@ with Quizlet-style mini games.
   amounts & "not"** (*kaksi kissaa*, *lasi maitoa*, *Minulla ei ole autoa*) and **Plurals in all forms** (*kissat, omenoita,
   lasten, laatikoissa, kauppoihin, pöydillä, opettajilta, lapsille, lapsina*, with stem changes like *hammas → hampaat*), plus Mixed. Choose from four forms of
   the same word or type it; each answer shows the full sentence, its translation and the rule. Exercises in `js/cases.js`.
+- **🔀 KPT: strong or weak?**: consonant gradation in sentences, with a rules page (all the pairs kk/k, pp/p, tt/t,
+  k/–, p/v, t/d, nk/ng, mp/mm, lt/ll, nt/nn, rt/rr, lk/lj, uku/uvu; which forms are weak and which strong, and why).
+  Sets: **Nouns** (kaupassa but kauppaan, kauppaa, kauppana, kauppani), **Inverse words** (kiuas → kiukaalle but
+  kiuasta; rengas, hammas, sade, liike, lääke, keitin…), **KPT in the plural** (kaupat, kaupoissa but kauppoja, kauppojen,
+  kauppoihin; mansikoita) and **Verbs** (luen / lukee / lue / luetaan; tavata → tapaan / tavataan). The wrong options
+  are the same form with the other grade. Exercises in `js/kpt.js`.
+- **👥 Plural forms**: a word and a plural form to make: t-plural, partitive, genitive, -issa, -ista, -ihin, -illa,
+  -ilta, -ille, -ina, -iksi. 30 words including lapsi → lasten, kenkä → kengät, rengas → renkaita, joki → joissa.
+  Generated from a table in `js/plurals.js`.
 - **Your own mini games**: save one or more game types, the categories, direction and round size
   under a name, then replay it from the Games page. Tick several game types to mix them: each question
   is one of them at random (Match comes as a quick board of 3–5 words). Quick play has a 🎲 **Mix** too.
@@ -74,7 +83,7 @@ with Quizlet-style mini games.
 - **Pronunciation**: 🔊 buttons read words aloud using your device's text-to-speech
   (install a Finnish voice for the best result).
 - **Backup**: export and import everything as JSON from Settings.
-- Starts with 2320 starter words in 53 categories, among them **No niin! 2** (the words from the textbook), one big **Daycare** category for daycare teachers
+- Starts with 2327 starter words in 53 categories, among them **No niin! 2** (the words from the textbook), one big **Daycare** category for daycare teachers
   (routines, instructions, praise, play, songs, meals, outdoors, safety, talking to parents, ECEC terms, child
   development, planning, support and inclusion), **Words learnt during internship** and **Module 2 Final Test**;
   everyday life (**Health & doctor**, **Food & cooking**, **Home & housing**, **Nature & weather**, **Getting around**,
@@ -124,6 +133,8 @@ npm test        # unit tests for answer checking, search, Wiktionary parsing, im
 | `js/numbers.js` | Finnish number words and the number exercises |
 | `js/numbersgame.js` | The drill screens used by Number practice and Which case? |
 | `js/cases.js` | The Which case? exercises |
+| `js/kpt.js` | The KPT exercises and rules |
+| `js/plurals.js` | The plural forms table and questions |
 | `js/review.js` | Daily review scheduling (spaced repetition, streak) |
 | `js/daily.js` | The Daily review screens |
 | `js/topics.js` | Topics and keywords used for category suggestions |
