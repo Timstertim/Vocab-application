@@ -29,45 +29,45 @@
     inner: { name: 'In, from, into: -issa, -ista, -ihin', icon: '🏠', blurb: 'kaupoissa · kaupoista · kauppoihin', forms: ['ine', 'ela', 'ill'] },
     outer: { name: 'On, from, to: -illa, -ilta, -ille', icon: '🛋️', blurb: 'pöydillä · ystäviltä · lapsille', forms: ['ade', 'abl', 'all'] },
     other: { name: 'As & becoming: -ina, -iksi', icon: '🔁', blurb: 'lapsina · kauppoina · kaupoiksi', forms: ['ess', 'tra'] },
-    gap: { name: 'Fill the gap (write it)', icon: '✍️', blurb: 'A sentence and a word: work out the plural form yourself and write it', typeOnly: true },
+    gap: { name: 'Fill the gap', icon: '✍️', blurb: 'A sentence and a word: work out which plural form fits, and spell it' },
   };
 
-  // Fill the gap: [sentence with ___, word, answer, [other accepted answers], which form and why, English].
+  // Fill the gap: [sentence with ___, word, answer, [other accepted answers], [wrong forms], which form and why, English].
   // The form is not named in the question; the sentence decides it. More come from Which case? (its plural set).
   const GAP = [
-    ['Lapset pukeutuivat ___.', 'noita', 'noidiksi', [], 'Plural translative -iksi (dressed up as, becoming). Weak grade: noita → noidiksi.', 'The children dressed up as witches.'],
-    ['Leikkaa omena ___.', 'pala', 'paloiksi', [], 'Plural translative -iksi: into pieces.', 'Cut the apple into pieces.'],
-    ['He tulivat hyviksi ___.', 'ystävä', 'ystäviksi', [], 'Plural translative -iksi: became friends. The adjective agrees: hyviksi ystäviksi.', 'They became good friends.'],
-    ['He työskentelevät ___.', 'opettaja', 'opettajina', [], 'Plural essive -ina (as): työskennellä opettajana / opettajina.', 'They work as teachers.'],
-    ['Pidämme heitä ___.', 'ystävä', 'ystävinä', [], 'Plural essive -inä (regard as).', 'We regard them as friends.'],
-    ['Sain kukkia ___.', 'oppilas', 'oppilailta', [], 'Plural ablative -ilta (from people). oppilas → oppilai-.', 'I got flowers from the pupils.'],
-    ['Kysyin neuvoa ___.', 'naapuri', 'naapureilta', [], 'kysyä + -lta: plural ablative. naapuri → naapurei-.', 'I asked the neighbours for advice.'],
-    ['Lähetin kutsut ___.', 'ystävä', 'ystäville', [], 'Plural allative -ille (to people).', 'I sent the invitations to friends.'],
-    ['Opettaja antoi tehtävän ___.', 'oppilas', 'oppilaille', [], 'antaa + -lle: plural allative.', 'The teacher gave the pupils a task.'],
-    ['Kissat istuvat ___.', 'tuoli', 'tuoleilla', [], 'Plural adessive -illa (on). tuoli → tuolei-.', 'The cats are sitting on the chairs.'],
-    ['___ on paljon läksyjä.', 'opiskelija', 'Opiskelijoilla', [], 'Who has: plural adessive -illa.', 'The students have lots of homework.'],
-    ['Pidän ___.', 'kukka', 'kukista', [], 'pitää + -sta: plural elative. Weak grade: kukka → kukista.', 'I like flowers.'],
-    ['Puhuimme ___.', 'harrastus', 'harrastuksista', [], 'puhua + -sta: plural elative. -us → -uksi-.', 'We talked about hobbies.'],
-    ['Ota kirjat pois ___.', 'laatikko', 'laatikoista', [], 'Out of: plural elative -ista. Weak: laatikko → laatikoista.', 'Take the books out of the boxes.'],
-    ['Lapset leikkivät ___.', 'puisto', 'puistoissa', [], 'In: plural inessive -issa.', 'The children play in the parks.'],
-    ['___ on paljon kalaa.', 'järvi', 'Järvissä', [], 'In: plural inessive -issä.', 'There\'s lots of fish in the lakes.'],
-    ['Avaimet ovat ___.', 'tasku', 'taskuissa', [], 'In: plural inessive -issa.', 'The keys are in the pockets.'],
-    ['Laita kengät ___.', 'hylly', 'hyllyihin', [], 'Into, onto (a shelf): plural illative -ihin.', 'Put the shoes on the shelves.'],
-    ['Vastasin kaikkiin ___.', 'viesti', 'viesteihin', [], 'vastata + illative: plural -ihin. viesti → viestei-.', 'I answered all the messages.'],
-    ['Kesällä menemme moniin ___.', 'juhla', 'juhliin', [], 'Into: plural illative -iin. The adjective agrees: moniin juhliin.', 'In summer we go to lots of parties.'],
-    ['Muutimme uusiin ___.', 'huone', 'huoneisiin', [], 'Into: plural illative -isiin (after -e words).', 'We moved into new rooms.'],
-    ['___ odottavat bussia.', 'ihminen', 'Ihmiset', [], 'The subject (all of them): t-plural. ihminen → ihmiset.', 'The people are waiting for the bus.'],
-    ['Ostin autoon uudet ___.', 'rengas', 'renkaat', [], 'A whole set as the object: t-plural. Inverse KPT: rengas → renkaat.', 'I bought new tyres for the car.'],
-    ['Ostin ___ äidille.', 'kukka', 'kukkia', [], 'Some (no number): plural partitive. Strong grade: kukkia.', 'I bought flowers for Mum.'],
-    ['Meillä ei ole ___.', 'lapsi', 'lapsia', [], 'Negative: plural partitive.', 'We don\'t have children.'],
-    ['Hänellä on monia ___.', 'ystävä', 'ystäviä', [], 'monia + plural partitive.', 'They have many friends.'],
-    ['Pöydällä on ___.', 'avain', 'avaimia', [], 'Some (no number): plural partitive. avain → avaimia.', 'There are keys on the table.'],
-    ['___ huone on yläkerrassa.', 'tyttö', 'Tyttöjen', [], 'Whose: plural genitive -jen. Strong grade: tyttöjen.', 'The girls\' room is upstairs.'],
-    ['___ hinnat nousivat.', 'asunto', 'Asuntojen', [], 'Whose: plural genitive -jen.', 'Housing prices went up.'],
-    ['Talo on ___ keskellä.', 'puu', 'puiden', ['puitten'], 'keskellä + genitive: plural genitive -iden.', 'The house is in the middle of the trees.'],
-    ['___ määrä kasvaa.', 'opiskelija', 'Opiskelijoiden', ['Opiskelijoitten'], 'Plural genitive -iden.', 'The number of students is growing.'],
-    ['Lapset kävelivät ___ läpi.', 'metsä', 'metsien', [], 'läpi + genitive: plural genitive -ien.', 'The children walked through the forests.'],
-    ['Kuuntelen ___ tarinoita.', 'vanhus', 'vanhusten', ['vanhuksien'], 'Whose: plural genitive. -us words: vanhusten (also vanhuksien).', 'I listen to the old people\'s stories.'],
+    ['Lapset pukeutuivat ___.', 'noita', 'noidiksi', [], ['noidaksi', 'noitia', 'noidissa'], 'Plural translative -iksi (dressed up as, becoming). Weak grade: noita → noidiksi.', 'The children dressed up as witches.'],
+    ['Leikkaa omena ___.', 'pala', 'paloiksi', [], ['palaksi', 'paloja', 'paloissa'], 'Plural translative -iksi: into pieces.', 'Cut the apple into pieces.'],
+    ['He tulivat hyviksi ___.', 'ystävä', 'ystäviksi', [], ['ystäväksi', 'ystäviä', 'ystävinä'], 'Plural translative -iksi: became friends. The adjective agrees: hyviksi ystäviksi.', 'They became good friends.'],
+    ['He työskentelevät ___.', 'opettaja', 'opettajina', [], ['opettajana', 'opettajia', 'opettajiksi'], 'Plural essive -ina (as): työskennellä opettajana / opettajina.', 'They work as teachers.'],
+    ['Pidämme heitä ___.', 'ystävä', 'ystävinä', [], ['ystävänä', 'ystäviä', 'ystäviksi'], 'Plural essive -inä (regard as).', 'We regard them as friends.'],
+    ['Sain kukkia ___.', 'oppilas', 'oppilailta', [], ['oppilaalta', 'oppilaille', 'oppilaita'], 'Plural ablative -ilta (from people). oppilas → oppilai-.', 'I got flowers from the pupils.'],
+    ['Kysyin neuvoa ___.', 'naapuri', 'naapureilta', [], ['naapurilta', 'naapureille', 'naapureita'], 'kysyä + -lta: plural ablative. naapuri → naapurei-.', 'I asked the neighbours for advice.'],
+    ['Lähetin kutsut ___.', 'ystävä', 'ystäville', [], ['ystävälle', 'ystäviltä', 'ystäviä'], 'Plural allative -ille (to people).', 'I sent the invitations to friends.'],
+    ['Opettaja antoi tehtävän ___.', 'oppilas', 'oppilaille', [], ['oppilaalle', 'oppilailta', 'oppilaita'], 'antaa + -lle: plural allative.', 'The teacher gave the pupils a task.'],
+    ['Kissat istuvat ___.', 'tuoli', 'tuoleilla', [], ['tuolilla', 'tuoleille', 'tuoleja'], 'Plural adessive -illa (on). tuoli → tuolei-.', 'The cats are sitting on the chairs.'],
+    ['___ on paljon läksyjä.', 'opiskelija', 'Opiskelijoilla', [], ['Opiskelijalla', 'Opiskelijoita', 'Opiskelijoiden'], 'Who has: plural adessive -illa.', 'The students have lots of homework.'],
+    ['Pidän ___.', 'kukka', 'kukista', [], ['kukasta', 'kukkia', 'kukkiin'], 'pitää + -sta: plural elative. Weak grade: kukka → kukista.', 'I like flowers.'],
+    ['Puhuimme ___.', 'harrastus', 'harrastuksista', [], ['harrastuksesta', 'harrastuksia', 'harrastuksiin'], 'puhua + -sta: plural elative. -us → -uksi-.', 'We talked about hobbies.'],
+    ['Ota kirjat pois ___.', 'laatikko', 'laatikoista', [], ['laatikosta', 'laatikoissa', 'laatikoihin'], 'Out of: plural elative -ista. Weak: laatikko → laatikoista.', 'Take the books out of the boxes.'],
+    ['Lapset leikkivät ___.', 'puisto', 'puistoissa', [], ['puistossa', 'puistoihin', 'puistoista'], 'In: plural inessive -issa.', 'The children play in the parks.'],
+    ['___ on paljon kalaa.', 'järvi', 'Järvissä', [], ['Järvessä', 'Järviin', 'Järviä'], 'In: plural inessive -issä.', 'There\'s lots of fish in the lakes.'],
+    ['Avaimet ovat ___.', 'tasku', 'taskuissa', [], ['taskussa', 'taskuihin', 'taskuja'], 'In: plural inessive -issa.', 'The keys are in the pockets.'],
+    ['Laita kengät ___.', 'hylly', 'hyllyihin', [], ['hyllyyn', 'hyllyissä', 'hyllyjä'], 'Into, onto (a shelf): plural illative -ihin.', 'Put the shoes on the shelves.'],
+    ['Vastasin kaikkiin ___.', 'viesti', 'viesteihin', [], ['viestiin', 'viestejä', 'viesteissä'], 'vastata + illative: plural -ihin. viesti → viestei-.', 'I answered all the messages.'],
+    ['Kesällä menemme moniin ___.', 'juhla', 'juhliin', [], ['juhlaan', 'juhlissa', 'juhlia'], 'Into: plural illative -iin. The adjective agrees: moniin juhliin.', 'In summer we go to lots of parties.'],
+    ['Muutimme uusiin ___.', 'huone', 'huoneisiin', [], ['huoneeseen', 'huoneissa', 'huoneita'], 'Into: plural illative -isiin (after -e words).', 'We moved into new rooms.'],
+    ['___ odottavat bussia.', 'ihminen', 'Ihmiset', [], ['Ihminen', 'Ihmisiä', 'Ihmisten'], 'The subject (all of them): t-plural. ihminen → ihmiset.', 'The people are waiting for the bus.'],
+    ['Ostin autoon uudet ___.', 'rengas', 'renkaat', [], ['renkaan', 'renkaita', 'rengas'], 'A whole set as the object: t-plural. Inverse KPT: rengas → renkaat.', 'I bought new tyres for the car.'],
+    ['Ostin ___ äidille.', 'kukka', 'kukkia', [], ['kukat', 'kukkaa', 'kukkien'], 'Some (no number): plural partitive. Strong grade: kukkia.', 'I bought flowers for Mum.'],
+    ['Meillä ei ole ___.', 'lapsi', 'lapsia', [], ['lapset', 'lasta', 'lasten'], 'Negative: plural partitive.', 'We don\'t have children.'],
+    ['Hänellä on monia ___.', 'ystävä', 'ystäviä', [], ['ystävät', 'ystävää', 'ystävien'], 'monia + plural partitive.', 'They have many friends.'],
+    ['Pöydällä on ___.', 'avain', 'avaimia', [], ['avaimet', 'avainta', 'avainten'], 'Some (no number): plural partitive. avain → avaimia.', 'There are keys on the table.'],
+    ['___ huone on yläkerrassa.', 'tyttö', 'Tyttöjen', [], ['Tytöt', 'Tyttöjä', 'Tytön'], 'Whose: plural genitive -jen. Strong grade: tyttöjen.', 'The girls\' room is upstairs.'],
+    ['___ hinnat nousivat.', 'asunto', 'Asuntojen', [], ['Asunnot', 'Asuntoja', 'Asunnon'], 'Whose: plural genitive -jen.', 'Housing prices went up.'],
+    ['Talo on ___ keskellä.', 'puu', 'puiden', ['puitten'], ['puut', 'puita', 'puun'], 'keskellä + genitive: plural genitive -iden.', 'The house is in the middle of the trees.'],
+    ['___ määrä kasvaa.', 'opiskelija', 'Opiskelijoiden', ['Opiskelijoitten'], ['Opiskelijat', 'Opiskelijoita', 'Opiskelijan'], 'Plural genitive -iden.', 'The number of students is growing.'],
+    ['Lapset kävelivät ___ läpi.', 'metsä', 'metsien', [], ['metsät', 'metsiä', 'metsän'], 'läpi + genitive: plural genitive -ien.', 'The children walked through the forests.'],
+    ['Kuuntelen ___ tarinoita.', 'vanhus', 'vanhusten', ['vanhuksien'], ['vanhukset', 'vanhuksia', 'vanhuksen'], 'Whose: plural genitive. -us words: vanhusten (also vanhuksien).', 'I listen to the old people\'s stories.'],
   ];
 
   // [word, English, t-plural, weak plural stem, strong plural stem, partitive, genitive (and alternatives), illative, a/ä]
@@ -139,16 +139,18 @@
   /** The fill-the-gap questions: the ones above and the plural sentences of Which case?. */
   function gapExercises() {
     const fromCases = (Cases.ITEMS || []).filter((it) => it[0] === 'plurals')
-      .map(([, sentence, base, answer, , note, en]) => [sentence, base, answer, [], note, en]);
-    return GAP.concat(fromCases).map(([sentence, base, answer, accept, note, en]) => ({
-      kind: 'plural-gap', shown: base + ' (plural)', task: 'Write the plural form that fits the sentence', context: sentence,
-      answer, accept, wrong: [], note, en, options: [], strict: true,
+      .map(([, sentence, base, answer, wrong, note, en]) => [sentence, base, answer, [], wrong, note, en]);
+    return GAP.concat(fromCases).map(([sentence, base, answer, accept, wrong, note, en]) => ({
+      kind: 'plural-gap', shown: base + ' (plural)', task: 'Put the word in the plural form that fits', context: sentence,
+      answer, accept, wrong, note, en, strict: true,
     }));
   }
 
   function round(set, n, rng) {
     rng = rng || Math.random;
-    if (set === 'gap') return shuffle(gapExercises(), rng).slice(0, n);
+    if (set === 'gap') {
+      return shuffle(gapExercises(), rng).slice(0, n).map((ex) => Object.assign(ex, { options: shuffle([ex.answer].concat(ex.wrong.slice(0, 3)), rng) }));
+    }
     const forms = set === 'mixed' ? Object.keys(FORMS) : SETS[set].forms;
     const pairs = shuffle(WORDS.flatMap((w) => forms.map((f) => [w, f])), rng).slice(0, n);
     return pairs.map(([w, f]) => {

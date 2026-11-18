@@ -38,7 +38,7 @@ test('Plurals: the forms of a word', () => {
 });
 
 test('Plurals: rounds have one right option; alternatives are accepted when typed', () => {
-  for (const set of Object.keys(P.SETS).filter((k) => !P.SETS[k].typeOnly).concat('mixed')) {
+  for (const set of Object.keys(P.SETS).concat('mixed')) {
     const r = P.round(set, 10);
     assert.equal(r.length, 10);
     for (const ex of r) {
@@ -52,14 +52,15 @@ test('Plurals: rounds have one right option; alternatives are accepted when type
   assert.equal(P.check('lapsia', lapsi).correct, false);
 });
 
-test('Plurals: fill the gap is written, with the form decided by the sentence', () => {
-  assert.equal(P.SETS.gap.typeOnly, true);
+test('Plurals: fill the gap, with the form decided by the sentence', () => {
   const all = P.gapExercises();
   assert.ok(all.length >= 60);
   for (const ex of all) {
     assert.equal(ex.context.split('___').length, 2, ex.context);
     assert.match(ex.shown, /\(plural\)$/);
-    assert.ok(ex.note && ex.en, ex.context);
+    assert.ok(ex.note && ex.en && ex.wrong.length >= 3, ex.context);
+    const opts = [ex.answer].concat(ex.wrong).map((x) => x.toLowerCase());
+    assert.equal(new Set(opts).size, opts.length, 'duplicate option: ' + ex.context);
     assert.equal(P.check(ex.answer, ex).correct, true, ex.answer);
     assert.equal(P.check(ex.shown.replace(' (plural)', ''), ex).correct, false, 'the basic form is not the answer: ' + ex.context);
   }

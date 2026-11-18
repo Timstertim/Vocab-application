@@ -50,28 +50,29 @@
 
   // What differs between the drills. The source has SETS, round(set, n) and check(typed, ex).
   const NUMBERS = {
-    src: () => root.VocabNumbers, hash: '#/numbers', title: '🔢 Number practice', modeKey: 'numMode', bestKey: 'numBest',
+    src: () => root.VocabNumbers, hash: '#/numbers', title: '🔢 Number practice', modeKey: 'numAnswer', bestKey: 'numBest',
     intro: 'Numbers the way they\'re really used: dates, the time, prices, floors and places, spoken forms and bus numbers. New questions every round.',
     check: (typed, ex) => root.VocabNumbers.checkNumberAnswer(typed, ex),
   };
   const CASES = {
-    src: () => root.VocabCases, hash: '#/cases', title: '🎯 Which case?', modeKey: 'caseMode', bestKey: 'caseBest', sentence: true,
+    src: () => root.VocabCases, hash: '#/cases', title: '🎯 Which case?', modeKey: 'caseAnswer', bestKey: 'caseBest', sentence: true,
     intro: 'A sentence with a gap and a word in its basic form. Put the word in the form the sentence needs: Pidän ___ (suklaa) → suklaasta.',
     check: (typed, ex) => root.VocabCases.check(typed, ex),
   };
 
   const KPT = {
-    src: () => root.VocabKpt, hash: '#/kpt', title: '🔀 KPT: strong or weak?', modeKey: 'kptMode', bestKey: 'kptBest', sentence: true, rules: true,
+    src: () => root.VocabKpt, hash: '#/kpt', title: '🔀 KPT: strong or weak?', modeKey: 'kptAnswer', bestKey: 'kptBest', sentence: true, rules: true,
     intro: 'Consonant gradation (KPT): kauppa → kaupassa but kauppaan, kiuas → kiukaalle, lukea → luen. Put the word in the form the sentence needs, with the right grade. Open the rules first if you like.',
     check: (typed, ex) => root.VocabKpt.check(typed, ex),
   };
   const PLURALS = {
-    src: () => root.VocabPlurals, hash: '#/plurals', title: '👥 Plural forms', modeKey: 'plMode', bestKey: 'plBest', sentence: true,
+    src: () => root.VocabPlurals, hash: '#/plurals', title: '👥 Plural forms', modeKey: 'plAnswer', bestKey: 'plBest', sentence: true,
     intro: 'A word and a plural form to make: the t-plural, partitive, genitive and all the other cases. 30 words, including the tricky ones (lapsi → lasten, kenkä → kengät, rengas → renkaita).',
     check: (typed, ex) => root.VocabPlurals.check(typed, ex),
   };
 
-  const mode = (cfg) => (Store.get().settings[cfg.modeKey] === 'type' ? 'type' : 'choose');
+  // How you answer: 'mix' (the default: each question is chosen or typed at random), 'choose' or 'type'.
+  const mode = (cfg) => { const m = Store.get().settings[cfg.modeKey]; return m === 'choose' || m === 'type' ? m : 'mix'; };
   const best = (cfg, set) => (Store.get().settings[cfg.bestKey] || {})[set];
 
   function renderList(view, cfg) {
@@ -84,8 +85,8 @@
       '<p class="muted">' + esc(cfg.intro) + '</p>' +
       (cfg.rules ? '<details class="card-pad rules"><summary>📖 The rules</summary>' + cfg.src().RULES + '</details>' : '') +
       '<h2 class="section-title">How do you answer?</h2>' +
-      '<div class="level-picker two">' +
-      [['choose', 'Choose', 'Pick the right form out of four'], ['type', 'Type', 'Write it yourself']].map(([k, n, b]) =>
+      '<div class="level-picker">' +
+      [['mix', 'Mix', 'Some to choose, some to write'], ['choose', 'Choose', 'Pick the right form out of four'], ['type', 'Type', 'Write it yourself']].map(([k, n, b]) =>
         '<button type="button" class="level' + (k === mode(cfg) ? ' on' : '') + '" data-mode="' + k + '" aria-pressed="' + (k === mode(cfg)) + '"><strong>' + n +
         '</strong><span class="muted small">' + b + '</span></button>').join('') + '</div>' +
       '<h2 class="section-title">What do you want to practise?</h2>' +
@@ -106,7 +107,10 @@
     if (set !== 'mixed' && !N.SETS[set]) { view.innerHTML = '<section class="page"><p>Not found.</p><a href="' + cfg.hash + '">Back</a></section>'; return; }
     const info = set === 'mixed' ? { name: 'Mixed', icon: '🎲' } : N.SETS[set];
     const exercises = N.round(set, ROUND);
-    const m = N.SETS[set] && N.SETS[set].typeOnly ? 'type' : mode(cfg);   // some sets are for writing only
+    const m = mode(cfg);
+    // With Mix, each question is chosen or typed at random (typed when it has no options to choose from).
+    const qmode = (ex) => (ex.options && ex.options.length > 1 ? (m === 'mix' ? (Math.random() < 0.5 ? 'choose' : 'type') : m) : 'type');
+    exercises.forEach((ex) => { ex.qmode = qmode(ex); });
     // What the 🔊 button reads: the whole sentence in Which case?, otherwise the answer.
     const sayIt = (ex) => (ex.digits ? ex.shown.replace(/[“”]/g, '') : cfg.sentence && ex.context ? ex.context.replace('___', ex.answer) : ex.answer);
     let i = 0;
@@ -137,7 +141,7 @@
         '<div class="q-label">' + esc(ex.task) + '</div>' +
         (ex.clock ? clockSvg(ex.clock.h, ex.clock.m) : '<div class="q-prompt num-shown">' + esc(ex.shown) + '</div>') +
         '<div id="num-context">' + contextHtml(ex) + '</div>' +
-        (m === 'choose'
+        (ex.qmode === 'choose'
           ? '<div class="choices num-choices">' + ex.options.map((o, n) => '<button class="choice" data-n="' + n + '"><kbd>' + (n + 1) + '</kbd> <span lang="fi">' + esc(o) + '</span></button>').join('') + '</div>'
           : '<form class="num-type" autocomplete="off"><input id="num-input" class="big-input" ' + (ex.digits ? 'inputmode="numeric" ' : 'lang="fi" ') +
             'placeholder="' + (ex.digits ? (ex.kind === 'dates' ? 'Type the date, e.g. 6.12.' : 'Type the number in digits') : 'Kirjoita suomeksi…') + '" spellcheck="false" autocapitalize="off">' +
@@ -164,7 +168,7 @@
         speak(sayIt(ex), 'fi');
       };
 
-      if (m === 'choose') {
+      if (ex.qmode === 'choose') {
         const buttons = Array.from(el.querySelectorAll('.choice'));
         const choose = (n) => {
           if (answered || n >= ex.options.length) return;
