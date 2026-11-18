@@ -1355,7 +1355,7 @@
     ['vihta', 'sauna whisk', 'noun', 'Bundle of birch twigs (vasta in eastern Finland).', [['Vihta tehdään koivunoksista.', 'A sauna whisk is made of birch twigs.']], 'Sauna & nature'],
     ['saunoa', 'to have a sauna', 'verb', 'Type 1 · minä saunon · hän saunoi (past).', [['Saunotaan illalla.', 'Let\'s have a sauna in the evening.']], 'Sauna & nature'],
     ['avanto', 'hole in the ice (for swimming)', 'noun', 'uida avannossa = ice swimming. Stem: avannon.', [['Uin avannossa.', 'I go ice swimming.']], 'Sauna & nature'],
-    ['jokamiehenoikeus', 'everyman\'s right', 'noun', 'The right to walk, camp and pick berries and mushrooms in nature.', [['Jokamiehenoikeus sallii marjastuksen.', 'Everyman\'s right allows berry picking.']], 'Sauna & nature'],
+    ['jokamiehenoikeus', 'everyman\'s right(s), the right to roam', 'noun', 'Usually plural: jokamiehenoikeudet (joka + mies → jokamiehen = everyone\'s; oikeus → oikeudet, t → d). You may walk, ski, cycle, camp for a short time and pick berries, mushrooms and flowers in nature, even on someone else\'s land. You may not disturb people or animals, cut trees, make a fire without permission, or camp near a home. Stem: jokamiehenoikeuden, jokamiehenoikeutta.', [['Jokamiehenoikeus sallii marjastuksen.', 'Everyman\'s right allows berry picking.'], ['Jokamiehenoikeudet koskevat kaikkia Suomessa.', 'Everyman\'s rights apply to everyone in Finland.']], 'Sauna & nature'],
     ['marjastaa', 'to pick berries', 'verb', 'Type 1 · minä marjastan · hän marjasti (past).', [['Lähdetään marjastamaan.', 'Let\'s go berry picking.']], 'Sauna & nature'],
     ['sienestää', 'to pick mushrooms', 'verb', 'Type 1 · minä sienestän · hän sienesti (past).', [['Sienestän syksyllä.', 'I go mushroom picking in the autumn.']], 'Sauna & nature'],
     ['retkeillä', 'to hike, to go on an outing', 'verb', 'Type 3 · minä retkeilen · hän retkeili (past).', [['Retkeilemme kansallispuistossa.', 'We\'re hiking in a national park.']], 'Sauna & nature'],
@@ -2970,6 +2970,7 @@
     ['tuonne', '(to) over there', 'adverb', 'Mihin? Moving to a place you can see. Spoken: tonne.', [['Laita laukku tuonne nurkkaan.', 'Put the bag over there in the corner.']], ['Where things are', 'No niin! 2']],
     ['tuolta', 'from over there', 'adverb', 'Mistä? From a place you can see.', [['Bussi tulee tuolta.', 'The bus is coming from over there.']], ['Where things are', 'No niin! 2']],
   ];
+  const ALSO_IN_V28 = { 'jokamiehenoikeus': ['No niin! 2'] };
   const ALSO_IN_V27 = { 'tänne': ['No niin! 2'], 'täällä': ['Where things are', 'No niin! 2'], 'täältä': ['No niin! 2'], 'sinne': ['No niin! 2'], 'siellä': ['No niin! 2'], 'sieltä': ['No niin! 2'] };
 
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
@@ -2992,7 +2993,7 @@
     partOfSpeech: r[2],
     definition: r[3],
     examples: r[4].map(([fi, en]) => ({ fi, en })),
-    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || [], ALSO_IN_V16[r[0]] || [], ALSO_IN_V17[r[0]] || [], ALSO_IN_V18[r[0]] || [], ALSO_IN_V19[r[0]] || [], ALSO_IN_V22[r[0]] || [], ALSO_IN_V23[r[0]] || [], ALSO_IN_V24[r[0]] || [], ALSO_IN_V25[r[0]] || [], ALSO_IN_V27[r[0]] || []).map(id))),
+    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || [], ALSO_IN_V16[r[0]] || [], ALSO_IN_V17[r[0]] || [], ALSO_IN_V18[r[0]] || [], ALSO_IN_V19[r[0]] || [], ALSO_IN_V22[r[0]] || [], ALSO_IN_V23[r[0]] || [], ALSO_IN_V24[r[0]] || [], ALSO_IN_V25[r[0]] || [], ALSO_IN_V27[r[0]] || [], ALSO_IN_V28[r[0]] || []).map(id))),
     level: L ? L.levelFor(r[0], [].concat(r[5])[0]) : '',
     notes: '',
     stats: { correct: 0, wrong: 0 },
@@ -3017,7 +3018,7 @@
    * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 21;
+  const FIXES = 22;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -3065,6 +3066,8 @@
     // Version 26: mahtaa explains all three uses.
     ...Object.entries(ALSO_IN_V27).map(([finnish, cats]) => ({ v: 20, finnish, addCategories: cats.map(id) })),
     ...IMPRESSION.map((w) => ({ v: 21, finnish: w.finnish, addCategories: [id('No niin! 2')] })),
+    ...Object.entries(ALSO_IN_V28).map(([finnish, cats]) => ({ v: 22, finnish, addCategories: cats.map(id) })),
+    { v: 22, finnish: 'jokamiehenoikeus', english: 'everyman\'s right', definition: 'The right to walk, camp and pick berries and mushrooms in nature.', examples: [{ fi: 'Jokamiehenoikeus sallii marjastuksen.', en: 'Everyman\'s right allows berry picking.' }] },
     { v: 19, finnish: 'mahtaa', english: 'I wonder; can, may', definition: 'Type 1 · mahtaa · mahtoi (past). Mahtaako hän tulla? = I wonder if they\'re coming.' },
   ].map((f) => Object.assign({ v: 1 }, f));
 
