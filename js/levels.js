@@ -37,7 +37,7 @@
     'Streets & place names': 'A2.1',
     // Categories made by merging, and the textbook.
     'Health & doctor': 'A2.2', 'Food & cooking': 'A2.1', 'Nature & weather': 'A2.1', 'Home & housing': 'A2.1',
-    'Spoken Finnish & slang': 'A2.2', 'Finnish culture': 'A2.2', 'Small & linking words': 'A2.2', 'No niin! 2': 'A2.2', 'Words learnt during internship': 'A2.1', 'Module 2 Final Test': 'A2.2',
+    'Spoken Finnish & slang': 'A2.2', 'Finnish culture': 'A2.2', 'Small & linking words': 'A2.2', 'No niin! 2': 'A2.2', 'Vaikutelmaverbit': 'B1.1', 'Words learnt during internship': 'A2.1', 'Module 2 Final Test': 'A2.2',
   };
 
   // Words that are easier or harder than their category.
@@ -161,6 +161,9 @@
   // Version 21 additions.
     groups['A2.2'] = groups['A2.2'].concat(['aine', 'pata', 'kiehuva']);
     groups['B1.1'] = groups['B1.1'].concat(['vilvoitella', 'vihtoa', 'pefletti', 'laudeliina']);
+  // Version 22 additions.
+    groups['A2.1'] = groups['A2.1'].concat(['näyttää', 'miltä', 'maku', 'suolainen']);
+    groups['A2.2'] = groups['A2.2'].concat(['kuulostaa', 'tuoksua', 'haju', 'karvas']);
   const WORD = {};
   for (const [level, words] of Object.entries(groups)) for (const w of words) WORD[w] = level;
 

@@ -14,6 +14,7 @@
     verbs: { name: 'Verbs & their cases', icon: '🔗', blurb: 'Pidän suklaasta · Luotan sinuun · Kysy opettajalta' },
     person: { name: 'Minua, minulla, minun', icon: '🙋', blurb: 'Minua pelottaa · Minulla on kylmä · Minun täytyy lähteä' },
     amounts: { name: 'Numbers, amounts & "not"', icon: '🧮', blurb: 'kaksi kissaa · paljon vettä · Minulla ei ole autoa' },
+    impression: { name: 'Vaikutelmaverbit: looks, sounds, feels', icon: '👀', blurb: 'Näytät väsyneeltä · Kuulostaa hyvältä · Minusta tuntuu…' },
     plurals: { name: 'Plurals in all forms', icon: '👥', blurb: 'kissat · omenoita · lasten · laatikoissa · kauppoihin · pöydillä', task: 'Put the word in the plural' },
   };
 
@@ -68,10 +69,10 @@
     // Verbs that take -lta
     ['verbs', 'Kysy ___.', 'opettaja', 'opettajalta', ['opettajaa', 'opettajalle', 'opettajasta'], 'kysyä + ' + R.abl + ' = to ask someone.', 'Ask the teacher.'],
     ['verbs', 'Pyysin apua ___.', 'naapuri', 'naapurilta', ['naapuria', 'naapurille', 'naapurista'], 'pyytää jotakin + ' + R.abl + ' = to ask someone for something.', 'I asked the neighbour for help.'],
-    ['verbs', 'Ruoka maistuu ___.', 'valkosipuli', 'valkosipulilta', ['valkosipulia', 'valkosipulille', 'valkosipulista'], 'maistua + ' + R.abl + ' = to taste of.', 'The food tastes of garlic.'],
-    ['verbs', 'Hän näyttää ___.', 'isä', 'isältä', ['isää', 'isälle', 'isästä'], 'näyttää + ' + R.abl + ' = to look like.', 'They look like their dad.'],
-    ['verbs', 'Se kuulostaa ___.', 'hyvä idea', 'hyvältä idealta', ['hyvää ideaa', 'hyvälle idealle', 'hyvästä ideasta'], 'kuulostaa + ' + R.abl + ' = to sound like.', 'That sounds like a good idea.'],
-    ['verbs', 'Kangas tuntuu ___.', 'silkki', 'silkiltä', ['silkkiä', 'silkille', 'silkistä'], 'tuntua + ' + R.abl + ' = to feel like.', 'The fabric feels like silk.'],
+    ['impression', 'Ruoka maistuu ___.', 'valkosipuli', 'valkosipulilta', ['valkosipulia', 'valkosipulille', 'valkosipulista'], 'maistua + ' + R.abl + ' = to taste of.', 'The food tastes of garlic.'],
+    ['impression', 'Hän näyttää ___.', 'isä', 'isältä', ['isää', 'isälle', 'isästä'], 'näyttää + ' + R.abl + ' = to look like.', 'They look like their dad.'],
+    ['impression', 'Se kuulostaa ___.', 'hyvä idea', 'hyvältä idealta', ['hyvää ideaa', 'hyvälle idealle', 'hyvästä ideasta'], 'kuulostaa + ' + R.abl + ' = to sound like.', 'That sounds like a good idea.'],
+    ['impression', 'Kangas tuntuu ___.', 'silkki', 'silkiltä', ['silkkiä', 'silkille', 'silkistä'], 'tuntua + ' + R.abl + ' = to feel like.', 'The fabric feels like silk.'],
     ['verbs', 'Onko ___ sitten jotain hyötyä?', 'tämä', 'tästä', ['tätä', 'tähän', 'tälle'], 'olla hyötyä + ' + R.ela + ': siitä on hyötyä = it is useful.', 'Is this of any use, then?'],
     // Verbs that take -ksi
     ['verbs', 'Vesi muuttuu ___.', 'jää', 'jääksi', ['jäätä', 'jäähän', 'jäästä'], 'muuttua + ' + R.tra + ' = to turn into.', 'Water turns into ice.'],
@@ -120,6 +121,30 @@
     ['amounts', 'En näe ___.', 'sinä', 'sinua', ['sinut', 'sinä', 'sinulla'], 'Negative verb + object: partitive. En näe sinua.', 'I can\'t see you.'],
     ['amounts', 'En löydä ___.', 'kenkä', 'kenkää', ['kengän', 'kenkä', 'kengät'], 'Negative verb + object: partitive. kenkä → kenkää.', 'I can\'t find the shoe.'],
     ['amounts', 'Juna lähtee kahden ___ päästä.', 'minuutti', 'minuutin', ['minuuttia', 'minuutti', 'minuutit'], 'kahden … päästä: the number and the noun are both genitive.', 'The train leaves in two minutes.'],
+    // Vaikutelmaverbit: näyttää, kuulostaa, tuntua, maistua, haista, tuoksua, vaikuttaa + -lta / -ltä.
+    ['impression', 'Näytät ___.', 'väsynyt', 'väsyneeltä', ['väsynyt', 'väsynyttä', 'väsyneelle'], 'näyttää + ' + R.abl + ': the adjective is ablative. väsynyt → väsyneeltä.', 'You look tired.'],
+    ['impression', 'Hän näyttää ___.', 'sairas', 'sairaalta', ['sairas', 'sairasta', 'sairaalle'], 'näyttää + ' + R.abl + '. sairas → sairaalta.', 'They look ill.'],
+    ['impression', 'Ruoka näyttää ___.', 'herkullinen', 'herkulliselta', ['herkullinen', 'herkullista', 'herkulliselle'], 'näyttää + ' + R.abl + '. -nen → -selta.', 'The food looks delicious.'],
+    ['impression', 'Ulkona näyttää ___.', 'kylmä', 'kylmältä', ['kylmä', 'kylmää', 'kylmälle'], 'näyttää + ' + R.abl + '.', 'It looks cold outside.'],
+    ['impression', 'Tuo pilvi näyttää ___.', 'lammas', 'lampaalta', ['lammas', 'lammasta', 'lampaalle'], 'Nouns too: näyttää lampaalta = looks like a sheep. KPT: lammas → lampaa-.', 'That cloud looks like a sheep.'],
+    ['impression', 'Kuulostaa ___!', 'kiva', 'kivalta', ['kiva', 'kivaa', 'kivalle'], 'kuulostaa + ' + R.abl + '. Kuulostaa kivalta! = Sounds nice!', 'Sounds nice!'],
+    ['impression', 'Äänesi kuulostaa ___.', 'iloinen', 'iloiselta', ['iloinen', 'iloista', 'iloiselle'], 'kuulostaa + ' + R.abl + '.', 'Your voice sounds happy.'],
+    ['impression', 'Tämä tuntuu ___.', 'pehmeä', 'pehmeältä', ['pehmeä', 'pehmeää', 'pehmeälle'], 'tuntua + ' + R.abl + '.', 'This feels soft.'],
+    ['impression', 'Keitto maistuu ___.', 'suolainen', 'suolaiselta', ['suolainen', 'suolaista', 'suolaiselle'], 'maistua + ' + R.abl + '.', 'The soup tastes salty.'],
+    ['impression', 'Kahvi maistuu ___.', 'karvas', 'karvaalta', ['karvas', 'karvasta', 'karvaalle'], 'maistua + ' + R.abl + '. karvas → karvaalta.', 'The coffee tastes bitter.'],
+    ['impression', 'Tämä maistuu ___.', 'mansikka', 'mansikalta', ['mansikka', 'mansikkaa', 'mansikalle'], 'maistua + ' + R.abl + ' (tastes of). KPT: mansikka → mansikalta.', 'This tastes of strawberry.'],
+    ['impression', 'Täällä haisee ___.', 'savu', 'savulta', ['savu', 'savua', 'savulle'], 'haista + ' + R.abl + ' (smells of).', 'It smells of smoke in here.'],
+    ['impression', 'Pulla tuoksuu ___.', 'ihana', 'ihanalta', ['ihana', 'ihanaa', 'ihanalle'], 'tuoksua + ' + R.abl + '.', 'The buns smell lovely.'],
+    ['impression', 'Kukka tuoksuu ___.', 'kesä', 'kesältä', ['kesä', 'kesää', 'kesälle'], 'tuoksua + ' + R.abl + ' (smells of).', 'The flower smells of summer.'],
+    ['impression', 'Hän vaikuttaa ___.', 'mukava', 'mukavalta', ['mukava', 'mukavaa', 'mukavalle'], 'vaikuttaa + ' + R.abl + ' = to seem.', 'They seem nice.'],
+    ['impression', 'Hän vaikutti ___ ihmiseltä.', 'ystävällinen', 'ystävälliseltä', ['ystävällinen', 'ystävällistä', 'ystävälliselle'], 'vaikuttaa + ' + R.abl + '; the adjective agrees: ystävälliseltä ihmiseltä.', 'They seemed a kind person.'],
+    ['impression', 'Tuntuu ___, että alkaa sataa.', 'se', 'siltä', ['sitä', 'se', 'sille'], 'Tuntuu siltä, että… = It feels like… (se → siltä).', 'It feels like it\'s going to rain.'],
+    ['impression', 'Näyttää ___, että bussi on myöhässä.', 'se', 'siltä', ['sitä', 'se', 'siitä'], 'Näyttää siltä, että… = It looks like…', 'It looks like the bus is late.'],
+    ['impression', '___ tuntuu, että hän on oikeassa.', 'minä', 'Minusta', ['Minulla', 'Minua', 'Minulta'], 'Minusta tuntuu = I feel, I think: the person is in -sta. Not minulla.', 'I feel that they\'re right.'],
+    ['impression', 'Miltä ___ tuntuu?', 'sinä', 'sinusta', ['sinulla', 'sinua', 'sinulta'], 'Miltä sinusta tuntuu? = How do you feel (about it)?', 'How do you feel about it?'],
+    ['impression', '___ uusi työ tuntuu?', 'mikä', 'Miltä', ['Mitä', 'Mikä', 'Mille'], 'The question word is in -lta too: miltä? = what … like?', 'How does the new job feel?'],
+    ['impression', 'Hän on ___ näköinen.', 'väsynyt', 'väsyneen', ['väsyneeltä', 'väsynyt', 'väsynyttä'], 'olla + genitive + näköinen = to look: väsyneen näköinen.', 'They look tired.'],
+    ['impression', 'Lapsi on ___ näköinen.', 'äiti', 'äidin', ['äidiltä', 'äiti', 'äitiä'], 'genitive + näköinen = looks like: äidin näköinen.', 'The child looks like their mum.'],
     // Plurals: every case, and words whose stem changes. The wrong options are the singular or another plural case.
     // Nominative plural -t: the subject, or "all of them" as the object.
     ['plurals', '___ nukkuvat sohvalla.', 'kissa', 'Kissat', ['Kissa', 'Kissoja', 'Kissojen'], 'Nominative plural -t: the subject. kissa → kissat.', 'The cats are sleeping on the sofa.'],

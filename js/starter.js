@@ -108,8 +108,9 @@
     C('Small & linking words', '#6f6f8f'),
     // The textbook (version 19).
     C('No niin! 2', '#1f8fa3'),
+    C('Vaikutelmaverbit', '#7a55c7'),
   ];
-  const VERSION = 21;
+  const VERSION = 22;
   // Since version 17 the daycare categories are one category, Daycare. The word lists below still name
   // the old ones; their words simply end up in Daycare.
   const MERGED_INTO_DAYCARE = ['Daycare: play', 'Daycare: safety', 'Daycare: instructions', 'Daycare: praise',
@@ -2911,8 +2912,27 @@
     ['kiehuva', 'boiling', 'adjective', 'From kiehua = to boil. kiehuva vesi = boiling water; partitive: kiehuvaa vettä.', [['Kaada päälle kiehuvaa vettä.', 'Pour boiling water over it.']], ['Food & cooking', 'No niin! 2']],
   ];
 
+  // Added in version 22: vaikutelmaverbit (looks, sounds, feels like). The adjective or noun goes in -lta / -ltä.
+  const v22 = [
+    ['näyttää', 'to look (like), to seem; to show', 'verb', 'Type 1 · minä näytän · hän näytti (past). Impression: näyttää + -lta: Näytät väsyneeltä = You look tired. Also to show: Näytä kuva!', [['Näytät tänään iloiselta.', 'You look happy today.']], ['Vaikutelmaverbit']],
+    ['kuulostaa', 'to sound (like)', 'verb', 'Type 1 · se kuulostaa · se kuulosti (past). + -lta: Kuulostaa hyvältä! = Sounds good!', [['Se kuulostaa hyvältä idealta.', 'That sounds like a good idea.']], ['Vaikutelmaverbit']],
+    ['haista', 'to smell (often bad)', 'verb', 'Type 3 · se haisee · se haisi (past). + -lta: Täällä haisee kalalta. haju = smell.', [['Täällä haisee kalalta.', 'It smells of fish in here.']], ['Vaikutelmaverbit']],
+    ['tuoksua', 'to smell (nice)', 'verb', 'Type 1 · se tuoksuu · se tuoksui (past). + -lta: Pulla tuoksuu ihanalta. tuoksu = scent.', [['Pulla tuoksuu ihanalta.', 'The buns smell lovely.']], ['Vaikutelmaverbit']],
+    ['miltä', 'what … like? (looks, sounds, feels)', 'pronoun', 'The ablative of mikä, used with the vaikutelmaverbit: Miltä näyttää? Miltä kuulostaa? Miltä sinusta tuntuu?', [['Miltä keitto maistuu?', 'What does the soup taste like?']], ['Vaikutelmaverbit', 'Question words']],
+    ['näyttää siltä', 'it looks like (that)…', 'phrase', 'Näyttää siltä, että… = It looks as if… Also: kuulostaa siltä, että…; tuntuu siltä kuin… = it feels as if…', [['Näyttää siltä, että alkaa sataa.', 'It looks like it\'s going to rain.']], ['Vaikutelmaverbit']],
+    ['tuntuu siltä', 'it feels like (that)…', 'phrase', 'Tuntuu siltä, että… = It feels like… / I feel that…', [['Tuntuu siltä, että olen sairastumassa.', 'It feels like I\'m coming down with something.']], ['Vaikutelmaverbit']],
+    ['minusta tuntuu', 'I feel (that), I think', 'phrase', 'The person is in -sta: minusta, sinusta, hänestä. Not: minulla tuntuu.', [['Minusta tuntuu, että hän on oikeassa.', 'I feel that they\'re right.']], ['Vaikutelmaverbit', 'Opinions & discussion']],
+    ['näköinen', 'looking (like)', 'adjective', 'olla + genitive + näköinen: Hän on väsyneen näköinen = They look tired. Lapsi on äitinsä näköinen = The child looks like their mother.', [['Lapsi on äitinsä näköinen.', 'The child looks like their mother.']], ['Vaikutelmaverbit']],
+    ['vaikutelma', 'impression', 'noun', 'Stem: vaikutelman. saada hyvä vaikutelma = to get a good impression. vaikutelmaverbit = verbs of impression.', [['Sain hänestä hyvän vaikutelman.', 'I got a good impression of them.']], ['Vaikutelmaverbit']],
+    ['maku', 'taste, flavour', 'noun', 'Stem: maun, makua (k disappears). maistua = to taste. hyvä maku = good taste.', [['Keitossa on hyvä maku.', 'The soup has a good flavour.']], ['Vaikutelmaverbit', 'Food & cooking']],
+    ['haju', 'smell, odour', 'noun', 'Stem: hajun. Usually neutral or bad; a nice smell is tuoksu.', [['Huoneessa on outo haju.', 'There\'s a strange smell in the room.']], ['Vaikutelmaverbit']],
+    ['suolainen', 'salty', 'adjective', 'Stem: suolaisen. suola = salt. Opposite: makea = sweet.', [['Keitto on liian suolainen.', 'The soup is too salty.']], ['Food & cooking', 'Vaikutelmaverbit']],
+    ['karvas', 'bitter', 'adjective', 'Stem: karvaan, karvasta. Kahvi maistuu karvaalta = the coffee tastes bitter.', [['Kahvi on karvasta.', 'The coffee is bitter.']], ['Food & cooking', 'Vaikutelmaverbit']],
+  ];
+  const ALSO_IN_V22 = { 'tuntua': ['Vaikutelmaverbit'], 'maistua': ['Vaikutelmaverbit'], 'vaikuttaa': ['Vaikutelmaverbit'], 'tuoksu': ['Vaikutelmaverbit'] };
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21).map((r) => {
+  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22).map((r) => {
     let cats = [].concat(r[5]);
     if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$|^Planning & documentation$|^Support & inclusion$|^Words learnt during internship$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$|^Slang$/.test(cats[0])) cats.push('Verbs');
@@ -2922,7 +2942,7 @@
   const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
   // The version each tagged word was added in (v4 onwards).
-  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21].flatMap((list, n) => list.map(() => n + 4));
+  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22].flatMap((list, n) => list.map(() => n + 4));
   const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(since[i])));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
@@ -2931,7 +2951,7 @@
     partOfSpeech: r[2],
     definition: r[3],
     examples: r[4].map(([fi, en]) => ({ fi, en })),
-    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || [], ALSO_IN_V16[r[0]] || [], ALSO_IN_V17[r[0]] || [], ALSO_IN_V18[r[0]] || [], ALSO_IN_V19[r[0]] || []).map(id))),
+    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || [], ALSO_IN_V16[r[0]] || [], ALSO_IN_V17[r[0]] || [], ALSO_IN_V18[r[0]] || [], ALSO_IN_V19[r[0]] || [], ALSO_IN_V22[r[0]] || []).map(id))),
     level: L ? L.levelFor(r[0], [].concat(r[5])[0]) : '',
     notes: '',
     stats: { correct: 0, wrong: 0 },
@@ -2953,7 +2973,7 @@
    * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 14;
+  const FIXES = 15;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -2994,6 +3014,7 @@
     ...Object.entries(MERGES_2).map(([into, from]) => ({ v: 12, mergeCategories: from.map((n) => 'cat-' + slug(n)), into: 'cat-' + slug(into) })),
     ...Object.entries(ALSO_IN_V18).map(([finnish, cats]) => ({ v: 13, finnish, addCategories: cats.map(id) })),
     ...Object.entries(ALSO_IN_V19).map(([finnish, cats]) => ({ v: 14, finnish, addCategories: cats.map(id) })),
+    ...Object.entries(ALSO_IN_V22).map(([finnish, cats]) => ({ v: 15, finnish, addCategories: cats.map(id) })),
   ].map((f) => Object.assign({ v: 1 }, f));
 
   root.VocabStarter = { VERSION, categories: categories.filter((c) => !mergeMap.has(c.id)), words, newerThan, FIXES, fixes };
