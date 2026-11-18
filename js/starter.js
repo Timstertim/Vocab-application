@@ -110,7 +110,7 @@
     C('No niin! 2', '#1f8fa3'),
     C('Vaikutelmaverbit', '#7a55c7'),
   ];
-  const VERSION = 23;
+  const VERSION = 24;
   // Since version 17 the daycare categories are one category, Daycare. The word lists below still name
   // the old ones; their words simply end up in Daycare.
   const MERGED_INTO_DAYCARE = ['Daycare: play', 'Daycare: safety', 'Daycare: instructions', 'Daycare: praise',
@@ -2943,8 +2943,15 @@
   ];
   const ALSO_IN_V23 = { 'päästä': ['No niin! 2'] };
 
+  // Added in version 24.
+  const v24 = [
+    ['älä valita', 'don\'t complain', 'phrase', 'The negative command of valittaa (to complain): älä + weak stem, tt → t. Don\'t mix up with valita = to choose (älä valitse = don\'t choose).', [['Älä valita koko ajan!', 'Stop complaining all the time!']], ['Daycare', 'No niin! 2']],
+    ['tahra', 'stain', 'noun', 'Stem: tahran. tahrainen = stained. Tahra lähti pesussa = the stain came out in the wash.', [['Paidassa on tahra.', 'There\'s a stain on the shirt.']], ['Clothes', 'No niin! 2']],
+  ];
+  const ALSO_IN_V24 = { 'valittaa': ['No niin! 2'] };
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23).map((r) => {
+  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24).map((r) => {
     let cats = [].concat(r[5]);
     if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$|^Planning & documentation$|^Support & inclusion$|^Words learnt during internship$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$|^Slang$/.test(cats[0])) cats.push('Verbs');
@@ -2954,7 +2961,7 @@
   const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
   // The version each tagged word was added in (v4 onwards).
-  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23].flatMap((list, n) => list.map(() => n + 4));
+  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24].flatMap((list, n) => list.map(() => n + 4));
   const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(since[i])));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
@@ -2963,7 +2970,7 @@
     partOfSpeech: r[2],
     definition: r[3],
     examples: r[4].map(([fi, en]) => ({ fi, en })),
-    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || [], ALSO_IN_V16[r[0]] || [], ALSO_IN_V17[r[0]] || [], ALSO_IN_V18[r[0]] || [], ALSO_IN_V19[r[0]] || [], ALSO_IN_V22[r[0]] || [], ALSO_IN_V23[r[0]] || []).map(id))),
+    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || [], ALSO_IN_V16[r[0]] || [], ALSO_IN_V17[r[0]] || [], ALSO_IN_V18[r[0]] || [], ALSO_IN_V19[r[0]] || [], ALSO_IN_V22[r[0]] || [], ALSO_IN_V23[r[0]] || [], ALSO_IN_V24[r[0]] || []).map(id))),
     level: L ? L.levelFor(r[0], [].concat(r[5])[0]) : '',
     notes: '',
     stats: { correct: 0, wrong: 0 },
@@ -2985,7 +2992,7 @@
    * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 16;
+  const FIXES = 17;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -3028,6 +3035,7 @@
     ...Object.entries(ALSO_IN_V19).map(([finnish, cats]) => ({ v: 14, finnish, addCategories: cats.map(id) })),
     ...Object.entries(ALSO_IN_V22).map(([finnish, cats]) => ({ v: 15, finnish, addCategories: cats.map(id) })),
     ...Object.entries(ALSO_IN_V23).map(([finnish, cats]) => ({ v: 16, finnish, addCategories: cats.map(id) })),
+    ...Object.entries(ALSO_IN_V24).map(([finnish, cats]) => ({ v: 17, finnish, addCategories: cats.map(id) })),
   ].map((f) => Object.assign({ v: 1 }, f));
 
   root.VocabStarter = { VERSION, categories: categories.filter((c) => !mergeMap.has(c.id)), words, newerThan, FIXES, fixes };
