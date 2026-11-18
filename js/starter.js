@@ -2999,6 +2999,9 @@
     createdAt: now - (rows.length - i) * 1000,
     since: r[6],
   }));
+  // The vaikutelmaverbit are also studied in No niin! 2.
+  const IMPRESSION = words.filter((w) => w.categoryIds.includes(id('Vaikutelmaverbit')));
+  IMPRESSION.forEach((w) => { if (!w.categoryIds.includes(id('No niin! 2'))) w.categoryIds.push(id('No niin! 2')); });
 
   /** The starter words added after `version`, with the categories they use. */
   function newerThan(version) {
@@ -3014,7 +3017,7 @@
    * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 20;
+  const FIXES = 21;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -3061,6 +3064,7 @@
     ...Object.entries(ALSO_IN_V25).map(([finnish, cats]) => ({ v: 18, finnish, addCategories: cats.map(id) })),
     // Version 26: mahtaa explains all three uses.
     ...Object.entries(ALSO_IN_V27).map(([finnish, cats]) => ({ v: 20, finnish, addCategories: cats.map(id) })),
+    ...IMPRESSION.map((w) => ({ v: 21, finnish: w.finnish, addCategories: [id('No niin! 2')] })),
     { v: 19, finnish: 'mahtaa', english: 'I wonder; can, may', definition: 'Type 1 · mahtaa · mahtoi (past). Mahtaako hän tulla? = I wonder if they\'re coming.' },
   ].map((f) => Object.assign({ v: 1 }, f));
 
