@@ -110,7 +110,7 @@
     C('No niin! 2', '#1f8fa3'),
     C('Vaikutelmaverbit', '#7a55c7'),
   ];
-  const VERSION = 27;
+  const VERSION = 28;
   // Since version 17 the daycare categories are one category, Daycare. The word lists below still name
   // the old ones; their words simply end up in Daycare.
   const MERGED_INTO_DAYCARE = ['Daycare: play', 'Daycare: safety', 'Daycare: instructions', 'Daycare: praise',
@@ -860,7 +860,7 @@
     ['makkara', 'sausage', 'noun', 'grillimakkara = grilling sausage.', [['Saunan jälkeen grillataan makkaraa.', 'After the sauna we grill sausages.']], 'Finnish food'],
     ['leipäjuusto', 'Finnish squeaky cheese', 'noun', 'Baked cheese, often eaten with cloudberry jam.', [['Leipäjuustoa syödään lakkahillon kanssa.', 'Squeaky cheese is eaten with cloudberry jam.']], 'Finnish food'],
     ['lakka', 'cloudberry', 'noun', 'Also: hilla. Grows in bogs in the north.', [['Lakka kasvaa suolla.', 'Cloudberries grow in bogs.']], 'Finnish food'],
-    ['puolukka', 'lingonberry', 'noun', 'Stem: puolukan.', [['Puolukasta tehdään hilloa.', 'Jam is made from lingonberries.']], 'Finnish food'],
+    ['puolukka', 'lingonberry', 'noun', 'Stem: puolukan, puolukkaa (kk → k). Plural: puolukat; partitive puolukoita (berries are usually plural: poimia puolukoita = to pick lingonberries). Picking berries in the forest is allowed by jokamiehenoikeudet.', [['Puolukasta tehdään hilloa.', 'Jam is made from lingonberries.'], ['Poimimme metsästä puolukoita.', 'We picked lingonberries in the forest.']], 'Finnish food'],
     ['mustikkapiirakka', 'blueberry pie', 'noun', 'A summer favourite.', [['Mustikkapiirakka on kesän herkku.', 'Blueberry pie is a summer treat.']], 'Finnish food'],
     ['mämmi', 'mämmi (Easter rye pudding)', 'noun', 'Eaten with cream and sugar.', [['Mämmiä syödään pääsiäisenä.', 'Mämmi is eaten at Easter.']], 'Finnish food'],
     ['salmiakki', 'salty liquorice', 'noun', 'Black, salty sweets loved by Finns.', [['Salmiakki on suolaista.', 'Salmiakki is salty.']], 'Finnish food'],
@@ -2970,11 +2970,27 @@
     ['tuonne', '(to) over there', 'adverb', 'Mihin? Moving to a place you can see. Spoken: tonne.', [['Laita laukku tuonne nurkkaan.', 'Put the bag over there in the corner.']], ['Where things are', 'No niin! 2']],
     ['tuolta', 'from over there', 'adverb', 'Mistä? From a place you can see.', [['Bussi tulee tuolta.', 'The bus is coming from over there.']], ['Where things are', 'No niin! 2']],
   ];
-  const ALSO_IN_V28 = { 'jokamiehenoikeus': ['No niin! 2'] };
   const ALSO_IN_V27 = { 'tänne': ['No niin! 2'], 'täällä': ['Where things are', 'No niin! 2'], 'täältä': ['No niin! 2'], 'sinne': ['No niin! 2'], 'siellä': ['No niin! 2'], 'sieltä': ['No niin! 2'] };
 
+  // Added in version 28.
+  const v28 = [
+    ['pahin mahdollinen', 'the worst possible', 'phrase', 'pahin = worst: paha → pahempi → pahin (bad → worse → worst). Opposite: paras mahdollinen = the best possible. pahimmassa tapauksessa = in the worst case.', [['Sade on pahin mahdollinen sää telttailuun.', 'Rain is the worst possible weather for camping.']], ['Describing things', 'No niin! 2']],
+    ['ennustaa', 'to forecast, to predict', 'verb', 'Type 1 · minä ennustan · hän ennusti (past). ennuste = forecast; sääennuste = weather forecast.', [['Meteorologit ennustavat lunta viikonlopuksi.', 'The meteorologists are forecasting snow for the weekend.']], ['Nature & weather', 'No niin! 2']],
+    ['ennuste', 'forecast, prediction', 'noun', 'Stem: ennusteen, ennustetta. From ennustaa. sääennuste = weather forecast.', [['Ennuste lupaa aurinkoa.', 'The forecast promises sun.']], ['Nature & weather', 'No niin! 2']],
+    ['yhä', 'still; more and more', 'adverb', 'Two uses: 1) still = vielä: Sataa yhä. 2) yhä + comparative = more and more: yhä useampi = more and more people, yhä kalliimpi = ever more expensive.', [['Sataa yhä.', 'It\'s still raining.'], ['Ruoka on yhä kalliimpaa.', 'Food is getting more and more expensive.']], ['Small & linking words', 'No niin! 2']],
+    ['aivan mahtava idea', 'a really great idea', 'phrase', 'aivan = totally, really; mahtava = great, awesome. Also: hyvä idea, loistava idea (a brilliant idea). Stem of idea: idean, ideaa.', [['Se on aivan mahtava idea!', 'That\'s a really great idea!']], ['Opinions & discussion', 'No niin! 2']],
+    ['riippumatto', 'hammock', 'noun', 'riippua (to hang) + matto (mat). Stem: riippumaton, riippumattoa (tt → t). Lepään riippumatossa = I\'m resting in the hammock. Don\'t mix up: riippumaton = independent.', [['Riippumatto on kahden puun välissä.', 'The hammock is between two trees.']], ['Nature & weather', 'No niin! 2']],
+    ['teltta', 'tent', 'noun', 'Stem: teltan, telttaa (tt → t). Verb: telttailla = to camp in a tent. pystyttää teltta = to put up a tent: Pystytimme teltan. purkaa teltta = to take down a tent.', [['Meillä on iso teltta.', 'We have a big tent.']], ['Nature & weather', 'No niin! 2']],
+    ['telttailla', 'to camp (in a tent), to go camping', 'verb', 'Type 3 · minä telttailen · hän telttaili (past). From teltta. telttailu = camping. leirintäalue = campsite.', [['Kesällä telttailemme Lapissa.', 'In the summer we go camping in Lapland.']], ['Nature & weather', 'Hobbies & sport', 'No niin! 2']],
+    ['jännä', 'interesting, exciting; funny, odd', 'adjective', 'Spoken Finnish, from jännittävä (exciting). Stem: jännän, jännää. Onpa jännä! = How interesting! / That\'s odd! Jännää! = Exciting!', [['Onpa jännä, että hän ei vastaa.', 'It\'s funny that they\'re not answering.']], ['Spoken Finnish & slang', 'No niin! 2']],
+    ['kuka tahansa', 'anyone, anybody, whoever', 'pronoun', 'Question word + tahansa = any… at all: mikä tahansa = anything, missä tahansa = anywhere, milloin tahansa = any time. kuka inflects: kenelle tahansa = to anyone.', [['Kuka tahansa voi oppia suomea.', 'Anyone can learn Finnish.']], ['Pronouns', 'No niin! 2']],
+    ['jättää', 'to leave (behind), to leave out; to hand in', 'verb', 'Type 1 · minä jätän · hän jätti (past) (tt → t). jättää = leave something or someone; lähteä = leave, go away; jäädä = stay. jättää väliin = to skip; jättää hakemus = to hand in an application.', [['Monet jättävät auton kotiin ja pyöräilevät.', 'Many people leave the car at home and cycle.']], ['Verbs', 'No niin! 2']],
+  ];
+  const ALSO_IN_V28 = { 'jokamiehenoikeus': ['No niin! 2'] };
+  const ALSO_IN_V28B = { 'puolukka': ['Nature & weather', 'No niin! 2'] };
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27).map((r) => {
+  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27, v28).map((r) => {
     let cats = [].concat(r[5]);
     if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$|^Planning & documentation$|^Support & inclusion$|^Words learnt during internship$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$|^Slang$/.test(cats[0])) cats.push('Verbs');
@@ -2984,7 +3000,7 @@
   const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
   // The version each tagged word was added in (v4 onwards).
-  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27].flatMap((list, n) => list.map(() => n + 4));
+  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27, v28].flatMap((list, n) => list.map(() => n + 4));
   const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(since[i])));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
@@ -2993,7 +3009,7 @@
     partOfSpeech: r[2],
     definition: r[3],
     examples: r[4].map(([fi, en]) => ({ fi, en })),
-    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || [], ALSO_IN_V16[r[0]] || [], ALSO_IN_V17[r[0]] || [], ALSO_IN_V18[r[0]] || [], ALSO_IN_V19[r[0]] || [], ALSO_IN_V22[r[0]] || [], ALSO_IN_V23[r[0]] || [], ALSO_IN_V24[r[0]] || [], ALSO_IN_V25[r[0]] || [], ALSO_IN_V27[r[0]] || [], ALSO_IN_V28[r[0]] || []).map(id))),
+    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || [], ALSO_IN_V16[r[0]] || [], ALSO_IN_V17[r[0]] || [], ALSO_IN_V18[r[0]] || [], ALSO_IN_V19[r[0]] || [], ALSO_IN_V22[r[0]] || [], ALSO_IN_V23[r[0]] || [], ALSO_IN_V24[r[0]] || [], ALSO_IN_V25[r[0]] || [], ALSO_IN_V27[r[0]] || [], ALSO_IN_V28[r[0]] || [], ALSO_IN_V28B[r[0]] || []).map(id))),
     level: L ? L.levelFor(r[0], [].concat(r[5])[0]) : '',
     notes: '',
     stats: { correct: 0, wrong: 0 },
@@ -3018,7 +3034,7 @@
    * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 22;
+  const FIXES = 23;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -3068,6 +3084,8 @@
     ...IMPRESSION.map((w) => ({ v: 21, finnish: w.finnish, addCategories: [id('No niin! 2')] })),
     ...Object.entries(ALSO_IN_V28).map(([finnish, cats]) => ({ v: 22, finnish, addCategories: cats.map(id) })),
     { v: 22, finnish: 'jokamiehenoikeus', english: 'everyman\'s right', definition: 'The right to walk, camp and pick berries and mushrooms in nature.', examples: [{ fi: 'Jokamiehenoikeus sallii marjastuksen.', en: 'Everyman\'s right allows berry picking.' }] },
+    ...Object.entries(ALSO_IN_V28B).map(([finnish, cats]) => ({ v: 23, finnish, addCategories: cats.map(id) })),
+    { v: 23, finnish: 'puolukka', definition: 'Stem: puolukan.', examples: [{ fi: 'Puolukasta tehdään hilloa.', en: 'Jam is made from lingonberries.' }] },
     { v: 19, finnish: 'mahtaa', english: 'I wonder; can, may', definition: 'Type 1 · mahtaa · mahtoi (past). Mahtaako hän tulla? = I wonder if they\'re coming.' },
   ].map((f) => Object.assign({ v: 1 }, f));
 
