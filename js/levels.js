@@ -176,6 +176,8 @@
     groups['A2.1'] = groups['A2.1'].concat(['mahdollinen', 'mahtava']);
     groups['A2.2'] = groups['A2.2'].concat(['mahdoton']);
     groups['B1.1'] = groups['B1.1'].concat(['en mahda mitään']);
+  // Version 29 additions.
+    groups['A2.2'] = groups['A2.2'].concat(['käyttää', 'säätää', 'tiivistää', 'hankkia', 'pakastaa', 'pakata', 'suosia', 'säästää', 'pienentää', 'hiilijalanjälki', 'ekologinen', 'kertakäyttöinen', 'sanomattakin on selvää']);
   // Version 28 additions.
     groups['A2.2'] = groups['A2.2'].concat(['pahin mahdollinen', 'ennustaa', 'ennuste', 'yhä', 'aivan mahtava idea', 'riippumatto', 'teltta', 'telttailla', 'jännä', 'kuka tahansa', 'jättää']);
   // Version 27 additions.

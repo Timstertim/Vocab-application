@@ -110,7 +110,7 @@
     C('No niin! 2', '#1f8fa3'),
     C('Vaikutelmaverbit', '#7a55c7'),
   ];
-  const VERSION = 28;
+  const VERSION = 29;
   // Since version 17 the daycare categories are one category, Daycare. The word lists below still name
   // the old ones; their words simply end up in Daycare.
   const MERGED_INTO_DAYCARE = ['Daycare: play', 'Daycare: safety', 'Daycare: instructions', 'Daycare: praise',
@@ -2989,8 +2989,26 @@
   const ALSO_IN_V28 = { 'jokamiehenoikeus': ['No niin! 2'] };
   const ALSO_IN_V28B = { 'puolukka': ['Nature & weather', 'No niin! 2'] };
 
+  // Added in version 29: the -malla / -matta verbs (No niin! 2).
+  const v29 = [
+    ['käyttää', 'to use; to wear', 'verb', 'Type 1 · minä käytän · hän käytti (past) (tt → t). käyttämällä = by using; käyttämättä = without using. käyttää silmälaseja = to wear glasses.', [['Käytän pyörää joka päivä.', 'I use my bike every day.']], ['No niin! 2']],
+    ['säätää', 'to adjust, to set', 'verb', 'Type 1 · minä säädän · hän sääti (past) (t → d). säätämällä = by adjusting. säätää lämpöä = to adjust the heating.', [['Voitko säätää lämpöä vähän pienemmälle?', 'Can you turn the heating down a little?']], ['Home & housing', 'No niin! 2']],
+    ['tiivistää', 'to seal; to compress; to summarise', 'verb', 'Type 1 · minä tiivistän · hän tiivisti (past). tiivistämällä = by sealing / compressing. tiivistää ikkunat = to seal the windows; tiivistää teksti = to summarise a text.', [['Syksyllä tiivistämme ikkunat.', 'In the autumn we seal the windows.']], ['Home & housing', 'Studying & writing', 'No niin! 2']],
+    ['hankkia', 'to get, to acquire', 'verb', 'Type 1 · minä hankin · hän hankki (past) (kk → k). hankkimalla = by getting. A bit more formal than saada or ostaa.', [['Hankimme käytetyn sohvan.', 'We got a second-hand sofa.']], ['No niin! 2']],
+    ['pakastaa', 'to freeze (food)', 'verb', 'Type 1 · minä pakastan · hän pakasti (past). pakastamalla = by freezing. pakastin = freezer; pakaste = frozen food.', [['Pakastan ylimääräisen leivän.', 'I freeze the extra bread.']], ['Food & cooking', 'No niin! 2']],
+    ['pakata', 'to pack', 'verb', 'Type 4 · minä pakkaan · hän pakkasi (past) (k → kk). pakkaamalla = by packing; pakkaamatta = without packing. pakata laukku = to pack a bag.', [['Pakkaan laukun illalla.', 'I\'ll pack my bag in the evening.']], ['No niin! 2']],
+    ['suosia', 'to favour, to prefer', 'verb', 'Type 1 · minä suosin · hän suosi (past). suosimalla = by favouring. suosia kotimaista = to buy Finnish products.', [['Suosin kotimaista ruokaa.', 'I prefer Finnish food.']], ['No niin! 2']],
+    ['säästää', 'to save (money, energy)', 'verb', 'Type 1 · minä säästän · hän säästi (past). säästämällä = by saving. säästää rahaa / energiaa / aikaa.', [['Säästän rahaa matkaa varten.', 'I\'m saving money for a trip.']], ['Shopping & money', 'No niin! 2']],
+    ['pienentää', 'to reduce, to make smaller', 'verb', 'Type 1 · minä pienennän · hän pienensi (past) (nt → nn). From pieni. Opposite: suurentaa. pienentää hiilijalanjälkeä = to reduce your carbon footprint.', [['Pienennä kuvaa vähän.', 'Make the picture a bit smaller.']], ['No niin! 2']],
+    ['hiilijalanjälki', 'carbon footprint', 'noun', 'hiili (carbon) + jalanjälki (footprint). Stem: hiilijalanjäljen, hiilijalanjälkeä (k → j).', [['Lentäminen kasvattaa hiilijalanjälkeä.', 'Flying increases your carbon footprint.']], ['Home & housing', 'No niin! 2']],
+    ['ekologinen', 'ecological, eco-friendly', 'adjective', 'Stem: ekologisen, ekologista. ekologinen valinta = an eco-friendly choice. Also: ympäristöystävällinen.', [['Pyöräily on ekologinen tapa liikkua.', 'Cycling is an eco-friendly way to get around.']], ['Home & housing', 'No niin! 2']],
+    ['kertakäyttöinen', 'disposable, single-use', 'adjective', 'kerta (once) + käyttö (use). Stem: kertakäyttöisen. kertakäyttöastia = disposable dish; opposite: monikäyttöinen = reusable.', [['Älä osta kertakäyttöisiä mukeja.', 'Don\'t buy disposable cups.']], ['Home & housing', 'No niin! 2']],
+    ['sanomattakin on selvää', 'it goes without saying', 'phrase', 'sanoa → sanomatta (without saying) + -kin. Sanomattakin on selvää, että… = It goes without saying that…', [['Sanomattakin on selvää, että autan sinua.', 'It goes without saying that I\'ll help you.']], ['Opinions & discussion', 'No niin! 2']],
+  ];
+  const ALSO_IN_V29 = { 'suunnitella': ['No niin! 2'], 'tilata': ['No niin! 2'], 'kierrättää': ['No niin! 2'], 'tarkistaa': ['No niin! 2'], 'pestä': ['No niin! 2'], 'ostaa': ['No niin! 2'], 'lajitella': ['No niin! 2'], 'pitää': ['No niin! 2'], 'käydä': ['No niin! 2'], 'vähentää': ['No niin! 2'], 'tehdä': ['No niin! 2'] };
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27, v28).map((r) => {
+  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27, v28, v29).map((r) => {
     let cats = [].concat(r[5]);
     if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$|^Planning & documentation$|^Support & inclusion$|^Words learnt during internship$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$|^Slang$/.test(cats[0])) cats.push('Verbs');
@@ -3000,7 +3018,7 @@
   const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
   // The version each tagged word was added in (v4 onwards).
-  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27, v28].flatMap((list, n) => list.map(() => n + 4));
+  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27, v28, v29].flatMap((list, n) => list.map(() => n + 4));
   const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(since[i])));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
@@ -3009,7 +3027,7 @@
     partOfSpeech: r[2],
     definition: r[3],
     examples: r[4].map(([fi, en]) => ({ fi, en })),
-    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || [], ALSO_IN_V16[r[0]] || [], ALSO_IN_V17[r[0]] || [], ALSO_IN_V18[r[0]] || [], ALSO_IN_V19[r[0]] || [], ALSO_IN_V22[r[0]] || [], ALSO_IN_V23[r[0]] || [], ALSO_IN_V24[r[0]] || [], ALSO_IN_V25[r[0]] || [], ALSO_IN_V27[r[0]] || [], ALSO_IN_V28[r[0]] || [], ALSO_IN_V28B[r[0]] || []).map(id))),
+    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || [], ALSO_IN_V16[r[0]] || [], ALSO_IN_V17[r[0]] || [], ALSO_IN_V18[r[0]] || [], ALSO_IN_V19[r[0]] || [], ALSO_IN_V22[r[0]] || [], ALSO_IN_V23[r[0]] || [], ALSO_IN_V24[r[0]] || [], ALSO_IN_V25[r[0]] || [], ALSO_IN_V27[r[0]] || [], ALSO_IN_V28[r[0]] || [], ALSO_IN_V28B[r[0]] || [], ALSO_IN_V29[r[0]] || []).map(id))),
     level: L ? L.levelFor(r[0], [].concat(r[5])[0]) : '',
     notes: '',
     stats: { correct: 0, wrong: 0 },
@@ -3034,7 +3052,7 @@
    * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 23;
+  const FIXES = 24;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -3086,6 +3104,7 @@
     { v: 22, finnish: 'jokamiehenoikeus', english: 'everyman\'s right', definition: 'The right to walk, camp and pick berries and mushrooms in nature.', examples: [{ fi: 'Jokamiehenoikeus sallii marjastuksen.', en: 'Everyman\'s right allows berry picking.' }] },
     ...Object.entries(ALSO_IN_V28B).map(([finnish, cats]) => ({ v: 23, finnish, addCategories: cats.map(id) })),
     { v: 23, finnish: 'puolukka', definition: 'Stem: puolukan.', examples: [{ fi: 'Puolukasta tehdään hilloa.', en: 'Jam is made from lingonberries.' }] },
+    ...Object.entries(ALSO_IN_V29).map(([finnish, cats]) => ({ v: 24, finnish, addCategories: cats.map(id) })),
     { v: 19, finnish: 'mahtaa', english: 'I wonder; can, may', definition: 'Type 1 · mahtaa · mahtoi (past). Mahtaako hän tulla? = I wonder if they\'re coming.' },
   ].map((f) => Object.assign({ v: 1 }, f));
 

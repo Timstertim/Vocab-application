@@ -63,7 +63,7 @@ with Quizlet-style mini games.
 - **Which case?**: a sentence with a gap and a word in its basic form; put the word in the form the sentence
   needs. Three sets: **Verbs & their cases** (*Pidän suklaasta*, *Luotan sinuun*, *Kysy opettajalta*, *Vesi muuttuu
   jääksi*), **Minua, minulla, minun** (*Minua pelottaa*, *Minulla on kylmä*, *Minun täytyy lähteä*) and **Numbers,
-  amounts & "not"** (*kaksi kissaa*, *lasi maitoa*, *Minulla ei ole autoa*), **Täällä, tuolla, siellä** (tänne / täällä /
+  amounts & "not"** (*kaksi kissaa*, *lasi maitoa*, *Minulla ei ole autoa*), **-malla or -matta?** (*sammuttamalla* = by switching off, *sammuttamatta* = without), **Täällä, tuolla, siellä** (tänne / täällä /
   täältä; here, over there you can see, there you can't) and **Plurals in all forms** (*kissat, omenoita,
   lasten, laatikoissa, kauppoihin, pöydillä, opettajilta, lapsille, lapsina*, with stem changes like *hammas → hampaat*), plus Mixed. Choose from four forms of
   the same word or type it; each answer shows the full sentence, its translation and the rule. Exercises in `js/cases.js`.
@@ -88,7 +88,7 @@ with Quizlet-style mini games.
 - **Pronunciation**: 🔊 buttons read words aloud using your device's text-to-speech
   (install a Finnish voice for the best result).
 - **Backup**: export and import everything as JSON from Settings.
-- Starts with 2369 starter words in 54 categories, among them **No niin! 2** (the words from the textbook), **Vaikutelmaverbit** (näyttää, kuulostaa, tuntua… + -lta), one big **Daycare** category for daycare teachers
+- Starts with 2382 starter words in 54 categories, among them **No niin! 2** (the words from the textbook), **Vaikutelmaverbit** (näyttää, kuulostaa, tuntua… + -lta), one big **Daycare** category for daycare teachers
   (routines, instructions, praise, play, songs, meals, outdoors, safety, talking to parents, ECEC terms, child
   development, planning, support and inclusion), **Words learnt during internship** and **Module 2 Final Test**;
   everyday life (**Health & doctor**, **Food & cooking**, **Home & housing**, **Nature & weather**, **Getting around**,
