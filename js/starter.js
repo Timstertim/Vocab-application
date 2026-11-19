@@ -109,8 +109,9 @@
     // The textbook (version 19).
     C('No niin! 2', '#1f8fa3'),
     C('Vaikutelmaverbit', '#7a55c7'),
+    C('Environment', '#3f9a3a'),
   ];
-  const VERSION = 29;
+  const VERSION = 30;
   // Since version 17 the daycare categories are one category, Daycare. The word lists below still name
   // the old ones; their words simply end up in Daycare.
   const MERGED_INTO_DAYCARE = ['Daycare: play', 'Daycare: safety', 'Daycare: instructions', 'Daycare: praise',
@@ -3007,8 +3008,37 @@
   ];
   const ALSO_IN_V29 = { 'suunnitella': ['No niin! 2'], 'tilata': ['No niin! 2'], 'kierrättää': ['No niin! 2'], 'tarkistaa': ['No niin! 2'], 'pestä': ['No niin! 2'], 'ostaa': ['No niin! 2'], 'lajitella': ['No niin! 2'], 'pitää': ['No niin! 2'], 'käydä': ['No niin! 2'], 'vähentää': ['No niin! 2'], 'tehdä': ['No niin! 2'] };
 
+  // Added in version 30: the environment word cloud (No niin! 2).
+  const E = ['Environment', 'No niin! 2'];
+  const v30 = [
+    ['ympäristö', 'environment; surroundings', 'noun', 'Stem: ympäristön, ympäristöä. ympäristöystävällinen = eco-friendly. Also "surroundings": kodin ympäristö.', [['Meidän pitää suojella ympäristöä.', 'We must protect the environment.']], E],
+    ['ympäristönsuojelu', 'environmental protection', 'noun', 'ympäristö + suojelu (protection). suojella = to protect. Compare luonnonsuojelu = nature conservation.', [['Ympäristönsuojelu on tärkeää kaikille.', 'Protecting the environment matters to everyone.']], E],
+    ['ympäristöasia', 'environmental issue', 'noun', 'ympäristö + asia (matter, issue). Usually plural: ympäristöasiat. Stem: ympäristöasian.', [['Hän on kiinnostunut ympäristöasioista.', 'They\'re interested in environmental issues.']], E],
+    ['jalanjälki', 'footprint', 'noun', 'jalan (of the foot) + jälki (mark). Stem: jalanjäljen, jalanjälkeä (k → j). Also hiilijalanjälki, vesijalanjälki, ekologinen jalanjälki.', [['Hiekassa näkyi jalanjälki.', 'There was a footprint in the sand.']], E],
+    ['ekologinen jalanjälki', 'ecological footprint', 'phrase', 'How much nature a person\'s lifestyle uses up. Partitive: ekologista jalanjälkeä.', [['Ekologinen jalanjälki kertoo, kuinka paljon luontoa kulutamme.', 'Our ecological footprint shows how much nature we use up.']], E],
+    ['vesijalanjälki', 'water footprint', 'noun', 'vesi + jalanjälki: how much water making something uses. Stem: vesijalanjäljen.', [['Puuvillan vesijalanjälki on suuri.', 'Cotton has a large water footprint.']], E],
+    ['kestävä', 'sustainable; durable, lasting', 'adjective', 'From kestää (to last). Stem: kestävän, kestävää. kestävä kehitys = sustainable development.', [['Tämä laukku on todella kestävä.', 'This bag is really durable.']], E],
+    ['elämäntapa', 'lifestyle, way of life', 'noun', 'elämän (of life) + tapa (way, habit). Stem: elämäntavan, elämäntapaa (p → v). terveelliset elämäntavat = a healthy lifestyle.', [['Liikunta kuuluu hänen elämäntapaansa.', 'Exercise is part of their lifestyle.']], E],
+    ['kestävä elämäntapa', 'sustainable lifestyle', 'phrase', 'A way of living that doesn\'t waste natural resources (= luonnonvaroja haaskaamaton elämäntapa).', [['Kestävä elämäntapa on myös halvempi.', 'A sustainable lifestyle is also cheaper.']], E],
+    ['lähiruoka', 'local food', 'noun', 'lähi- (near) + ruoka. Food produced close to where it\'s eaten. Stem: lähiruoan / lähiruuan.', [['Ostan lähiruokaa torilta.', 'I buy local food at the market.']], ['Environment', 'Food & cooking', 'No niin! 2']],
+    ['sähkö', 'electricity', 'noun', 'Stem: sähkön, sähköä. sähkölasku = electricity bill; sähköauto = electric car; sähköposti = e-mail.', [['Sähkö on kallista talvella.', 'Electricity is expensive in winter.']], ['Environment', 'Home & housing', 'No niin! 2']],
+    ['vihreä sähkö', 'green electricity', 'phrase', 'Electricity from renewable sources: wind, sun, water.', [['Vihreä sähkö tehdään tuulesta, auringosta ja vedestä.', 'Green electricity is made from wind, sun and water.']], E],
+    ['vihreä liike', 'the green movement', 'phrase', 'liike = movement; also a shop or business. vihreät = the Greens (party).', [['Vihreä liike syntyi 1970-luvulla.', 'The green movement started in the 1970s.']], E],
+    ['liike', 'movement; shop, business', 'noun', 'Stem: liikkeen, liikettä (k → kk). urheiluliike = sports shop; liikunta = exercise.', [['Liike on auki kymmeneen.', 'The shop is open until ten.']], ['Shopping & money', 'No niin! 2']],
+    ['viherpiipertäjä', 'tree-hugger (mocking)', 'noun', 'A joking or mocking (halventava tai leikillinen) name for someone in the green movement. Stem: viherpiipertäjän.', [['Häntä kutsuttiin viherpiipertäjäksi.', 'They called them a tree-hugger.']], ['Environment', 'Spoken Finnish & slang', 'No niin! 2']],
+    ['lajittelu', 'sorting', 'noun', 'From lajitella. jätteiden lajittelu = sorting waste (for recycling).', [['Lajittelu on helppoa, kun on monta roskista.', 'Sorting is easy when there are many bins.']], E],
+    ['jätteiden lajittelu', 'sorting waste (for recycling)', 'phrase', 'jäte (waste) → plural genitive jätteiden. biojäte, kartonki, lasi, metalli, muovi, sekajäte.', [['Jätteiden lajittelu on Suomessa tavallista.', 'Sorting waste is normal in Finland.']], E],
+    ['kestää', 'to last; to stand, to bear; to take (time)', 'verb', 'Type 1 · minä kestän · hän kesti (past). Matka kestää tunnin = the trip takes an hour. En kestä tätä! = I can\'t stand this!', [['Elokuva kestää kaksi tuntia.', 'The film lasts two hours.']], ['Time & calendar', 'No niin! 2']],
+    ['ei kestä päivänvaloa', 'shady, doesn\'t bear scrutiny', 'phrase', 'Literally "can\'t stand daylight": something dishonest or secret. päivänvalo = daylight.', [['Tämä kauppa ei kestä päivänvaloa.', 'This deal is shady.']], ['Sayings', 'No niin! 2']],
+    ['luonnonvarat', 'natural resources', 'noun', 'Usually plural (singular luonnonvara). luonnon (of nature) + vara (reserve). Stem: luonnonvarojen.', [['Luonnonvarat eivät riitä kaikille.', 'There aren\'t enough natural resources for everyone.']], E],
+    ['haaskata', 'to waste', 'verb', 'Type 4 · minä haaskaan · hän haaskasi (past). = tuhlata. haaskaamaton = not wasteful.', [['Älä haaskaa ruokaa!', 'Don\'t waste food!']], E],
+    ['halventava', 'derogatory, belittling', 'adjective', 'From halventaa (to belittle; halpa = cheap). Stem: halventavan. halventava nimitys = a derogatory name.', [['Se on halventava sana.', 'That\'s a derogatory word.']], ['Opinions & discussion', 'No niin! 2']],
+    ['kannattaja', 'supporter', 'noun', 'From kannattaa (to support). Stem: kannattajan. vihreiden kannattaja = Green Party supporter.', [['Hän on vihreän liikkeen kannattaja.', 'They\'re a supporter of the green movement.']], ['Opinions & discussion', 'No niin! 2']],
+  ];
+  const ALSO_IN_V30 = { 'vihreä': ['No niin! 2'], 'luonnonsuojelu': ['Environment'], 'hiilijalanjälki': ['Environment'], 'ekologinen': ['Environment'], 'kertakäyttöinen': ['Environment'], 'kierrättää': ['Environment'], 'lajitella': ['Environment'], 'säästää': ['Environment'], 'pienentää': ['Environment'], 'vähentää': ['Environment'] };
+
   // Daycare sub-categories also belong to Daycare, and every verb also to Verbs.
-  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27, v28, v29).map((r) => {
+  const tagged = v4.concat(v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27, v28, v29, v30).map((r) => {
     let cats = [].concat(r[5]);
     if (/^Daycare|^Talking to parents$|^ECEC terms$|^Child development$|^Planning & documentation$|^Support & inclusion$|^Words learnt during internship$/.test(cats[0]) && cats[0] !== 'Daycare') cats.push('Daycare');
     if (r[2] === 'verb' && !/^Spoken Finnish$|^Slang$/.test(cats[0])) cats.push('Verbs');
@@ -3018,7 +3048,7 @@
   const L = root.VocabLevels || (typeof require === 'function' ? require('./levels.js') : null);
   const now = Date.now();
   // The version each tagged word was added in (v4 onwards).
-  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27, v28, v29].flatMap((list, n) => list.map(() => n + 4));
+  const since = [v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26, v27, v28, v29, v30].flatMap((list, n) => list.map(() => n + 4));
   const rows = raw.map((r) => r.concat(1)).concat(v2.map((r) => r.concat(2)), v3.map((r) => r.concat(3)), tagged.map((r, i) => r.concat(since[i])));
   const words = rows.map((r, i) => ({
     id: 'w-starter-' + i,
@@ -3027,7 +3057,7 @@
     partOfSpeech: r[2],
     definition: r[3],
     examples: r[4].map(([fi, en]) => ({ fi, en })),
-    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || [], ALSO_IN_V16[r[0]] || [], ALSO_IN_V17[r[0]] || [], ALSO_IN_V18[r[0]] || [], ALSO_IN_V19[r[0]] || [], ALSO_IN_V22[r[0]] || [], ALSO_IN_V23[r[0]] || [], ALSO_IN_V24[r[0]] || [], ALSO_IN_V25[r[0]] || [], ALSO_IN_V27[r[0]] || [], ALSO_IN_V28[r[0]] || [], ALSO_IN_V28B[r[0]] || [], ALSO_IN_V29[r[0]] || []).map(id))),
+    categoryIds: Array.from(new Set([].concat(r[5], ALSO_IN[r[0]] || [], ALSO_IN_V11[r[0]] || [], ALSO_IN_V12[r[0]] || [], ALSO_IN_V13[r[0]] || [], ALSO_IN_V14[r[0]] || [], ALSO_IN_V15[r[0]] || [], ALSO_IN_V16[r[0]] || [], ALSO_IN_V17[r[0]] || [], ALSO_IN_V18[r[0]] || [], ALSO_IN_V19[r[0]] || [], ALSO_IN_V22[r[0]] || [], ALSO_IN_V23[r[0]] || [], ALSO_IN_V24[r[0]] || [], ALSO_IN_V25[r[0]] || [], ALSO_IN_V27[r[0]] || [], ALSO_IN_V28[r[0]] || [], ALSO_IN_V28B[r[0]] || [], ALSO_IN_V29[r[0]] || [], ALSO_IN_V30[r[0]] || []).map(id))),
     level: L ? L.levelFor(r[0], [].concat(r[5])[0]) : '',
     notes: '',
     stats: { correct: 0, wrong: 0 },
@@ -3052,7 +3082,7 @@
    * Each entry has the FIXES number it was added in (v), so a saved word only gets the newer ones.
    * Bump FIXES when adding entries.
    */
-  const FIXES = 24;
+  const FIXES = 25;
   const fixes = [
     { finnish: 'eilen', definition: 'toissa päivänä = the day before yesterday.' },
     { finnish: 'aamupäivä', english: 'morning (before noon)', definition: 'aamupäivällä = in the late morning.',
@@ -3105,6 +3135,7 @@
     ...Object.entries(ALSO_IN_V28B).map(([finnish, cats]) => ({ v: 23, finnish, addCategories: cats.map(id) })),
     { v: 23, finnish: 'puolukka', definition: 'Stem: puolukan.', examples: [{ fi: 'Puolukasta tehdään hilloa.', en: 'Jam is made from lingonberries.' }] },
     ...Object.entries(ALSO_IN_V29).map(([finnish, cats]) => ({ v: 24, finnish, addCategories: cats.map(id) })),
+    ...Object.entries(ALSO_IN_V30).map(([finnish, cats]) => ({ v: 25, finnish, addCategories: cats.map(id) })),
     { v: 19, finnish: 'mahtaa', english: 'I wonder; can, may', definition: 'Type 1 · mahtaa · mahtoi (past). Mahtaako hän tulla? = I wonder if they\'re coming.' },
   ].map((f) => Object.assign({ v: 1 }, f));
 

@@ -37,7 +37,7 @@
     'Streets & place names': 'A2.1',
     // Categories made by merging, and the textbook.
     'Health & doctor': 'A2.2', 'Food & cooking': 'A2.1', 'Nature & weather': 'A2.1', 'Home & housing': 'A2.1',
-    'Spoken Finnish & slang': 'A2.2', 'Finnish culture': 'A2.2', 'Small & linking words': 'A2.2', 'No niin! 2': 'A2.2', 'Vaikutelmaverbit': 'B1.1', 'Words learnt during internship': 'A2.1', 'Module 2 Final Test': 'A2.2',
+    'Spoken Finnish & slang': 'A2.2', 'Finnish culture': 'A2.2', 'Small & linking words': 'A2.2', 'No niin! 2': 'A2.2', 'Vaikutelmaverbit': 'B1.1', 'Environment': 'A2.2', 'Words learnt during internship': 'A2.1', 'Module 2 Final Test': 'A2.2',
   };
 
   // Words that are easier or harder than their category.
@@ -176,6 +176,9 @@
     groups['A2.1'] = groups['A2.1'].concat(['mahdollinen', 'mahtava']);
     groups['A2.2'] = groups['A2.2'].concat(['mahdoton']);
     groups['B1.1'] = groups['B1.1'].concat(['en mahda mitään']);
+  // Version 30 additions.
+    groups['A2.1'] = groups['A2.1'].concat(['sähkö', 'ympäristö', 'liike', 'kestää']);
+    groups['B1.1'] = groups['B1.1'].concat(['viherpiipertäjä', 'ei kestä päivänvaloa', 'halventava', 'vesijalanjälki']);
   // Version 29 additions.
     groups['A2.2'] = groups['A2.2'].concat(['käyttää', 'säätää', 'tiivistää', 'hankkia', 'pakastaa', 'pakata', 'suosia', 'säästää', 'pienentää', 'hiilijalanjälki', 'ekologinen', 'kertakäyttöinen', 'sanomattakin on selvää']);
   // Version 28 additions.

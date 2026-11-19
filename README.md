@@ -88,7 +88,7 @@ with Quizlet-style mini games.
 - **Pronunciation**: 🔊 buttons read words aloud using your device's text-to-speech
   (install a Finnish voice for the best result).
 - **Backup**: export and import everything as JSON from Settings.
-- Starts with 2382 starter words in 54 categories, among them **No niin! 2** (the words from the textbook), **Vaikutelmaverbit** (näyttää, kuulostaa, tuntua… + -lta), one big **Daycare** category for daycare teachers
+- Starts with 2405 starter words in 55 categories, among them **No niin! 2** (the words from the textbook), **Vaikutelmaverbit** (näyttää, kuulostaa, tuntua… + -lta), one big **Daycare** category for daycare teachers
   (routines, instructions, praise, play, songs, meals, outdoors, safety, talking to parents, ECEC terms, child
   development, planning, support and inclusion), **Words learnt during internship** and **Module 2 Final Test**;
   everyday life (**Health & doctor**, **Food & cooking**, **Home & housing**, **Nature & weather**, **Getting around**,
